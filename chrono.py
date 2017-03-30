@@ -1,4 +1,4 @@
-class chronolist(list):
+class chronolist:
     def __init__(self, l=[]):
         self.list = []
         for e in l:
@@ -11,13 +11,13 @@ class chronolist(list):
         return repr(self.list)
     def __str__(self):
         return str(self.list)
-    def index(self, o):
-        if isinstance(o, (int, float, long, complex)):
-            o = [o, o]
-        for i, e in enumerate(self.list):
-            if e[0] <= o[0] <= o[1] <= e[1]:
-                return i
-        return -1
+#     def index(self, o):
+#         if isinstance(o, (int, float, long, complex)):
+#             o = [o, o]
+#         for i, e in enumerate(self.list):
+#             if e[0] <= o[0] <= o[1] <= e[1]:
+#                 return i
+#         return -1
     def add(self, o):
         assert len(o) == 2, '{} is not a range'.format(o)
         assert o[0] <= o[1], '{} is not a proper range'.format(o)
@@ -28,14 +28,18 @@ class chronolist(list):
                 break
             i += 1
         self.list.insert(i, o)
-        if i == 0:
+        if len(self.list) == 1:
             return
         # merge remaining
-        o = self.list[i - 1]
         cutlist = []
-        for e in self.list[i:]:
+        if i >= 1:
+            e = self.list[i - 1]
+            if o[0] <= e[1]: # check behind
+                self.list[i][0] = min(e[0], o[0])
+                cutlist.append(e)
+        for e in self.list[i + 1:]: # check in front
             if e[0] <= o[1]:
-                self.list[i - 1][1] = max(e[1], o[1])
+                self.list[i][1] = max(e[1], o[1])
                 cutlist.append(e)
             else:
                 break
