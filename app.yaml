@@ -1,4 +1,4 @@
-application: undefined
+application: antscoper
 version: 1
 
 runtime: python27
@@ -7,6 +7,10 @@ threadsafe: true
 
 skip_files:
 - AntScope
+- __pycache__
+- ./*.ipynb
+- ./*.js
+- ./*.md
 
 handlers:
 - url: /.*
