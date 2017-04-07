@@ -15,3 +15,4 @@ skip_files:
 handlers:
 - url: /.*
   script: main.app
+  secure: always
