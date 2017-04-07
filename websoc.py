@@ -57,7 +57,7 @@ def yearterms():
     yts = [y + '-' + t for t in ts]
     for yt in yts:
         data = post(yt)
-        if 'Currently in week' in data:
+        if 'Currently in week' in data or 'Instruction starts on' in data:
             yield yt
 
 def coursecodes():
