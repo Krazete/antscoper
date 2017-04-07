@@ -1,0 +1,26 @@
+#bldgs {
+	background: #abc;
+	position: absolute;
+	top: 0;
+	bottom: 25%;
+	left: 0;
+	right: 50%;
+}
+
+#rooms {
+	background: #ace;
+	position: absolute;
+	top: 0;
+	bottom: 25%;
+	left: 50%;
+	right: 0;
+}
+
+#times {
+	background: #def;
+	position: absolute;
+	top: 75%;
+	bottom: 0;
+	left: 0;
+	right: 0;
+}
