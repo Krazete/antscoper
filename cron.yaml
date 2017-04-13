@@ -1,0 +1,4 @@
+cron:
+- description: scrape websoc
+  url: /scrape.py
+  schedule: every day 06:00
