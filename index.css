@@ -1,4 +1,4 @@
-#bldgs {
+#map {
 	background: #abc;
 	position: absolute;
 	top: 0;
@@ -7,16 +7,17 @@
 	right: 50%;
 }
 
-#rooms {
+#list {
 	background: #ace;
 	position: absolute;
 	top: 0;
 	bottom: 25%;
 	left: 50%;
 	right: 0;
+	overflow: auto;
 }
 
-#times {
+#time {
 	background: #def;
 	position: absolute;
 	top: 75%;
