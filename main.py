@@ -18,3 +18,5 @@ sitemap = [
 ]
 
 app = webapp2.WSGIApplication(sitemap, debug=True)
+
+import scrape
