@@ -2,9 +2,6 @@ from google.appengine.api import urlfetch
 from datetime import datetime
 from bs4 import BeautifulSoup
 
-# https://github.com/gumho/antplanner2/blob/b8501534787b6541f05626907b18bd273e8bc567/antplanner2/views.py
-# https://www.reg.uci.edu/perl/WebSoc?YearTerm=2016-92&Submit=TextResults&CourseCodes=50000-54000
-
 URL = 'https://www.reg.uci.edu/perl/WebSoc'
 
 def get():
@@ -48,28 +45,14 @@ def generate_coursecodes(n):
         b = a + remainder - 1
         yield str(a) + '-' + str(b)
 
-from logging import info
-
 def get_data():
+    'Returns raw data of course schedules from WebSoc.'
     data = []
     yearterms = generate_yearterms()
     for yearterm in yearterms:
-        info(yearterm)
         coursecodes = generate_coursecodes(800)
         for coursecode in coursecodes:
-            info(coursecode)
             content = post(yearterm, coursecode)
             if 'No courses matched' not in content:
                 data.append(content)
     return data
-
-def parse_data(data):
-    database = []
-    lines = data.split('\n')
-    for line in lines:
-        if line != '':
-            database.append(line)
-    return database
-
-def store():
-    pass
