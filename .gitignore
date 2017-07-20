@@ -1,4 +1,5 @@
 *.pyc
 *.ipynb
-leaflet
+bs4
 DataTables
+leaflet
