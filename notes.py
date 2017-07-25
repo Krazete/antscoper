@@ -2,6 +2,10 @@
 +-------------------------------------+
 |                IDEAS                |
 +-------------------------------------+
+| General Classroom Information       |
+|   Include a disclaimer for warning  |
+|   about official bookings and the   |
+|   general closing time for classes. |
 | WebSOC Viewer                       |
 |   Search through WebSOC without     |
 |   having to reload for each search  |
