@@ -1,5 +1,7 @@
 *.pyc
-*.ipynb
+test.py
+notes.py
+messages
 bs4
 DataTables
 leaflet
