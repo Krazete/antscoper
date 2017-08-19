@@ -1,26 +1,19 @@
-from google.cloud import datastore
+from google.appengine.api import datastore
+import websoc
+import websoc_parse
 
-def create_client(project_id):
-    return datastore.Client(project_id)
+data = websoc.get_data()
 
-def add_task(client, description):
-    key = client.key('Task')
-    task = datastore.Entity(
-        key, exclude_from_indexes=['description'])
-    task.update({
-        'created': datetime.datetime.utcnow(),
-        'description': description,
-        'done': False
-    })
-    client.put(task)
-    return task.key
+database = {}
+for document in data:
+    websoc_parse.parse_document(database, document)
 
-def mark_done(client, task_id):
-    with client.transaction():
-        key = client.key('Task', task_id)
-        task = client.get(key)
-        if not task:
-            raise ValueError(
-                'Task {} does not exist.'.format(task_id))
-        task['done'] = True
-        client.put(task)
+for bldg in database:
+    for room in database[bldg]:
+        entity = datastore.Entity('Room', name=' '.join([bldg, room]))
+        for day in database[bldg][room]:
+            entity[day] = [str(t) for t in database[bldg][room][day]]
+        key = datastore.Put(entity)
+        # print key
+        # print datastore.Get(key)
+        # datastore.Delete(key)
