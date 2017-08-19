@@ -3,16 +3,25 @@ version: 1
 
 runtime: python27
 api_version: 1
-threadsafe: true
+threadsafe: false
 
 skip_files:
-- AntScope
-- __pycache__
-- ./*.ipynb
-- ./*.js
-- ./*.md
+- ^(.*/)?#.*#$
+- ^(.*/)?.*~$
+- ^(.*/)?.*\.py[co]$
+- ^(.*/)?.*/RCS/.*$
+- ^(.*/)?\..*$
+- messages
+- vacancy\.js
+- README\.md
 
 handlers:
-- url: /.*
+- url: /(.*\.(gif|png|jpg|ico))
+  static_files: \1
+  upload: .*\.(gif|png|jpg|ico)
+- url: /scrape
+  script: scrape.py
+  secure: always
+- url: .*
   script: main.app
   secure: always
