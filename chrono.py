@@ -11,13 +11,13 @@ class chronolist:
         return repr(self.list)
     def __str__(self):
         return str(self.list)
-#     def index(self, o):
-#         if isinstance(o, (int, float, long, complex)):
-#             o = [o, o]
-#         for i, e in enumerate(self.list):
-#             if e[0] <= o[0] <= o[1] <= e[1]:
-#                 return i
-#         return -1
+    # def index(self, o):
+    #     if isinstance(o, (int, float, long, complex)):
+    #         o = [o, o]
+    #     for i, e in enumerate(self.list):
+    #         if e[0] <= o[0] <= o[1] <= e[1]:
+    #             return i
+    #     return -1
     def add(self, o):
         assert len(o) == 2, '{} is not a range'.format(o)
         assert o[0] <= o[1], '{} is not a proper range'.format(o)
