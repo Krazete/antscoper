@@ -9,6 +9,7 @@ class Room(ndb.Model):
     th = ndb.StringProperty()
     fr = ndb.StringProperty()
     sa = ndb.StringProperty()
+    last_active = ndb.IntegerProperty()
 
 def get():
     return Room.query().fetch()

@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 urlfetch.set_default_fetch_deadline(60)
 
 URL = 'https://www.reg.uci.edu/perl/WebSoc'
+CURRENT_YEAR = datetime.now().year
 
 def get():
     'Returns content from WebSoc.'
@@ -20,7 +21,7 @@ def post(yearterm, coursecodes=None):
 def detect_yearterms(year=None):
     'Detects current yearterms or gets yearterms specified by year.'
     if not year:
-        year = datetime.now().year
+        year = CURRENT_YEAR
     content = get()
     html = BeautifulSoup(content, 'html.parser')
     yearterms_html = html.find('select').find_all('option')

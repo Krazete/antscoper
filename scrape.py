@@ -7,6 +7,7 @@ def scrape(year=None):
         data = websoc.get_data(year)
         keys = None
     else:
+        year = websoc.CURRENT_YEAR
         data = websoc.get_data()
         keys = antndb.get_keys()
 
@@ -24,7 +25,8 @@ def scrape(year=None):
                 we=str(database[bldg][room]['W']),
                 th=str(database[bldg][room]['Th']),
                 fr=str(database[bldg][room]['F']),
-                sa=str(database[bldg][room]['Sa'])
+                sa=str(database[bldg][room]['Sa']),
+                last_active=year
             )
             key = entity.put()
             if keys:
