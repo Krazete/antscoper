@@ -2,6 +2,8 @@ from google.appengine.api import urlfetch
 from datetime import datetime
 from bs4 import BeautifulSoup
 
+urlfetch.set_default_fetch_deadline(60)
+
 URL = 'https://www.reg.uci.edu/perl/WebSoc'
 
 def get():
