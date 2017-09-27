@@ -3,11 +3,11 @@ from ast import literal_eval
 
 class Room(ndb.Model):
     su = ndb.StringProperty()
-    m = ndb.StringProperty()
+    mo = ndb.StringProperty()
     tu = ndb.StringProperty()
-    w = ndb.StringProperty()
+    we = ndb.StringProperty()
     th = ndb.StringProperty()
-    f = ndb.StringProperty()
+    fr = ndb.StringProperty()
     sa = ndb.StringProperty()
 
 def get():
@@ -16,8 +16,6 @@ def get():
 def get_keys():
     return Room.query().fetch(keys_only=True)
 
-
-
 def reset():
-    entries = Room.query().fetch(keys_only=True)
+    entries = get_keys()
     ndb.delete_multi(entries)
