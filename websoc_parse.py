@@ -55,7 +55,7 @@ def parse_time(time):
     return days, hours
 
 def parse_place(place):
-    return place.strip().split(' ')
+    return place.strip().split(' ', 1)
 
 if __name__ == '__main__':
     import test
