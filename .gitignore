@@ -1,6 +1,7 @@
 *.pyc
 test.py
 notes.py
+initialize_database.js
 messages
 bs4
 DataTables

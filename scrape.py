@@ -2,9 +2,9 @@ import websoc
 import websoc_parse
 import antndb
 
-def scrape(year=None):
+def scrape(year=None, term=None):
     if year:
-        data = websoc.get_data(year)
+        data = websoc.get_data(year, term)
         keys = None
     else:
         year = websoc.CURRENT_YEAR

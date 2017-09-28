@@ -18,19 +18,21 @@ def post(yearterm, coursecodes=None):
         params += '&Submit=TextResults&CourseCodes=' + coursecodes
     return urlfetch.fetch(URL + params).content
 
-def detect_yearterms(year=None):
-    'Detects current yearterms or gets yearterms specified by year.'
+def detect_yearterms(year=None, term=None):
+    'Detects current yearterms or gets yearterms filtered by year and/or term.'
     if not year:
         year = CURRENT_YEAR
     content = get()
     html = BeautifulSoup(content, 'html.parser')
     yearterms_html = html.find('select').find_all('option')
+    if term:
+        yearterms_html = filter(lambda e: term.lower() in e.decode_contents().lower(), yearterms_html)
     yearterms = map(lambda e: e['value'], yearterms_html)
     return filter(lambda e: int(e.split('-')[0]) == year, yearterms)
 
-def generate_yearterms(year=None):
-    'Generates current yearterms or yearterms specified by year.'
-    yearterms = detect_yearterms(year)
+def generate_yearterms(year=None, term=None):
+    'Generates current yearterms or yearterms filtered by year and/or term.'
+    yearterms = detect_yearterms(year, term)
     for yearterm in yearterms:
         if year:
             yield yearterm
@@ -52,10 +54,10 @@ def generate_coursecodes(n):
         b = a + remainder - 1
         yield str(a) + '-' + str(b)
 
-def get_data(year=None):
+def get_data(year=None, term=None):
     'Returns raw data of course schedules from WebSoc.'
     data = []
-    yearterms = generate_yearterms(year)
+    yearterms = generate_yearterms(year, term)
     for yearterm in yearterms:
         coursecodes = generate_coursecodes(800)
         for coursecode in coursecodes:
