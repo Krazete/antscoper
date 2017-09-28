@@ -1,5 +1,5 @@
- cron:
- - description: scrape websoc
-   url: /scrape
-   schedule: every day 06:00
-   timezone: US/Pacific
+cron:
+- description: scrape websoc
+  url: /scrape
+  schedule: every day 06:00
+  timezone: US/Pacific

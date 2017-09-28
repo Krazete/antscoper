@@ -19,6 +19,9 @@ handlers:
 - url: /(.*\.(gif|png|jpg|ico|css|js))
   static_files: \1
   upload: .*\.(gif|png|jpg|ico|css|js)
-- url: /(scrape)?
+- url: /(initialize_database)?
   script: index.app
+  secure: always
+- url: /scrape
+  script: scrape.py
   secure: always

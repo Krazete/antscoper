@@ -1,5 +1,4 @@
 from google.appengine.ext import ndb
-from ast import literal_eval
 
 class Room(ndb.Model):
     su = ndb.StringProperty()
