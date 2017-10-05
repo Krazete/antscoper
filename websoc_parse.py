@@ -46,7 +46,7 @@ def parse_document(database, document):
 def parse_time(time):
     days = re.findall('(Su|M|Tu|W|Th|F|Sa)', time)
     start, end = re.findall('(\d+):(\d+)(.)', time)
-    hours = [int(start[0]) + int(start[1]) / 60, int(end[0]) + (int(end[1]) + 10) / 60]
+    hours = [int(start[0]) + int(start[1]) / 60.0, int(end[0]) + (int(end[1]) + 10) / 60.0]
     if 'p' in time:
         if hours[1] < 12:
             if hours[0] < hours[1]:
