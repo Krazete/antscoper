@@ -1,27 +1,104 @@
+.timetable {
+	white-space: nowrap;
+	height: 100%;
+	width: 100%;
+	border-spacing: 0;
+	font-family: Helvetica, Arial, sans-serif;
+	font-size: 14px;
+}
+
+.day {
+	cursor: pointer;
+	background: linear-gradient(#def, transparent);
+	border-radius: 10px 10px 0 0;
+	border-top: 0;
+}
+
+tr {
+	height: 30px;
+}
+tr:nth-child(even) {
+	background: #bdf;
+}
+
+td {
+	padding: 0 5px 0 5px;
+}
+td:nth-child(2) {
+	width: 100%;
+}
+
+/* Timeline */
+
+.timeline {
+	font-family: monospace;
+	font-size: 12px;
+	height: 100%;
+	width: 100%;
+	display: flex;
+	color: transparent;
+}
+.timeline:hover {
+	color: #000;
+}
+
+.timeblock {
+	flex: 1;
+}
+
+.timeblock:nth-child(odd) {
+	border-left: 1px solid #79b;
+}
+.timeblock:nth-child(even) {
+	border-left: 1px solid #9bd;
+}
+.timeblock:last-child {
+	border-right: 1px solid #79b;
+}
+
+.timeblock.active {
+	background: #579;
+	border-color: transparent;
+}
+.timeline:hover > .timeblock.active {
+	color: #ace;
+}
+
+/* Orientation */
+
 #map {
 	background: #abc;
 	position: absolute;
 	top: 0;
-	bottom: 25%;
 	left: 0;
-	right: 50%;
 }
 
 #list {
 	background: #ace;
 	position: absolute;
-	top: 0;
-	bottom: 25%;
-	left: 50%;
+	bottom: 0;
 	right: 0;
 	overflow: auto;
 }
 
-#time {
-	background: #def;
-	position: absolute;
-	top: 75%;
-	bottom: 0;
-	left: 0;
-	right: 0;
+@media all and (orientation: landscape) {
+	#map {
+		bottom: 0;
+		right: 70%;
+	}
+	#list {
+		top: 0;
+		left: 30%;
+	}
+}
+
+@media all and (orientation: portrait) {
+	#map {
+		bottom: 70%;
+		right: 0;
+	}
+	#list {
+		top: 30%;
+		left: 0;
+	}
 }

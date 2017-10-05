@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<!--meta name="viewport" content="width=device-width, initial-scale=1"-->
+	<meta name="google" content="notranslate">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>AntScoper</title>
-	<!--link rel="icon" type="image/x-icon" href="/favicon.ico"-->
 	<link rel="stylesheet" type="text/css" href="index.css">
 
 	<link rel="stylesheet" type="text/css" href="leaflet/leaflet.css">
@@ -11,28 +11,14 @@
 
 	<link rel="stylesheet" type="text/css" href="DataTables/datatables.min.css">
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-	<script>
-		var data = [{WEBSOC_DATA}];
-	</script>
 </head>
 <body>
 	<div id="map"></div>
-	<div id="list">
-		<table id="listbox">
-			<thead>
-				<tr>
-					<th>Name</th>
-					<th>Abbreviation</th>
-					<th>Room</th>
-				</tr>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-	</div>
-	<div id="time">
-	</div>
+	<div id="list"></div>
 
+	<script>
+		var database = {WEBSOC_DATA};
+	</script>
 	<script src="index.js"></script>
 </body>
 </html>

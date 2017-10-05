@@ -1,6 +1,8 @@
 *.pyc
 test.py
 notes.py
+dataTest.js
+storeTest.js
 initialize_database.js
 messages
 bs4
