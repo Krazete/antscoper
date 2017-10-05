@@ -9,7 +9,7 @@ def scrape(year=None, term=None):
     else:
         year = websoc.CURRENT_YEAR
         data = websoc.get_data()
-        keys = antndb.get_keys()
+        keys = antndb.get(keys_only=True)
 
     database = {}
     for document in data:

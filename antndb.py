@@ -10,12 +10,12 @@ class Room(ndb.Model):
     sa = ndb.StringProperty()
     last_active = ndb.IntegerProperty()
 
-def get():
-    return Room.query().fetch()
-
-def get_keys():
-    return Room.query().fetch(keys_only=True)
+def get(filter=None, keys_only=False):
+    query = Room.query()
+    if filter:
+        query.filter(filter.split(" "))
+    return query.fetch(keys_only=keys_only)
 
 def reset():
-    entries = get_keys()
+    entries = get(keys_only=True)
     ndb.delete_multi(entries)
