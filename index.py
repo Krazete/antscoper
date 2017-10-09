@@ -3,6 +3,7 @@ import antndb
 from ast import literal_eval
 from json import dumps
 from scrape import scrape
+import urllib
 
 class Index(webapp2.RequestHandler):
     def get(self):
@@ -21,7 +22,7 @@ class Index(webapp2.RequestHandler):
                 "last_active": e.last_active
             } for e in antndb.get()
         ]
-        self.response.write(open('index.html').read().replace('{WEBSOC_DATA}', dumps(database)))
+        self.response.write(open('index.html').read().replace('{WEBSOC_DATA}', dumps(database)).replace('{MAP_DATA}', urllib.urlopen('https://map.uci.edu/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5').read()))
 
 class Initialize(webapp2.RequestHandler):
     def post(self):
