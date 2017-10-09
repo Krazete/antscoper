@@ -40,7 +40,7 @@ class chronolist:
                 self.list[i][0] = min(item[0], new_item[0])
                 cutlist.append(item)
         for item in self.list[i + 1:]: # check in front
-            if e[0] <= new_item[1]:
+            if item[0] <= new_item[1]:
                 self.list[i][1] = max(item[1], new_item[1])
                 cutlist.append(item)
             else:
