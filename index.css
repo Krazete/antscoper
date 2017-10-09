@@ -1,21 +1,20 @@
 .timetable {
-	white-space: nowrap;
 	height: 100%;
 	width: 100%;
 	border-spacing: 0;
-	font-family: Helvetica, Arial, sans-serif;
+	font-family: "Trebuchet MS", "Helvetica", "Arial", sans-serif;
 	font-size: 14px;
+	white-space: nowrap;
 }
 
 .day {
 	cursor: pointer;
-	background: linear-gradient(#def, transparent);
+	background: linear-gradient(#def, #ace);
 	border-radius: 10px 10px 0 0;
-	border-top: 0;
 }
 
 tr {
-	height: 30px;
+	max-height: 30px;
 }
 tr:nth-child(even) {
 	background: #bdf;
@@ -35,7 +34,8 @@ td:nth-child(2) {
 	font-size: 12px;
 	height: 100%;
 	width: 100%;
-	display: flex;
+	display: table;
+	table-layout: fixed;
 	color: transparent;
 }
 .timeline:hover {
@@ -43,7 +43,7 @@ td:nth-child(2) {
 }
 
 .timeblock {
-	flex: 1;
+	display: table-cell;
 }
 
 .timeblock:nth-child(odd) {
@@ -84,21 +84,21 @@ td:nth-child(2) {
 @media all and (orientation: landscape) {
 	#map {
 		bottom: 0;
-		right: 70%;
+		right: 65%;
 	}
 	#list {
 		top: 0;
-		left: 30%;
+		left: 35%;
 	}
 }
 
 @media all and (orientation: portrait) {
 	#map {
-		bottom: 70%;
+		bottom: 65%;
 		right: 0;
 	}
 	#list {
-		top: 30%;
+		top: 35%;
 		left: 0;
 	}
 }
