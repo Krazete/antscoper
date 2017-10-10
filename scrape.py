@@ -19,13 +19,13 @@ def scrape(year=None, term=None):
         for room in database[bldg]:
             entity = antndb.Room(
                 id=' '.join([bldg, room]),
-                su=str(database[bldg][room]['Su']),
-                mo=str(database[bldg][room]['M']),
-                tu=str(database[bldg][room]['Tu']),
-                we=str(database[bldg][room]['W']),
-                th=str(database[bldg][room]['Th']),
-                fr=str(database[bldg][room]['F']),
-                sa=str(database[bldg][room]['Sa']),
+                su=database[bldg][room]['Su'].list,
+                mo=database[bldg][room]['M'].list,
+                tu=database[bldg][room]['Tu'].list,
+                we=database[bldg][room]['W'].list,
+                th=database[bldg][room]['Th'].list,
+                fr=database[bldg][room]['F'].list,
+                sa=database[bldg][room]['Sa'].list,
                 last_active=year
             )
             key = entity.put()

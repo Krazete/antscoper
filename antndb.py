@@ -1,13 +1,13 @@
 from google.appengine.ext import ndb
 
 class Room(ndb.Model):
-    su = ndb.StringProperty()
-    mo = ndb.StringProperty()
-    tu = ndb.StringProperty()
-    we = ndb.StringProperty()
-    th = ndb.StringProperty()
-    fr = ndb.StringProperty()
-    sa = ndb.StringProperty()
+    su = ndb.JsonProperty()
+    mo = ndb.JsonProperty()
+    tu = ndb.JsonProperty()
+    we = ndb.JsonProperty()
+    th = ndb.JsonProperty()
+    fr = ndb.JsonProperty()
+    sa = ndb.JsonProperty()
     last_active = ndb.IntegerProperty()
 
 def get(filter=None, keys_only=False):

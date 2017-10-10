@@ -11,8 +11,6 @@ class chronolist:
         return repr(self.list)
     def __str__(self):
         return str(self.list)
-    def default(self):
-        return self.list
     # def index(self, new_item):
     #     if isinstance(new_item, (int, float, long, complex)):
     #         new_item = [new_item, new_item]
