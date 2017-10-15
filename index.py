@@ -10,15 +10,14 @@ class Index(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'text/html'
         database = [
             {
-                "bldg": e.key.id().split(" ", 1)[0],
-                "room": e.key.id().split(" ", 1)[1],
-                "su": e.su,
-                "mo": e.mo,
-                "tu": e.tu,
-                "we": e.we,
-                "th": e.th,
-                "fr": e.fr,
-                "sa": e.sa,
+                "id": e.key.id(),
+                "0": e.su,
+                "1": e.mo,
+                "2": e.tu,
+                "3": e.we,
+                "4": e.th,
+                "5": e.fr,
+                "6": e.sa,
                 "last_active": e.last_active
             } for e in antndb.get()
         ]
