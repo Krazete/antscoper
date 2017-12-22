@@ -7,7 +7,6 @@ initialize_database.js
 mrc.js
 piazza.js
 
-.gitignore
 messages
 bs4
 DataTables
