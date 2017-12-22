@@ -1,0 +1,153 @@
+<!doctype html>
+<head>
+    <title>Test: Table</title>
+    <style>
+    body {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+    }
+    .container {
+        position: absolute;
+        background-color: #ebdfb2;
+        top: 50%;
+        transform: translate(-50%, -50%);
+    }
+    .vertical {
+        width: 400px;
+        height: 700px;
+        left: 25%;
+    }
+    .horizontal {
+        width: 700px;
+        height: 400px;
+        left: 67%;
+    }
+    .table {
+        position: absolute;
+        background-color: #555759;
+        font-family: "Trebuchet MS";
+        color: white;
+        right: 0;
+        bottom: 0;
+    }
+    .vertical > .table {
+        left: 0;
+        top: 35%;
+    }
+    .horizontal > .table {
+        left: 35%;
+        top: 0;
+    }
+    .building {
+        margin: 5px;
+    }
+    .abbreviation {
+        background-color: #0064a4;
+        border-radius: 5px 5px 0 0;
+        padding: 1px 5px 1px 5px;
+    }
+    .rooms {
+        background-color: #6aa2b8;
+        padding: 2px 2px 0 2px;
+        border-radius: 0 0 5px 5px;
+    }
+    .room {
+        height: 100%;
+        overflow-x: scroll;
+    }
+    .schedule {
+        background-color: rgba(0,0,0,0.5);
+        display: inline-block;
+        height: 100%;
+        overflow: scroll;
+    }
+    .number {
+        display: inline-block;
+        background-color: #0064a4;
+        padding: 1px 5px 1px 5px;
+        margin-bottom: 2px;
+        border-radius: 0 0 5px 5px;
+    }
+    .timeline {
+        position: absolute;
+        background-color: #0064a4;
+        width: 100%;
+        height: 1px;
+    }
+    .timeblock {
+    }
+    </style>
+</head>
+<body>
+    <div class="container vertical">
+        <div class="table">
+            <div class="building">
+                <div class="abbreviation">
+                    <div class="title">ACT</div><!-- title class isn't css'd -->
+                </div>
+                <div class="rooms">
+                    <div class="room">
+                        <div class="schedule">
+                            <div class="timeline"></div>
+                            <div class="timeblock"></div>
+                        </div>
+                        <div class="number">
+                            2206
+                        </div>
+                    </div>
+                    <div class="room">
+                        <div class="schedule">
+                            <div class="timeline"></div>
+                            <div class="timeblock"></div>
+                        </div>
+                        <div class="number">
+                            3214
+                        </div>
+                    </div>
+                    <div class="room">
+                        <div class="schedule">
+                            <div class="timeline"></div>
+                            <div class="timeblock"></div>
+                        </div>
+                        <div class="number">
+                            3226
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="building">
+                <div class="abbreviation">
+                    DBH
+                </div>
+                <div class="rooms">
+                    <div class="room">
+                        <div class="schedule">
+                            <div class="timeline"></div>
+                            <div class="timeblock"></div>
+                        </div>
+                        <div class="number">
+                            5733G
+                        </div>
+                    </div>
+                    <div class="room">
+                        <div class="schedule">
+                            <div class="timeline"></div>
+                            <div class="timeblock"></div>
+                        </div>
+                        <div class="number">
+                            2048
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container horizontal"></div>
+    <script>
+    var table = document.getElementsByClassName("table")[0];
+    var horizontal = document.getElementsByClassName("horizontal")[0];
+    horizontal.appendChild(table.cloneNode(true))
+    </script>
+</body>
