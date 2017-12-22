@@ -103,8 +103,9 @@ watcher.on("locationerror", onLeafletLocateError);
 
 /* Table */
 
+yearterm = "2017-92";
 for(var x, i = 0; x = database[i]; i++) {
-    x.id = "<a href=\"https://www.reg.uci.edu/perl/WebSoc?YearTerm=2017-92&ShowFinals=0&ShowComments=0&Days=" + "UMTWHFS"[new Date().getDay()] + "&Bldg=" + x.id.split(" ")[0] + "&Room=" + x.id.split(" ")[1] + "\" target=\"_blank\">" + x.id + "</a>";
+    x.id = "<a href=\"https://www.reg.uci.edu/perl/WebSoc?YearTerm=" + yearterm + "&ShowFinals=0&ShowComments=0&Days=" + "UMTWHFS"[new Date().getDay()] + "&Bldg=" + x.id.split(" ")[0] + "&Room=" + x.id.split(" ")[1] + "\" target=\"_blank\">" + x.id + "</a>";
 }
 var timetable = TimeTable.new(database, ["room", "distance", "last_active"]);
 document.getElementById("list").appendChild(timetable.table);

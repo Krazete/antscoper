@@ -1,9 +1,13 @@
 *.pyc
 test.py
 notes.py
-dataTest.js
-storeTest.js
+
+*Test.js
 initialize_database.js
+mrc.js
+piazza.js
+
+.gitignore
 messages
 bs4
 DataTables

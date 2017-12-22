@@ -1,11 +1,11 @@
 var TimeTable = {
-    "getTime": function() {
-		var date = new Date();
-		return date.getHours() + date.getMinutes() / 60;
-	},
     "getDay": function() {
 		var date = new Date();
 		return date.getDay();
+	},
+    "getTime": function() {
+		var date = new Date();
+		return date.getHours() + date.getMinutes() / 60;
 	},
 	"newTable": function(table, data, properties) {
 		TimeTable.initTable(table, data, properties);
@@ -20,19 +20,27 @@ var TimeTable = {
 			"data": data,
 			"table": table,
 			"sort": function() {
-				this.data = this.data.sort(function(a, b) {
+				this.data.sort(function(a, b) {
+                    var day = TimeTable.getDay();
 					var time = TimeTable.getTime();
-					var chapa = a[TimeTable.getDay()].every(e => e[1] < time || time+1 < e[0]);
-					var chapb = b[TimeTable.getDay()].every(e => e[1] < time || time+1 < e[0]);
+                    /* sortByTime */
+					var chapa = a[TimeTable.getDay()].every(e => e[1] < time || time + 1 < e[0]);
+					var chapb = b[TimeTable.getDay()].every(e => e[1] < time || time + 1 < e[0]);
+                    // sortByHoursUntilNext();
+    				// sortByHoursFromLast();
+    				// sortByBuildingAndRoom();
 					return chapa - chapb;
 				});
 				table.innerHTML = "";
 				TimeTable.newTable(table, data, properties);
-				// sortByDistance();
-				// sortByHoursUntilNext();
-				// sortByHoursFromLast();
-				// sortByBuildingAndRoom();
 			},
+            "sortByProperty": function(property) {
+                this.data.sort(function(a, b) {
+                    return a[property] - b[property];
+                });
+                table.innerHTML = "";
+				TimeTable.newTable(table, data, properties);
+            },
 			"resize": function() {},
 			"changeDay": function(e) {
 				console.log(e.target.value);
@@ -54,7 +62,7 @@ var TimeTable = {
 			var timeline = TimeTable.newTimeline(6, 24);
 			td.appendChild(timeline);
 			for (var j = 6 * 2; j < 24 * 2; j++) {
-				if (data[i][TimeTable.getDay()].some(function(e) {return e[0] * 2 <= j && j < e[1] * 2})) {
+				if (Array.from(data[i][TimeTable.getDay()]).some(function(e) {return e[0] * 2 <= j && j < e[1] * 2})) {
 					timeline.children[j - 6 * 2].classList.add("active");
 				}
 			}
