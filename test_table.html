@@ -26,7 +26,7 @@
     }
     .table {
         position: absolute;
-        background-color: #555759;
+        background-color: black;
         font-family: "Trebuchet MS";
         color: white;
         right: 0;
@@ -41,113 +41,154 @@
         top: 0;
     }
     .building {
-        margin: 5px;
+        margin: 2px;
     }
     .abbreviation {
         background-color: #0064a4;
+        text-align: center;
         border-radius: 5px 5px 0 0;
-        padding: 1px 5px 1px 5px;
+    }
+    .title {
+        /* writing-mode: tb; */
+        /* text-orientation: upright; */
     }
     .rooms {
         background-color: #6aa2b8;
-        padding: 2px 2px 0 2px;
-        border-radius: 0 0 5px 5px;
-    }
-    .room {
-        height: 100%;
         overflow-x: scroll;
-    }
-    .schedule {
-        background-color: rgba(0,0,0,0.5);
-        display: inline-block;
-        height: 100%;
-        overflow: scroll;
+        border: solid transparent;
+        border-width: 2px 2px 0 2px;
+        border-radius: 0 0 5px 5px;
+
     }
     .number {
+        position: fixed;
         display: inline-block;
         background-color: #0064a4;
-        padding: 1px 5px 1px 5px;
-        margin-bottom: 2px;
+        padding: 0 2px 0 2px;
         border-radius: 0 0 5px 5px;
+        float: left;
+    }
+
+    .room {
+        height: 21px; /* dependent */
+    }
+    .timetable {
+        display: table;
+        table-layout: fixed;
+        width: 1200px;
+        height: 15px;
     }
     .timeline {
-        position: absolute;
-        background-color: #0064a4;
-        width: 100%;
-        height: 1px;
+        display: table;
+        table-layout: fixed;
+        width: 1200px;
+        font-size: 10px;
     }
-    .timeblock {
+    .timeline > .timecell {
+        border: none;
+    }
+    .timecell {
+        display: table-cell;
+        border: solid #0064a4;
+    }
+    .timecell:nth-child(odd) {
+        border-width: 2px 0 0 1px;
+        border-radius: 0 0 0 5px;
+    }
+    .timecell:nth-child(even) {
+        border-width: 2px 1px 0 0;
+        border-radius: 0 0 5px 0;
     }
     </style>
 </head>
 <body>
+    <div class="container horizontal"></div>
     <div class="container vertical">
         <div class="table">
             <div class="building">
                 <div class="abbreviation">
-                    <div class="title">ACT</div><!-- title class isn't css'd -->
+                    <div class="title">ACT</div>
                 </div>
                 <div class="rooms">
+                    <div class="timeline"></div>
+                    <div class="number">2206</div>
                     <div class="room">
-                        <div class="schedule">
-                            <div class="timeline"></div>
-                            <div class="timeblock"></div>
-                        </div>
-                        <div class="number">
-                            2206
-                        </div>
+                        <div class="timetable"></div>
                     </div>
+                    <div class="number">3214</div>
                     <div class="room">
-                        <div class="schedule">
-                            <div class="timeline"></div>
-                            <div class="timeblock"></div>
-                        </div>
-                        <div class="number">
-                            3214
-                        </div>
+                        <div class="timetable"></div>
                     </div>
+                    <div class="number">3226</div>
                     <div class="room">
-                        <div class="schedule">
-                            <div class="timeline"></div>
-                            <div class="timeblock"></div>
-                        </div>
-                        <div class="number">
-                            3226
-                        </div>
+                        <div class="timetable"></div>
                     </div>
                 </div>
             </div>
             <div class="building">
                 <div class="abbreviation">
-                    DBH
+                    <div class="title">DBH</div>
                 </div>
                 <div class="rooms">
+                    <div class="timeline"></div>
+                    <div class="number">5733G</div>
                     <div class="room">
-                        <div class="schedule">
-                            <div class="timeline"></div>
-                            <div class="timeblock"></div>
-                        </div>
-                        <div class="number">
-                            5733G
-                        </div>
+                        <div class="timetable"></div>
                     </div>
+                    <div class="number">2048</div>
                     <div class="room">
-                        <div class="schedule">
-                            <div class="timeline"></div>
-                            <div class="timeblock"></div>
-                        </div>
-                        <div class="number">
-                            2048
-                        </div>
+                        <div class="timetable"></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container horizontal"></div>
     <script>
+    var timeline = Array.from(document.getElementsByClassName("timeline"));
+    timeline.className = "timeline";
+    timeline.forEach(function (e) {
+        for (var c = 0; c < 24; c++) {
+            var timecell = document.createElement("div");
+            timecell.className = "timecell";
+            timecell.innerHTML = c % 12 ? c % 12 : 12;
+            e.appendChild(timecell);
+        }
+    });
+
+    var timetable = Array.from(document.getElementsByClassName("timetable"));
+    timetable.forEach(function (e) {
+        for (var c = 0; c < 48; c++) {
+            var timecell = document.createElement("div");
+            timecell.className = "timecell";
+            e.appendChild(timecell);
+        }
+    });
+
     var table = document.getElementsByClassName("table")[0];
     var horizontal = document.getElementsByClassName("horizontal")[0];
-    horizontal.appendChild(table.cloneNode(true))
+    var tableclone = table.cloneNode(true);
+    horizontal.appendChild(tableclone);
+
+    var rooms = Array.from(table.getElementsByClassName("rooms"));
+    rooms.forEach(function (e) {
+        e.addEventListener("scroll", function (f) {
+            rooms.forEach(function (g) {
+                if (g != f.target) {
+                    g.scrollTo(f.target.scrollLeft, f.target.scrollTop);
+                }
+            });
+        });
+    });
+
+    var roomsclone = Array.from(tableclone.getElementsByClassName("rooms"));
+    roomsclone.forEach(function (e) {
+        e.addEventListener("scroll", function (f) {
+            roomsclone.forEach(function (g) {
+                if (g != f.target) {
+                    g.scrollTo(f.target.scrollLeft, f.target.scrollTop);
+                }
+            });
+        });
+    });
     </script>
 </body>
