@@ -4,11 +4,11 @@ import re
 def get_timeplace_indices(document):
     lines = document.split('\n')
     for line in lines:
-        if 'CCode' in line:
-            i = line.index('Time')
-            j = line.index('Place')
-            k = line.index('Max')
-            return i, j, k
+        if 'CCode' in line and 'Time' in line and 'Place' in line and 'Max' in line:
+            t = line.index('Time')
+            p = line.index('Place')
+            m = line.index('Max')
+            return t, p, m
 
 def document2blocks(document):
     start = document.index('###')
@@ -23,14 +23,14 @@ def block2lines(block):
     return lines
 
 def parse_document(database, document):
-    i, j, k = get_timeplace_indices(document)
+    t, p, m = get_timeplace_indices(document)
     blocks = document2blocks(document)
     for block in blocks:
         lines = block2lines(block)
         for line in lines:
             # print line # debugging
-            time = line[i:j]
-            place = line[j:k]
+            time = line[t:p]
+            place = line[p:m]
             timeplace = time + place
             if 'TBA' not in timeplace and timeplace.strip() != '':
                 days, hours = parse_time(time)

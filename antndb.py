@@ -1,14 +1,29 @@
 from google.appengine.ext import ndb
 
 class Room(ndb.Model):
-    su = ndb.JsonProperty()
-    mo = ndb.JsonProperty()
-    tu = ndb.JsonProperty()
-    we = ndb.JsonProperty()
-    th = ndb.JsonProperty()
-    fr = ndb.JsonProperty()
-    sa = ndb.JsonProperty()
-    last_active = ndb.IntegerProperty()
+    building = ndb.StringProperty()
+    room = ndb.StringProperty()
+
+    sunday = ndb.JsonProperty()
+    monday = ndb.JsonProperty()
+    tuesday = ndb.JsonProperty()
+    wednesday = ndb.JsonProperty()
+    thursday = ndb.JsonProperty()
+    friday = ndb.JsonProperty()
+    saturday = ndb.JsonProperty()
+
+    initial_yearterm = ndb.StringProperty()
+    final_yearterm = ndb.StringProperty()
+
+class Building(ndb.Model):
+    name = ndb.StringProperty()
+    initials = ndb.StringProperty()
+
+    latitude = ndb.FloatProperty()
+    longitude = ndb.FloatProperty()
+    distance = ndb.ComputedProperty(lambda x, y: ((latitude - x)**2 + (longitude - y)**2) ** 0.5) # google this and change to world-distance formula
+
+    rooms = ndb.StructuredProperty(Room, repeated=True)
 
 def get(filter=None, keys_only=False):
     query = Room.query()
@@ -19,3 +34,9 @@ def get(filter=None, keys_only=False):
 def reset():
     entries = get(keys_only=True)
     ndb.delete_multi(entries)
+
+def get_near():
+    pass
+
+def get_next_100():
+    pass
