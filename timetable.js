@@ -1,3 +1,38 @@
+// /* Option 1 */
+// for (var building in database) {
+// 	for (var room in database[building]) {
+// 		console.log(building, room, database[building][room]);
+//     }
+// }
+//
+// /* Option 2 */
+// var building = Object.keys(database);
+// for (var i = 0; i < building.length; i++) {
+// 	var room = Object.keys(database[building[i]]);
+// 	for (var j = 0; j < room.length; j++) {
+// 		console.log(building[i], room[j], database[building[i]][room[j]]);
+//     }
+// }
+
+function newChronolog(database) {
+    for (var building in database) {
+        var b = document.createElement("div");
+        b.className = "building";
+    	for (var room in database[building]) {
+            var r = document.createElement("div");
+            r.className = "room";
+    		console.log(database[building][room]);
+        }
+    }
+}
+
+
+
+
+
+
+
+
 var TimeTable = {
     "getDay": function() {
 		var date = new Date();

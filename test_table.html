@@ -23,22 +23,22 @@
         height: 400px;
         left: 67%;
     }
-    .vertical > .container {
+    .vertical > .buildingcatalogue {
         left: 0;
         top: 35%;
     }
-    .horizontal > .container {
+    .horizontal > .buildingcatalogue {
         left: 35%;
         top: 0;
     }
-    .vertical > .container > .building > .abbreviation {
+    .vertical > .buildingcatalogue > .building > .abbreviation {
         left: 0;
     }
-    .horizontal > .container > .building > .abbreviation {
+    .horizontal > .buildingcatalogue > .building > .abbreviation {
         left: 35%;
     }
 
-    .container {
+    .buildingcatalogue {
         background: #000;
         font-family: "Trebuchet MS";
         color: white;
@@ -56,93 +56,115 @@
         text-align: center;
         position: fixed;
         right: 0;
+        height: 20px; /* possibly unneeded */
+        font-size: 20px;
+        line-height: 100%;
+    }
+    .timelinecontainer {
+        background: #147;
+        color: #7ad;
+        margin-bottom: 1px;
+    }
+    .timelinecontainer:before { /* possibly unwanted */
+        content: "";
+        background: #147;
+        position: fixed;
+        width: 50px;
+        height: 32px;
     }
     .timeline {
         display: table;
         table-layout: fixed;
         margin-left: 50px;
-        font-size: 10px;
         width: 1150px;
-        height: 30px;
+        height: 32px;
+        font-size: 12px;
+        line-height: 100%;
     }
-    .number {
-        position: fixed;
-        background: #147;
-        width: 50px;
-        text-align: center;
+    .timeline > .timeblock {
+        border: none;
+        vertical-align: bottom;
     }
-    .timetable {
+    .roomnumberandtimeblockarraycontainer {
         height: 25px;
     }
-    .timerow {
+    .roomnumber {
+        position: fixed;
+        background: #147;
+        text-align: center;
+        width: 50px;
+        height: 14px; /* possibly unneeded */
+        font-size: 14px;
+        line-height: 100%;
+        padding: 5px 0 5px 0;
+    }
+    .timeblockarray {
         display: table;
         table-layout: fixed;
         margin-left: 50px;
         width: 1150px;
         height: 15px;
     }
-    .timecell {
+    .timeblock {
         display: table-cell;
         border: solid #147;
-        height: 10px;
     }
-    .timecell:nth-child(odd) {
+    .timeblock:nth-child(odd) {
         border-width: 2px 0 0 1px;
     }
-    .timecell:nth-child(even) {
+    .timeblock:nth-child(even) {
         border-width: 2px 1px 0 0;
-    }
-    .timeline > .timecell {
-        border: none;
-        color: #147;
-        vertical-align: bottom;
     }
     </style>
 </head>
 <body>
     <div class="phone-simulator horizontal"></div>
     <div class="phone-simulator vertical">
-        <div class="container">
-                <div class="building">
-                    <div class="abbreviation">ACT</div>
+        <div class="buildingcatalogue">
+            <div class="building">
+                <div class="abbreviation">ACT</div>
+                <div class="timelinecontainer">
                     <div class="timeline"></div>
-
-                    <div class="number">2206</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
-                    <div class="number">3214</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
-                    <div class="number">3226</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
                 </div>
-                <div class="building">
-                    <div class="abbreviation">DBH</div>
-                    <div class="timeline"></div>
-                    <div class="number">5733G</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
-                    <div class="number">2048</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">2206</div>
+                    <div class="timeblockarray"></div>
                 </div>
-                <div class="building">
-                    <div class="abbreviation">DBH</div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">3214</div>
+                    <div class="timeblockarray"></div>
+                </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">3226</div>
+                    <div class="timeblockarray"></div>
+                </div>
+            </div>
+            <div class="building">
+                <div class="abbreviation">DBH</div>
+                <div class="timelinecontainer">
                     <div class="timeline"></div>
-                    <div class="number">5733G</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
-                    <div class="number">2048</div>
-                    <div class="timetable">
-                        <div class="timerow"></div>
-                    </div>
+                </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">5733G</div>
+                    <div class="timeblockarray"></div>
+                </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">2048</div>
+                    <div class="timeblockarray"></div>
+                </div>
+            </div>
+            <div class="building">
+                <div class="abbreviation">DBH</div>
+                <div class="timelinecontainer">
+                    <div class="timeline"></div>
+                </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">5733G</div>
+                    <div class="timeblockarray"></div>
+                </div>
+                <div class="roomnumberandtimeblockarraycontainer">
+                    <div class="roomnumber">2048</div>
+                    <div class="timeblockarray"></div>
                 </div>
             </div>
         </div>
@@ -151,25 +173,25 @@
     var timeline = Array.from(document.getElementsByClassName("timeline"));
     timeline.forEach(function (e) {
         for (var c = 0; c < 24; c++) {
-            var timecell = document.createElement("div");
-            timecell.className = "timecell";
-            timecell.innerHTML = c % 12 ? c % 12 : 12;
-            e.appendChild(timecell);
+            var timeblock = document.createElement("div");
+            timeblock.className = "timeblock";
+            timeblock.innerHTML = c % 12 ? c % 12 : 12;
+            e.appendChild(timeblock);
         }
     });
 
-    var timerow = Array.from(document.getElementsByClassName("timerow"));
-    timerow.forEach(function (e) {
+    var timeblockarray = Array.from(document.getElementsByClassName("timeblockarray"));
+    timeblockarray.forEach(function (e) {
         for (var c = 0; c < 48; c++) {
-            var timecell = document.createElement("div");
-            timecell.className = "timecell";
-            e.appendChild(timecell);
+            var timeblock = document.createElement("div");
+            timeblock.className = "timeblock";
+            e.appendChild(timeblock);
         }
     });
 
-    var container = document.getElementsByClassName("container")[0];
+    var buildingcatalogue = document.getElementsByClassName("buildingcatalogue")[0];
     var horizontal = document.getElementsByClassName("horizontal")[0];
-    var containerclone = container.cloneNode(true);
-    horizontal.appendChild(containerclone);
+    var buildingcatalogcloneue = buildingcatalogue.cloneNode(true);
+    horizontal.appendChild(buildingcatalogcloneue);
     </script>
 </body>

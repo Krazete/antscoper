@@ -76,6 +76,8 @@ for(var x, i = 0; x = database[i]; i++) {
 var timetable = TimeTable.new(database, ["room", "distance", "last_active"]);
 document.getElementById("list").appendChild(timetable.table);
 
+newChronolog(database);
+
 // Major
 // optimize database requests (for quota limit)
 // change last_active to active_quarters
