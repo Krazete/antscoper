@@ -1,112 +1,106 @@
 <head>
     <title>Test: Table</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     body {
+        background: palegoldenrod; /* TEMP */
         position: absolute;
         width: 100%;
         height: 100%;
         margin: 0;
     }
-    .phone-simulator {
-        background: #ebdfb2;
-        position: absolute;
-        top: 50%;
-        transform: translate(-50%, -50%);
-    }
-    .vertical {
-        width: 400px;
-        height: 700px;
-        left: 25%;
-    }
-    .horizontal {
-        width: 700px;
-        height: 400px;
-        left: 67%;
-    }
-    .vertical > .buildingcatalogue {
-        left: 0;
-        top: 35%;
-    }
-    .horizontal > .buildingcatalogue {
-        left: 35%;
-        top: 0;
-    }
-    .vertical > .buildingcatalogue > .building > .abbreviation {
-        left: 0;
-    }
-    .horizontal > .buildingcatalogue > .building > .abbreviation {
-        left: 35%;
-    }
 
-    .buildingcatalogue {
-        background: #000;
-        font-family: "Trebuchet MS";
-        color: white;
+    .buildings {
+        background: #024;
+        color: #eee;
+        font-family: "Avenir", sans-serif;
         position: absolute;
         right: 0;
         bottom: 0;
         overflow: scroll;
+        -webkit-overflow-scrolling: touch; /* for ios */
     }
-    .building {
-        background: #7ad;
-        width: 1200px;
+    @media all and (orientation: landscape) {
+        .buildings {
+            left: 35%;
+            top: 0;
+        }
     }
+    @media all and (orientation: portrait) {
+        .buildings {
+            left: 0;
+            top: 35%;
+        }
+    }
+
     .abbreviation {
         background: #147;
+        font-size: 18px;
         text-align: center;
-        position: fixed;
-        right: 0;
-        height: 20px; /* possibly unneeded */
-        font-size: 20px;
-        line-height: 100%;
+        position: -webkit-sticky; /* for safari */
+        position: sticky;
+        left: 0;
     }
-    .timelinecontainer {
+    .building {
+        min-width: 1500px; /* maybe reduce this */
+    }
+
+    .fader {
+        background: linear-gradient(to right, #147, transparent);
+        background: linear-gradient(to right, #147, #1470); /* for safari */
+        position: -webkit-sticky; /* for safari */
+        position: sticky;
+        left: 0;
+        width: 55px;
+        height: 12px;
+        margin-bottom: -12px;
+    }
+    .timelines {
         background: #147;
         color: #7ad;
-        margin-bottom: 1px;
-    }
-    .timelinecontainer:before { /* possibly unwanted */
-        content: "";
-        background: #147;
-        position: fixed;
-        width: 50px;
-        height: 32px;
     }
     .timeline {
-        display: table;
-        table-layout: fixed;
-        margin-left: 50px;
-        width: 1150px;
-        height: 32px;
+        display: flex;
+        margin-left: 55px;
+        height: 12px;
         font-size: 12px;
         line-height: 100%;
     }
-    .timeline > .timeblock {
-        border: none;
-        vertical-align: bottom;
+
+    .rooms {
+        background: #7ad;
+        padding-top: 1px;
     }
-    .roomnumberandtimeblockarraycontainer {
-        height: 25px;
+    .room {
+        height: 24px;
+        padding-bottom: 1px;
     }
-    .roomnumber {
-        position: fixed;
+    .number {
         background: #147;
         text-align: center;
-        width: 50px;
-        height: 14px; /* possibly unneeded */
+        position: -webkit-sticky; /* for safari */
+        position: sticky;
+        left: 0;
+        width: 55px;
+        height: 14px;
         font-size: 14px;
         line-height: 100%;
         padding: 5px 0 5px 0;
+        margin-bottom: -24px;
     }
-    .timeblockarray {
-        display: table;
-        table-layout: fixed;
-        margin-left: 50px;
-        width: 1150px;
-        height: 15px;
+    .timeblocks {
+        display: flex;
+        margin-left: 55px;
+        height: 16px;
     }
+
     .timeblock {
-        display: table-cell;
+        flex: 1;
+    }
+    .timeblock.filled {
+        background: #369;
+    }
+    .timeblocks > .timeblock { /* TODO: find an alternative */
         border: solid #147;
     }
     .timeblock:nth-child(odd) {
@@ -118,53 +112,108 @@
     </style>
 </head>
 <body>
-    <div class="phone-simulator horizontal"></div>
-    <div class="phone-simulator vertical">
-        <div class="buildingcatalogue">
-            <div class="building">
-                <div class="abbreviation">ACT</div>
-                <div class="timelinecontainer">
-                    <div class="timeline"></div>
+    <div class="buildings">
+        <div class="abbreviation">ACT</div>
+        <div class="building">
+            <div class="timelines">
+                <div class="fader"></div>
+                <div class="timeline"></div>
+            </div>
+            <div class="rooms">
+                <div class="number">2206</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">2206</div>
-                    <div class="timeblockarray"></div>
+                <div class="number">3214</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">3214</div>
-                    <div class="timeblockarray"></div>
-                </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">3226</div>
-                    <div class="timeblockarray"></div>
+                <div class="number">3226</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
             </div>
-            <div class="building">
-                <div class="abbreviation">DBH</div>
-                <div class="timelinecontainer">
-                    <div class="timeline"></div>
+        </div>
+        <div class="abbreviation">DBH</div>
+        <div class="building">
+            <div class="timelines">
+                <div class="fader"></div>
+                <div class="timeline"></div>
+            </div>
+            <div class="rooms">
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">5733G</div>
-                    <div class="timeblockarray"></div>
-                </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">2048</div>
-                    <div class="timeblockarray"></div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
             </div>
-            <div class="building">
-                <div class="abbreviation">DBH</div>
-                <div class="timelinecontainer">
-                    <div class="timeline"></div>
+        </div>
+        <div class="abbreviation">MSTB</div>
+        <div class="building">
+            <div class="timelines">
+                <div class="fader"></div>
+                <div class="timeline"></div>
+            </div>
+            <div class="rooms">
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">5733G</div>
-                    <div class="timeblockarray"></div>
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
-                <div class="roomnumberandtimeblockarraycontainer">
-                    <div class="roomnumber">2048</div>
-                    <div class="timeblockarray"></div>
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+            </div>
+        </div>
+        <div class="abbreviation">HIB</div>
+        <div class="building">
+            <div class="timelines">
+                <div class="fader"></div>
+                <div class="timeline"></div>
+            </div>
+            <div class="rooms">
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">ONDAS</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">5733G</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
+                </div>
+                <div class="number">2048</div>
+                <div class="room">
+                    <div class="timeblocks"></div>
                 </div>
             </div>
         </div>
@@ -180,18 +229,20 @@
         }
     });
 
-    var timeblockarray = Array.from(document.getElementsByClassName("timeblockarray"));
-    timeblockarray.forEach(function (e) {
+    var filling = false;
+    var timeblocks = Array.from(document.getElementsByClassName("timeblocks"));
+    timeblocks.forEach(function (e) {
         for (var c = 0; c < 48; c++) {
             var timeblock = document.createElement("div");
             timeblock.className = "timeblock";
+            if (filling) {
+                timeblock.classList.add("filled");
+            }
+            if (Math.random() < 0.1) {
+                filling = !filling;
+            }
             e.appendChild(timeblock);
         }
     });
-
-    var buildingcatalogue = document.getElementsByClassName("buildingcatalogue")[0];
-    var horizontal = document.getElementsByClassName("horizontal")[0];
-    var buildingcatalogcloneue = buildingcatalogue.cloneNode(true);
-    horizontal.appendChild(buildingcatalogcloneue);
     </script>
 </body>
