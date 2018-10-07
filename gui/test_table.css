@@ -1,0 +1,142 @@
+body {
+    background: palegoldenrod; /* TEMP */
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+}
+
+.menu {
+    background: #024;
+    color: #eee;
+    font-family: "Avenir", sans-serif;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+@media all and (orientation: landscape) {
+    .menu {
+        left: 40%;
+        top: 0;
+    }
+}
+@media all and (orientation: portrait) {
+    .menu {
+        left: 0;
+        top: 40%;
+    }
+}
+
+.buildings {
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch; /* for ios */
+}
+
+.days {
+    background: #024;
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+    top: 0;
+    display: flex;
+    z-index: 1;
+}
+.day {
+    text-align: center;
+    cursor: pointer;
+    flex: 1;
+    color: #7ad;
+}
+.day.selected {
+    color: #eee;
+}
+
+.abbreviation {
+    background: #147;
+    font-size: 18px;
+    text-align: center;
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+}
+.building {
+    min-width: 1500px; /* maybe reduce this */
+}
+
+.fader {
+    background: linear-gradient(to right, #147, transparent);
+    background: linear-gradient(to right, #147, #1470); /* for safari */
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+    width: 55px;
+    height: 12px;
+    margin-bottom: -12px;
+}
+.timelines {
+    background: #147;
+    color: #7ad;
+}
+.timelines:before {
+    content: "";
+    background: linear-gradient(to right, #147, transparent);
+    background: linear-gradient(to right, #147, #1470); /* for safari */
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+    width: 55px;
+    height: 12px;
+    margin-bottom: -12px;
+    display: block;
+}
+.timeline {
+    display: flex;
+    height: 12px;
+    font-size: 12px;
+    line-height: 100%;
+    margin-left: 55px;
+}
+
+.rooms {
+    padding-top: 1px;
+    border-left: 55px solid #58b;
+}
+.room {
+    height: 24px;
+    padding-bottom: 1px;
+}
+.room:before {
+    content: attr(data-number);
+    background: #147;
+    text-align: center;
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+    width: 55px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 100%;
+    padding: 5px 0 5px 0;
+    margin: 0 0 -24px -55px;
+    display: block;
+}
+.timeblocks {
+    display: flex;
+    height: 16px;
+}
+
+.timeblock {
+    flex: 1;
+}
+.timeblock.filled {
+    background: #369;
+}
+.timeblocks > .timeblock { /* TODO: find an alternative */
+    border: solid #147;
+}
+.timeblock:nth-child(odd) {
+    border-width: 2px 0 0 1px;
+}
+.timeblock:nth-child(even) {
+    border-width: 2px 1px 0 0;
+}
