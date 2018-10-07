@@ -1,13 +1,7 @@
 *.pyc
-test.py
-notes.py
 
 *Test.js
 initialize_database.js
-mrc.js
-piazza.js
 
-messages
 bs4
-DataTables
 leaflet
