@@ -1,33 +1,38 @@
 import websoc
-import websoc_parse
 import antndb
 
-def scrape(year=None, term=None):
-    if year:
-        data = websoc.get_data(year, term)
-        keys = None
-    else:
-        year = websoc.CURRENT_YEAR
-        data = websoc.get_data()
+def scrape(years=[], terms=[]):
+    if len(years) > 0:
+        if len(terms) > 0:
+            documents = websoc.iter_websoc(years, terms, only_now=False)
+        else:
+            documents = websoc.iter_websoc(years, only_now=False)
         keys = antndb.get(keys_only=True)
+    else:
+        documents = websoc.iter_websoc()
+        keys = None
 
     database = {}
-    for document in data:
-        websoc_parse.parse_document(database, document)
+    for document in documents:
+        websoc.parse_document(database, document)
 
-    for bldg in database:
-        for room in database[bldg]:
+    for building in database:
+        b = antndb.Building(
+            name=building,
+        )
+
+        for room in database[building]:
             entity = antndb.Room(
-                id=' '.join([bldg, room]),
-                sunday=database[bldg][room]['Su'].list,
-                monday=database[bldg][room]['M'].list,
-                tuesday=database[bldg][room]['Tu'].list,
-                wednesday=database[bldg][room]['W'].list,
-                thursday=database[bldg][room]['Th'].list,
-                friday=database[bldg][room]['F'].list,
-                saturday=database[bldg][room]['Sa'].list,
-                initial_term=year
-                final_term=year
+                id=' '.join([building, room]),
+                sunday=database[building][room]['Su'],
+                monday=database[building][room]['M'],
+                tuesday=database[building][room]['Tu'],
+                wednesday=database[building][room]['W'],
+                thursday=database[building][room]['Th'],
+                friday=database[building][room]['F'],
+                saturday=database[building][room]['Sa'],
+                initial_yearterm=''.format(year),
+                final_yearterm=''.format(year)
             )
             key = entity.put()
             if keys:
