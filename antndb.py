@@ -12,9 +12,6 @@ class Schedule(ndb.Model):
     friday = ndb.JsonProperty()
     saturday = ndb.JsonProperty()
 
-    initial_yearterm = ndb.StringProperty()
-    final_yearterm = ndb.StringProperty()
-
 def get(filter=None, keys_only=False):
     query = Schedule.query()
     if filter:

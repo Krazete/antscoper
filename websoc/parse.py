@@ -42,7 +42,7 @@ def parse_document(database, document):
         for line in iter_line(block):
             time = line[t:p]
             place = line[p:m]
-            if 'TBA' in time or 'TBA' in place: # TODO: change with more specific term, '*TBA*'
+            if 'TBA' in time or 'TBA' in place: # TODO: maybe change to '*TBA*'
                 continue
             if time.strip() == '' or place.strip() == '':
                 continue

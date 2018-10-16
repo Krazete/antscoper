@@ -20,15 +20,15 @@ def scrape(years=[], terms=[]):
         for room in database[building]:
             entity = antndb.Schedule(
                 id=' '.join([building, room]),
-                sunday=database[building][room]['Su'],
-                monday=database[building][room]['M'],
-                tuesday=database[building][room]['Tu'],
-                wednesday=database[building][room]['W'],
-                thursday=database[building][room]['Th'],
-                friday=database[building][room]['F'],
-                saturday=database[building][room]['Sa'],
-                initial_yearterm=''.format(year),
-                final_yearterm=''.format(year)
+                building=building,
+                room=room,
+                sunday=list(database[building][room]['Su']),
+                monday=list(database[building][room]['M']),
+                tuesday=list(database[building][room]['Tu']),
+                wednesday=list(database[building][room]['W']),
+                thursday=list(database[building][room]['Th']),
+                friday=list(database[building][room]['F']),
+                saturday=list(database[building][room]['Sa'])
             )
             key = entity.put()
             if keys:
