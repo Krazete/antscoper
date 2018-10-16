@@ -1,6 +1,6 @@
 from google.appengine.ext import ndb
 
-class Room(ndb.Model):
+class Schedule(ndb.Model):
     building = ndb.StringProperty()
     room = ndb.StringProperty()
 
@@ -15,18 +15,8 @@ class Room(ndb.Model):
     initial_yearterm = ndb.StringProperty()
     final_yearterm = ndb.StringProperty()
 
-class Building(ndb.Model):
-    name = ndb.StringProperty()
-    initials = ndb.StringProperty()
-
-    latitude = ndb.FloatProperty()
-    longitude = ndb.FloatProperty()
-    distance = ndb.ComputedProperty(lambda x, y: ((latitude - x)**2 + (longitude - y)**2) ** 0.5) # google this and change to world-distance formula
-
-    rooms = ndb.StructuredProperty(Room, repeated=True)
-
 def get(filter=None, keys_only=False):
-    query = Room.query()
+    query = Schedule.query()
     if filter:
         query.filter(filter.split(" "))
     return query.fetch(keys_only=keys_only)

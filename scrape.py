@@ -17,12 +17,8 @@ def scrape(years=[], terms=[]):
         websoc.parse_document(database, document)
 
     for building in database:
-        b = antndb.Building(
-            name=building,
-        )
-
         for room in database[building]:
-            entity = antndb.Room(
+            entity = antndb.Schedule(
                 id=' '.join([building, room]),
                 sunday=database[building][room]['Su'],
                 monday=database[building][room]['M'],
@@ -44,6 +40,3 @@ def scrape(years=[], terms=[]):
         for entity in entities:
             entity.su = entity.mo = entity.tu = entity.we = entity.th = entity.fr = entity.sa = '[]'
         antndb.ndb.put_multi(entities)
-
-if __name__ == '__main__':
-    scrape()

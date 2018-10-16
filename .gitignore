@@ -1,7 +1,4 @@
 *.pyc
 
-*Test.js
-initialize_database.js
-
 bs4
 leaflet

@@ -31,14 +31,12 @@ class Chronos:
     def __iter__(self):
         return iter(self.get_timespans())
 
-    def __repr__(self): # TODO: remove in unnecessary
-        return str(self.get_timespans())
-
-    def __str__(self): # TODO: remove in unnecessary
+    def __repr__(self): # TODO: remove if unnecessary
         return str(self.get_timespans())
 
 def parse_document(database, document):
     'Extract room data from a websoc document.'
+    # year = get_year(document)
     t, p, m = get_timeplace_indices(document)
     for block in iter_block(document):
         for line in iter_line(block):
@@ -62,7 +60,17 @@ def parse_document(database, document):
             })
             for day in days:
                 database[building][room][day].insert_timespan(hours)
+            # database[building][room].setdefault('initial_year', year)
+            # database[building][room]['final_year'] = year
     return database
+
+# def get_year(document):
+#     'Find the year of the document.'
+#     lines = document.split('\n')
+#     for line in lines:
+#         year = re.match('\d{4}', line)
+#         return year
+#     return 0
 
 def get_timeplace_indices(document):
     'Find the indices of Time, Place, and Max on a line.'
