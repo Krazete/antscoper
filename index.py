@@ -19,13 +19,13 @@ class Index(webapp2.RequestHandler):
             room = schedule.room
             database.setdefault(building, {})
             database[building].setdefault(room, {
-                "0": schedule.sunday,
-                "1": schedule.monday,
-                "2": schedule.tuesday,
-                "3": schedule.wednesday,
-                "4": schedule.thursday,
-                "5": schedule.friday,
-                "6": schedule.saturday
+                "su": schedule.su,
+                "mo": schedule.mo,
+                "tu": schedule.tu,
+                "we": schedule.we,
+                "th": schedule.th,
+                "fr": schedule.fr,
+                "sa": schedule.sa
             })
         template = open('index.html').read()
         datajson = json.dumps(database)

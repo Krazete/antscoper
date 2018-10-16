@@ -4,13 +4,13 @@ class Schedule(ndb.Model):
     building = ndb.StringProperty()
     room = ndb.StringProperty()
 
-    sunday = ndb.JsonProperty()
-    monday = ndb.JsonProperty()
-    tuesday = ndb.JsonProperty()
-    wednesday = ndb.JsonProperty()
-    thursday = ndb.JsonProperty()
-    friday = ndb.JsonProperty()
-    saturday = ndb.JsonProperty()
+    su = ndb.JsonProperty()
+    mo = ndb.JsonProperty()
+    tu = ndb.JsonProperty()
+    we = ndb.JsonProperty()
+    th = ndb.JsonProperty()
+    fr = ndb.JsonProperty()
+    sa = ndb.JsonProperty()
 
 def get(filter=None, keys_only=False):
     query = Schedule.query()

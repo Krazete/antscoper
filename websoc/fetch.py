@@ -28,7 +28,7 @@ def iter_coursecodes(blocksize):
     'Generate coursecodes 0-99999 in blocks of specified size.'
     n = 100000 // blocksize
     if 100000 % blocksize > 0:
-        n = n + 1 # basically math.ceil(100000 / blocksize)
+        n += 1 # basically math.ceil(100000 / blocksize)
     for i in range(n):
         a = i * blocksize
         b = min(a + blocksize - 1, 99999)

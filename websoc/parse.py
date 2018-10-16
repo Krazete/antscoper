@@ -50,13 +50,13 @@ def parse_document(database, document):
             building, room = parse_place(place)
             database.setdefault(building, {})
             database[building].setdefault(room, {
-                'Su': Chronos(),
-                'M': Chronos(),
-                'Tu': Chronos(),
-                'W': Chronos(),
-                'Th': Chronos(),
-                'F': Chronos(),
-                'Sa': Chronos()
+                'su': Chronos(),
+                'm': Chronos(),
+                'tu': Chronos(),
+                'w': Chronos(),
+                'th': Chronos(),
+                'f': Chronos(),
+                'sa': Chronos()
             })
             for day in days:
                 database[building][room][day].insert_timespan(hours)
@@ -101,12 +101,13 @@ def iter_line(block):
 
 def parse_time(time):
     'Extract days and hours from a websoc time string.'
-    days = re.findall('(Su|M|Tu|W|Th|F|Sa)', time)
-    start, end = re.findall('(\d+):(\d+)', time)
+    timelow = time.lower()
+    days = re.findall('(su|m|tu|w|th|f|sa)', timelow)
+    start, end = re.findall('(\d+):(\d+)', timelow)
     hour0 = int(start[0]) + int(start[1]) / 60.0
     hour1 = int(end[0]) + (int(end[1]) + 10) / 60.0 # TODO: maybe remove +10
     hours = [hour0, hour1]
-    if 'p' in time:
+    if 'p' in timelow:
         if hours[1] < 12:
             if hours[0] < hours[1]:
                 hours[0] += 12
@@ -115,7 +116,8 @@ def parse_time(time):
 
 def parse_place(place):
     'Extract building and room from a websoc place string.'
-    return place.split()
+    placelow = place.lower()
+    return placelow.split()
 
 if __name__ == '__main__':
     import test_websoc_parse

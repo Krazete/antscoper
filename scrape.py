@@ -22,13 +22,13 @@ def scrape(years=[], terms=[]):
                 id=' '.join([building, room]),
                 building=building,
                 room=room,
-                sunday=list(database[building][room]['Su']),
-                monday=list(database[building][room]['M']),
-                tuesday=list(database[building][room]['Tu']),
-                wednesday=list(database[building][room]['W']),
-                thursday=list(database[building][room]['Th']),
-                friday=list(database[building][room]['F']),
-                saturday=list(database[building][room]['Sa'])
+                su=list(database[building][room]['su']),
+                mo=list(database[building][room]['m']),
+                tu=list(database[building][room]['tu']),
+                we=list(database[building][room]['w']),
+                th=list(database[building][room]['th']),
+                fr=list(database[building][room]['f']),
+                sa=list(database[building][room]['sa'])
             )
             key = entity.put()
             if keys:
