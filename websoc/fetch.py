@@ -11,8 +11,6 @@ def iter_websoc(years=[YEAR_NOW], terms=TERMS, only_now=True):
     'Generate raw data of course schedules from WebSoc.'
     for yearterm in iter_yearterm(years, terms):
         for document in iter_valid_documents(yearterm):
-            if 'Whoa pardner' in document or 'No courses matched' in document:
-                continue
             if not only_now or 'Currently in week' in document: # TODO: check if last few weeks are different
                 yield document
 
@@ -33,7 +31,9 @@ def iter_valid_documents(yearterm, a=0, b=99999):
                 yield document
             for document in iter_valid_documents(yearterm, m, b):
                 yield document
-    else:
+    elif 'Whoa pardner' in document:
+        raise StopIteration
+    elif 'No courses matched' not in document:
         yield document
 
 def get_valid_document(yearterm, a, b):
