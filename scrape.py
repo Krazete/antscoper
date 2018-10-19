@@ -35,3 +35,6 @@ def scrape(years=[], terms=[]):
                 keys.remove(key)
 
     antndb.reset_multi(keys)
+
+if __name__ == '__main__':
+    scrape()

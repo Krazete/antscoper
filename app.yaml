@@ -11,15 +11,16 @@ skip_files:
 - ^(.*/)?.*\.py[co]$
 - ^(.*/)?.*/RCS/.*$
 - ^(.*/)?\..*$
-- messages
-- vacancy\.js
+- gui
+- references
 - README\.md
+- vacancy\.js
 
 handlers:
 - url: /(.*\.(gif|png|jpg|ico|css|js))
   static_files: \1
   upload: .*\.(gif|png|jpg|ico|css|js)
-- url: /(initialize_database)?
+- url: /(scrape_yearterm)?
   script: index.app
   secure: always
 - url: /scrape
