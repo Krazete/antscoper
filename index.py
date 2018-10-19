@@ -1,6 +1,7 @@
 import webapp2
 import json
 import urllib
+import traceback
 import antndb
 from scrape import scrape
 
@@ -8,7 +9,7 @@ MAPURL = 'https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=371529
 # https://map.uci.edu/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
 # https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
 # http://map.concept3d.com/?id=463
-# https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990&CourseCodes=92&Submit=Text'
+# https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990-03&CourseCodes=0-99999&Submit=Text
 
 class Index(webapp2.RequestHandler):
     def get(self):
@@ -19,13 +20,8 @@ class Index(webapp2.RequestHandler):
             room = schedule.room
             database.setdefault(building, {})
             database[building].setdefault(room, {
-                "su": schedule.su,
-                "mo": schedule.mo,
-                "tu": schedule.tu,
-                "we": schedule.we,
-                "th": schedule.th,
-                "fr": schedule.fr,
-                "sa": schedule.sa
+                'schedule': schedule.schedule,
+                'datestamp': schedule.datestamp.isoformat()
             })
         template = open('index.html').read()
         datajson = json.dumps(database)
@@ -42,15 +38,15 @@ class Scrape_YearTerm(webapp2.RequestHandler):
     def post(self):
         year = int(self.request.get('year', 1990))
         term = int(self.request.get('term', 92))
-        self.response.write('Adding YearTerm {}-{} to the database.\n'.format(year, term))
         template = open('scrape_yearterm.html').read()
         try:
             scrape([year], [term])
-            self.response.write('YearTerm {}-{} has successfully been added to the database.\n'.format(year, term))
+            self.response.write('YearTerm {:04d}-{:02d} has successfully been added to the database.<br><br>'.format(year, term))
             year_value = str(year + 1 if term == 92 else year)
             input_index = str([0, 92, 03, 14, 25, 39, 76].index(term))
         except Exception as e:
-            self.response.write(str(e) + '\n')
+            traceback.print_exc() # only visible in terminal
+            self.response.write('ERROR: {}<br><br>'.format(e))
             year_value = str(year)
             input_index = str([0, 03, 14, 25, 39, 76, 92].index(term))
         content = template.replace('{YEAR_VALUE}', year_value).replace('{INPUT_INDEX}', input_index)

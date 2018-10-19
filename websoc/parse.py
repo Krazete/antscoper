@@ -73,8 +73,7 @@ def get_datestamp(document):
         if datestrings:
             datestring = datestrings[0]
             timestamp = datetime.strptime(datestring, "%A, %B %d, %Y")
-            datestamp = timestamp.date()
-            return datestamp
+            return timestamp.date()
     return datetime.now().date()
 
 def get_timeplace_indices(document):
@@ -121,11 +120,10 @@ def parse_time(time):
 
 def parse_place(place):
     'Extract building and room from a websoc place string.'
-    placelow = place.lower()
-    placesplit = placelow.split(None, 1)
-    while len(placesplit) < 2:
-        placesplit.append('null')
-    return placesplit
+    buildingroom = place.lower().strip().split(None, 1)
+    while len(buildingroom) < 2:
+        buildingroom.append('null')
+    return buildingroom
 
 if __name__ == '__main__':
     import test_websoc_parse

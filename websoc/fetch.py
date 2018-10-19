@@ -21,7 +21,7 @@ def iter_yearterm(years, terms):
     'Generate specified yearterms.'
     for year in years:
         for term in terms:
-            yearterm = '{}-{}'.format(year, str(term).zfill(2))
+            yearterm = '{:04d}-{:02d}'.format(year, term)
             yield yearterm
 
 def iter_coursecodes(blocksize):

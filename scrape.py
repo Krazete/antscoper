@@ -20,17 +20,17 @@ def scrape(years=[], terms=[]):
     for building in database:
         for room in database[building]:
             id = ' '.join([building, room])
-            key = antndb.set(
-                id, building, room,
+            schedule = [
                 list(database[building][room]['su']),
                 list(database[building][room]['m']),
                 list(database[building][room]['tu']),
                 list(database[building][room]['w']),
                 list(database[building][room]['th']),
                 list(database[building][room]['f']),
-                list(database[building][room]['sa']),
-                database[building][room]['datestamp']
-            )
+                list(database[building][room]['sa'])
+            ]
+            datestamp = database[building][room]['datestamp']
+            key = antndb.set(id, building, room, schedule, datestamp)
             if key in keys:
                 keys.remove(key)
 
