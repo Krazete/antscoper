@@ -7,11 +7,10 @@ YEAR_NOW = datetime.now().year # TODO: set timezone to pst
 YEARS = range(1990, YEAR_NOW + 1)
 TERMS = [03, 14, 25, 39, 76, 92] # [Winter, Spring, Summer Session 1, 10-Wk Summer, Summer Session 2, Fall]
 
-def iter_websoc(years=[YEAR_NOW], terms=TERMS, blocksize=800, only_now=True):
+def iter_websoc(years=[YEAR_NOW], terms=TERMS, only_now=True):
     'Generate raw data of course schedules from WebSoc.'
     for yearterm in iter_yearterm(years, terms):
-        for coursecodes in iter_coursecodes(blocksize):
-            document = post(yearterm, coursecodes)
+        for document in iter_valid_documents(yearterm):
             if 'Whoa pardner' in document or 'No courses matched' in document:
                 continue
             if not only_now or 'Currently in week' in document: # TODO: check if last few weeks are different
@@ -24,15 +23,25 @@ def iter_yearterm(years, terms):
             yearterm = '{:04d}-{:02d}'.format(year, term)
             yield yearterm
 
-def iter_coursecodes(blocksize):
-    'Generate coursecodes 0-99999 in blocks of specified size.'
-    n = 100000 // blocksize
-    if 100000 % blocksize > 0:
-        n += 1 # basically math.ceil(100000 / blocksize)
-    for i in range(n):
-        a = i * blocksize
-        b = min(a + blocksize - 1, 99999)
-        yield '{}-{}'.format(a, b)
+def iter_valid_documents(yearterm, a=0, b=99999):
+    'Generate WebSoc documents with valid coursecode ranges.'
+    document = get_valid_document(yearterm, a, b)
+    if document == None:
+        m = (a + b) // 2
+        if a < m < b:
+            for document in iter_valid_documents(yearterm, a, m):
+                yield document
+            for document in iter_valid_documents(yearterm, m, b):
+                yield document
+    else:
+        yield document
+
+def get_valid_document(yearterm, a, b):
+    'Get a WebSoc document given a valid coursecode range or return None.'
+    coursecodes = '{}-{}'.format(a, b)
+    document = post(yearterm, coursecodes)
+    if 'please refine your search' not in document:
+        return document
 
 def post(yearterm, coursecodes):
     'Post a request to WebSoc and return the response.'
