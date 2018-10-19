@@ -1,4 +1,5 @@
 import re
+from datetime import datetime
 
 class Chronos:
     def __init__(self, timespans=[]):
@@ -36,7 +37,6 @@ class Chronos:
 
 def parse_document(database, document):
     'Extract room data from a websoc document.'
-    # year = get_year(document)
     t, p, m = get_timeplace_indices(document)
     for block in iter_block(document):
         for line in iter_line(block):
@@ -56,21 +56,26 @@ def parse_document(database, document):
                 'w': Chronos(),
                 'th': Chronos(),
                 'f': Chronos(),
-                'sa': Chronos()
+                'sa': Chronos(),
+                'datestamp': get_datestamp(document)
             })
             for day in days:
                 database[building][room][day].insert_timespan(hours)
-            # database[building][room].setdefault('initial_year', year)
-            # database[building][room]['final_year'] = year
     return database
 
-# def get_year(document):
-#     'Find the year of the document.'
-#     lines = document.split('\n')
-#     for line in lines:
-#         year = re.match('\d{4}', line)
-#         return year
-#     return 0
+def get_datestamp(document):
+    'Find the date of the document.'
+    lines = document.split('\n')
+    for line in lines:
+        if 'Currently in week' in line:
+            break
+        datestrings = re.findall('Term ended on (\w+day, \w+ \d+, \d+)', line)
+        if datestrings:
+            datestring = datestrings[0]
+            timestamp = datetime.strptime(datestring, "%A, %B %d, %Y")
+            datestamp = timestamp.date()
+            return datestamp
+    return datetime.now().date()
 
 def get_timeplace_indices(document):
     'Find the indices of Time, Place, and Max on a line.'
@@ -117,7 +122,7 @@ def parse_time(time):
 def parse_place(place):
     'Extract building and room from a websoc place string.'
     placelow = place.lower()
-    return placelow.split()
+    return placelow.split(None, 1)
 
 if __name__ == '__main__':
     import test_websoc_parse
