@@ -122,7 +122,10 @@ def parse_time(time):
 def parse_place(place):
     'Extract building and room from a websoc place string.'
     placelow = place.lower()
-    return placelow.split(None, 1)
+    placesplit = placelow.split(None, 1)
+    while len(placesplit) < 2:
+        placesplit.append('null')
+    return placesplit
 
 if __name__ == '__main__':
     import test_websoc_parse
