@@ -32,7 +32,7 @@ class Chronos:
     def __iter__(self):
         return iter(self.get_timespans())
 
-    def __repr__(self): # TODO: remove if unnecessary
+    def __repr__(self):
         return str(self.get_timespans())
 
 def parse_document(database, document):
@@ -42,7 +42,7 @@ def parse_document(database, document):
         for line in iter_line(block):
             time = line[t:p]
             place = line[p:m]
-            if 'TBA' in time or 'TBA' in place: # TODO: maybe change to '*TBA*'
+            if '*TBA*' in time or '*TBA*' in place:
                 continue
             if time.strip() == '' or place.strip() == '':
                 continue
@@ -109,7 +109,7 @@ def parse_time(time):
     days = re.findall('(su|m|tu|w|th|f|sa)', timelow)
     start, end = re.findall('(\d+):(\d+)', timelow)
     hour0 = int(start[0]) + int(start[1]) / 60.0
-    hour1 = int(end[0]) + (int(end[1]) + 10) / 60.0 # TODO: maybe remove +10
+    hour1 = int(end[0]) + (int(end[1]) + 10) / 60.0 # pad end with 10 minutes
     hours = [hour0, hour1]
     if 'p' in timelow:
         if hours[1] < 12:

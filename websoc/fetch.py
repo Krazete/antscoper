@@ -1,17 +1,18 @@
 from google.appengine.api import urlfetch
-from datetime import datetime
+from datetime import datetime, timedelta
 
 urlfetch.set_default_fetch_deadline(60)
 
-YEAR_NOW = datetime.now().year # TODO: set timezone to pst
+YEAR_NOW = (datetime.utcnow() + timedelta(hours=-8)).year
 YEARS = range(1990, YEAR_NOW + 1)
-TERMS = [03, 14, 25, 39, 76, 92] # [Winter, Spring, Summer Session 1, 10-Wk Summer, Summer Session 2, Fall]
+TERMS = [03, 14, 25, 39, 76, 92]
+# [Winter, Spring, Summer Session 1, 10-Wk Summer, Summer Session 2, Fall]
 
 def iter_websoc(years=[YEAR_NOW], terms=TERMS, only_now=True):
     'Generate raw data of course schedules from WebSoc.'
     for yearterm in iter_yearterm(years, terms):
         for document in iter_valid_documents(yearterm):
-            if not only_now or 'Currently in week' in document: # TODO: check if last few weeks are different
+            if not only_now or 'Currently in week' in document: # TODO: check if last few weeks have a different string
                 yield document
 
 def iter_yearterm(years, terms):

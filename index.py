@@ -42,13 +42,13 @@ class Scrape_YearTerm(webapp2.RequestHandler):
         try:
             scrape([year], [term])
             self.response.write('YearTerm {:04d}-{:02d} has successfully been added to the database.<br><br>'.format(year, term))
-            year_value = str(year + 1 if term == 92 else year)
-            input_index = str([0, 92, 03, 14, 25, 39, 76].index(term))
+            year_value = str(year + 1 if term == 92 else year) # iterate year
+            input_index = str([0, 92, 03, 14, 25, 39, 76].index(term)) # iterate term
         except Exception as e:
             traceback.print_exc() # only visible in terminal
             self.response.write('ERROR: {}<br><br>'.format(e))
-            year_value = str(year)
-            input_index = str([0, 03, 14, 25, 39, 76, 92].index(term))
+            year_value = str(year) # preserve year
+            input_index = str([0, 03, 14, 25, 39, 76, 92].index(term)) # preserve term
         content = template.replace('{YEAR_VALUE}', year_value).replace('{INPUT_INDEX}', input_index)
         self.response.write(content)
 
