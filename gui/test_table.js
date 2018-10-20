@@ -1,51 +1,78 @@
-function init() {
+var day = 1; // 0 = sunday
 
-var days = document.getElementsByClassName("day");
-for (var i = 0; i < days.length; i++) {
-    days[i].addEventListener("click", function () {
-        this.classList.add("selected");
-    });
+var scroller = document.getElementById("scroller");
+var dynamicStyle = document.getElementById("dynamic-style");
+
+function init() {
+    initDays();
+    initTimeline();
+    updateTime();
 }
 
-var timeline = Array.from(document.getElementsByClassName("timeline"));
-timeline.forEach(function (e) {
-    for (var c = 0; c < 24; c++) {
-        var timeblock = document.createElement("div");
-        timeblock.className = "timeblock";
-        timeblock.innerHTML = c % 12 ? c % 12 : 12;
-        timeblock.innerHTML += c < 12 ? " am" : " pm";
-        e.appendChild(timeblock);
+function initDays() { // TODO: fix days
+    var days = document.getElementsByClassName("day");
+    for (var day of days) {
+        day.addEventListener("click", toggle);
     }
-});
+}
 
-var filling = false;
-var timeblocks = Array.from(document.getElementsByClassName("timeblocks"));
-timeblocks.forEach(function (e) {
-    for (var c = 0; c < 48; c++) {
-        var timeblock = document.createElement("div");
-        timeblock.className = "timeblock";
-        if (filling) {
-            timeblock.classList.add("filled");
-        }
-        if (Math.random() < 0.1) {
-            filling = !filling;
-        }
-        e.appendChild(timeblock);
+function toggle() { // TODO: delete this crap and put in an actual day switcher
+    if (this.classList.contains("selected")) {
+        this.classList.remove("selected");
     }
-});
+    else {
+        this.classList.add("selected");
+    }
+}
 
-var dynamicStyle = document.getElementById("dynamic-style");
+function initTimeline() {
+    for (var building in database) {
+        var buildingTitle = createBuildingTitle(building);
+        var buildingBlock = createBuildingBlock(building);
+        scroller.appendChild(buildingTitle);
+        scroller.appendChild(buildingBlock);
+    }
+}
+
+function createBuildingTitle(building) {
+    var buildingTitle = document.createElement("div");
+        buildingTitle.className = "building-title";
+        buildingTitle.innerHTML = building.toUpperCase();
+    return buildingTitle;
+}
+
+function createBuildingBlock(building) {
+    var buildingBlock = document.createElement("div");
+        buildingBlock.className = "building-block";
+        var timeline = createTimeline();
+        buildingBlock.appendChild(timeline);
+        for (var room of database[building]) {
+            var roomBlock = createRoomBlock();
+            buildingBlock.appendChild(roomBlock);
+        }
+    return buildingBlock;
+}
+
+function createTimeline() {
+    var timelines = document.createElement("div");
+        timelines.className = "timelines";
+        var timeline = document.createElement("div");
+            timeline.className = "timeline";
+            var timeblock = document.createElement("div");
+                timeblock.className = "timeblock";
+            timeline.appendChild(timeblock);
+        timelines.appendChild(timeline);
+    return timelines;
+}
+
 function updateTime() {
     var date = new Date();
     var now = date.getHours() + date.getMinutes() / 60;
     var percent = 100 * now / 24;
-    dynamicStyle.innerHTML = `.rooms {
+    dynamicStyle.innerHTML = `.scrollbox {
         background: linear-gradient(to right, #58b ${percent}%, #7ad ${percent}%);
     }`;
     setTimeout(updateTime, 60000);
-}
-updateTime();
-
 }
 
 window.addEventListener("DOMContentLoaded", init);

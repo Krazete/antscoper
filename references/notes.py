@@ -26,20 +26,15 @@ some systems shut down at 11:50???
 some systems restart at 1:00
 painter/maintenance at 2:45?
 doors unlock at 7
+
+TODO:
+    fix Schedule queries
+        request by building?
+        request by proximity?
+        request by day?
+    fix gui
+        stop going by 30-minute blocks
+        add some search feature
+        allow building to be clicked
+        etc
 '''
-
-import SimpleHTTPServer
-import json
-
-
-class MyRequestHandler(SimpleHTTPServer.SimpleHTTPRequestHandler):
-    def do_POST(self):
-        content_length = int(self.headers.getheader('content-length'))
-        body = self.rfile.read(content_length)
-        try:
-            result = json.loads(body, encoding='utf-8')
-            # process result as a normal python dictionary
-            ...
-            self.wfile.write('Request has been processed.')
-        except Exception as exc:
-            self.wfile.write('Request has failed to process. Error: %s', exc.message)

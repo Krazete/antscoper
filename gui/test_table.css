@@ -6,33 +6,32 @@ body {
     margin: 0;
 }
 
-.menu {
-    background: #024;
-    color: #eee;
-    font-family: "Avenir", sans-serif;
+/* MAIN MENU CONTAINER */
+
+#legend {
     position: absolute;
     right: 0;
     bottom: 0;
+    background: #024; /* TEMP */
+    color: #eee; /* TEMP */
+    font-family: "Avenir", sans-serif;
 }
 @media all and (orientation: landscape) {
-    .menu {
-        left: 40%;
+    #legend {
+        left: 50%;
         top: 0;
     }
 }
 @media all and (orientation: portrait) {
-    .menu {
+    #legend {
         left: 0;
-        top: 40%;
+        top: 50%;
     }
 }
 
-.buildings {
-    overflow: scroll;
-    -webkit-overflow-scrolling: touch; /* for ios */
-}
+/* DAY BUTTONS */
 
-.days {
+#days {
     background: #024;
     position: -webkit-sticky; /* for safari */
     position: sticky;
@@ -51,62 +50,60 @@ body {
     color: #eee;
 }
 
-.abbreviation {
+/* SCROLLER */
+
+#scroller {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch; /* for ios */
+}
+
+.building {
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
     background: #147;
     font-size: 18px;
     text-align: center;
-    position: -webkit-sticky; /* for safari */
-    position: sticky;
-    left: 0;
 }
-.building {
+
+.timetable {
+    height: 100%;
     min-width: 1500px; /* maybe reduce this */
 }
 
-.fader {
-    background: linear-gradient(to right, #147, transparent);
-    background: linear-gradient(to right, #147, #1470); /* for safari */
-    position: -webkit-sticky; /* for safari */
-    position: sticky;
-    left: 0;
-    width: 55px;
-    height: 12px;
-    margin-bottom: -12px;
-}
-.timelines {
-    background: #147;
-    color: #7ad;
-}
-.timelines:before {
-    content: "";
-    background: linear-gradient(to right, #147, transparent);
-    background: linear-gradient(to right, #147, #1470); /* for safari */
-    position: -webkit-sticky; /* for safari */
-    position: sticky;
-    left: 0;
-    width: 55px;
-    height: 12px;
-    margin-bottom: -12px;
-    display: block;
-}
 .timeline {
-    display: flex;
     height: 12px;
+    background: #147;
     font-size: 12px;
-    line-height: 100%;
-    margin-left: 55px;
+    line-height: 12px;
+    display: flex;
+}
+.timeline:before {
+    content: "";
+    background: linear-gradient(to right, #147, transparent); /* for safari */
+    background: linear-gradient(to right, #147, #1470);
+    position: -webkit-sticky; /* for safari */
+    position: sticky;
+    left: 0;
+    width: 55px;
+    height: 100%;
 }
 
-.rooms {
-    padding-top: 1px;
-    border-left: 55px solid #58b;
+.timeblock {
+    flex: 1;
 }
-.room {
-    height: 24px;
-    padding-bottom: 1px;
+
+.schedule {
+    position: relative;
+    height: 14px;
+    margin: 1px 0 0 55px; /* TODO: find proper room width */
 }
-.room:before {
-    content: attr(data-number);
+
+.schedule:after {
+    content: attr(data-room);
     background: #147;
     text-align: center;
     position: -webkit-sticky; /* for safari */
@@ -120,23 +117,10 @@ body {
     margin: 0 0 -24px -55px;
     display: block;
 }
-.timeblocks {
-    display: flex;
-    height: 16px;
-}
 
-.timeblock {
-    flex: 1;
-}
-.timeblock.filled {
-    background: #369;
-}
-.timeblocks > .timeblock { /* TODO: find an alternative */
-    border: solid #147;
-}
-.timeblock:nth-child(odd) {
-    border-width: 2px 0 0 1px;
-}
-.timeblock:nth-child(even) {
-    border-width: 2px 1px 0 0;
+.timebubble {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    background: black;
 }
