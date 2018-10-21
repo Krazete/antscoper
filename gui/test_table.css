@@ -1,8 +1,9 @@
 body {
-    background: palegoldenrod; /* TEMP */
     position: absolute;
     width: 100%;
     height: 100%;
+    background: palegoldenrod; /* TEMP */
+    font-family: "Avenir", sans-serif;
     margin: 0;
 }
 
@@ -14,11 +15,14 @@ body {
     bottom: 0;
     background: #024; /* TEMP */
     color: #eee; /* TEMP */
-    font-family: "Avenir", sans-serif;
 }
 @media all and (orientation: landscape) {
     #legend {
         left: 50%;
+        top: 0;
+    }
+    #days {
+        right: 50%;
         top: 0;
     }
 }
@@ -27,26 +31,37 @@ body {
         left: 0;
         top: 50%;
     }
+    #days {
+        right: 0;
+        bottom: 50%;
+    }
+    input, .day {
+        float: left;
+    }
 }
 
 /* DAY BUTTONS */
 
 #days {
-    background: #024;
-    position: -webkit-sticky; /* for safari */
-    position: sticky;
-    left: 0;
-    top: 0;
-    display: flex;
-    z-index: 1;
+    position: absolute;
+    text-align: center;
 }
 .day {
-    text-align: center;
-    cursor: pointer;
-    flex: 1;
+    background: #147;
+    width: 36px;
+    height: 24px;
+    font-size: 12px;
+    line-height: 24px;
     color: #7ad;
+    border-radius: 6px;
+    margin: 2px;
+    cursor: pointer;
 }
-.day.selected {
+.day:after {
+    content: attr(data-day);
+}
+.day:hover, .day.selected {
+    background: #258;
     color: #eee;
 }
 
@@ -67,10 +82,10 @@ body {
     background: #147;
     font-size: 18px;
     text-align: center;
+    display: none;
 }
 
 .timetable {
-    height: 100%;
     min-width: 1500px; /* maybe reduce this */
 }
 
@@ -82,7 +97,7 @@ body {
     display: flex;
 }
 .timeline:before {
-    content: "";
+    content: attr(data-building);
     background: linear-gradient(to right, #147, transparent); /* for safari */
     background: linear-gradient(to right, #147, #1470);
     position: -webkit-sticky; /* for safari */
