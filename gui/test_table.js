@@ -61,9 +61,10 @@ function createTimeline(building) {
 }
 
 function createTimeBlock(i) {
+    var imod12 = i % 12;
     var timeblock = document.createElement("div");
         timeblock.className = "timeblock";
-        timeblock.innerHTML = (i % 12 ? i : 12) + (i < 12 ? "am" : "pm");
+        timeblock.innerHTML = (imod12 ? imod12 : 12) + (i < 12 ? "am" : "pm");
     return timeblock;
 }
 

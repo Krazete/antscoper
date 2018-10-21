@@ -7,7 +7,7 @@ body {
     margin: 0;
 }
 
-/* MAIN MENU CONTAINER */
+/* MAIN MENU STUFF */
 
 #legend {
     position: absolute;
@@ -16,6 +16,31 @@ body {
     background: #024; /* TEMP */
     color: #eee; /* TEMP */
 }
+
+#days {
+    position: absolute;
+    text-align: center;
+}
+
+.day {
+    width: 36px;
+    height: 24px;
+    background: #147;
+    color: #7ad;
+    font-size: 12px;
+    line-height: 24px;
+    border-radius: 6px;
+    margin: 2px;
+    opacity: 0.75;
+    cursor: pointer;
+}
+.day:after {
+    content: attr(data-day);
+}
+.day:hover, .day.selected {
+    opacity: 1;
+}
+
 @media all and (orientation: landscape) {
     #legend {
         left: 50%;
@@ -35,58 +60,32 @@ body {
         right: 0;
         bottom: 50%;
     }
-    input, .day {
+    .day {
         float: left;
     }
-}
-
-/* DAY BUTTONS */
-
-#days {
-    position: absolute;
-    text-align: center;
-}
-.day {
-    background: #147;
-    width: 36px;
-    height: 24px;
-    font-size: 12px;
-    line-height: 24px;
-    color: #7ad;
-    border-radius: 6px;
-    margin: 2px;
-    cursor: pointer;
-}
-.day:after {
-    content: attr(data-day);
-}
-.day:hover, .day.selected {
-    background: #258;
-    color: #eee;
 }
 
 /* SCROLLER */
 
 #scroller {
-    position: relative;
     width: 100%;
     height: 100%;
     overflow: scroll;
-    -webkit-overflow-scrolling: touch; /* for ios */
+    -webkit-overflow-scrolling: touch; /*s ios */
 }
 
 .building {
-    position: -webkit-sticky; /* for safari */
+    position: -webkit-sticky; /* safari */
     position: sticky;
     left: 0;
     background: #147;
     font-size: 18px;
     text-align: center;
-    display: none;
+    margin-top: 1px;
 }
 
 .timetable {
-    min-width: 1500px; /* maybe reduce this */
+    min-width: 1500px;
 }
 
 .timeline {
@@ -97,45 +96,49 @@ body {
     display: flex;
 }
 .timeline:before {
-    content: attr(data-building);
-    background: linear-gradient(to right, #147, transparent); /* for safari */
-    background: linear-gradient(to right, #147, #1470);
-    position: -webkit-sticky; /* for safari */
+    content: ""; /* OR attr(data-building) */
+    position: -webkit-sticky; /* safari */
     position: sticky;
+    background: linear-gradient(to right, #147, transparent); /* safari */
+    background: linear-gradient(to right, #147, #1470);
     left: 0;
     width: 55px;
-    height: 100%;
+    height: 12px;
 }
 
 .timeblock {
+    overflow: hidden;
     flex: 1;
 }
 
 .schedule {
-    position: relative;
-    height: 14px;
+    position: relative; /* .timebubble position */
+    height: 18px;
+    border-top: 1px solid #147;
+    box-sizing: border-box;
     margin: 1px 0 0 55px; /* TODO: find proper room width */
 }
-
 .schedule:after {
     content: attr(data-room);
-    background: #147;
-    text-align: center;
-    position: -webkit-sticky; /* for safari */
+    position: -webkit-sticky; /* safari */
     position: sticky;
     left: 0;
     width: 55px;
     height: 14px;
+    background: #147;
     font-size: 14px;
-    line-height: 100%;
-    padding: 5px 0 5px 0;
-    margin: 0 0 -24px -55px;
+    line-height: 14px;
+    text-align: center;
+    padding: 2px 0 2px 0;
+    border-bottom-right-radius: 3px;
+    margin: -1px 0 0 -55px;
     display: block;
 }
 
 .timebubble {
     position: absolute;
     top: 0;
-    height: 100%;
-    background: black;
+    height: 90%;
+    background: #147;
+    border-radius: 0 0 6px 6px;
 }
