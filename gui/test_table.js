@@ -1,9 +1,10 @@
 var day = 1; // 0 = sunday
 
-var scroller;
-var dynamicStyle;
+var scroller, dynamicStyle;
 
 function init() {
+    scroller = document.getElementById("scroller");
+    dynamicStyle = document.getElementById("dynamic-style");
     initDays();
     initTimeline();
     updateTime();
@@ -12,11 +13,11 @@ function init() {
 function initDays() { // TODO: fix days
     var days = document.getElementsByClassName("day");
     for (var day of days) {
-        day.addEventListener("click", toggle);
+        day.addEventListener("click", toggleDay);
     }
 }
 
-function toggle() { // TODO: delete this crap and put in an actual day switcher
+function toggleDay() { // TODO: delete this crap and put in an actual day switcher
     if (this.classList.contains("selected")) {
         this.classList.remove("selected");
     }
@@ -26,65 +27,48 @@ function toggle() { // TODO: delete this crap and put in an actual day switcher
 }
 
 function initTimeline() {
-    scroller = document.getElementById("scroller");
-    dynamicStyle = document.getElementById("dynamic-style");
     for (var building in database) {
-        scroller.appendChild(createBuildingTitle(building));
         scroller.appendChild(createBuildingBlock(building));
     }
-}
-
-function createBuildingTitle(building) {
-    var buildingTitle = document.createElement("div");
-        buildingTitle.className = "building";
-        buildingTitle.innerHTML = building.toUpperCase();
-    return buildingTitle;
 }
 
 function createBuildingBlock(building) {
     var buildingTable = document.createElement("div");
         buildingTable.className = "timetable";
-        buildingTable.dataset.building = building; // TODO: weigh this vs createBuildingTitle
         buildingTable.appendChild(createTimeline(building));
-        buildingTable.appendChild(createSchedule(building));
+        for (var room in database[building]) {
+            buildingTable.appendChild(createTimerule(building, room));
+        }
     return buildingTable;
 }
 
 function createTimeline(building) {
     var timeline = document.createElement("div");
         timeline.className = "timeline";
-        timeline.dataset.building = building.toUpperCase();
+        timeline.dataset.label = building;
         for (var i = 0; i < 24; i++) {
             timeline.appendChild(createTimeBlock(i));
         }
     return timeline;
 }
 
-function createTimeBlock(i) {
-    var imod12 = i % 12;
-    var timeblock = document.createElement("div");
-        timeblock.className = "timeblock";
-        timeblock.innerHTML = (imod12 ? imod12 : 12) + (i < 12 ? "am" : "pm");
-    return timeblock;
-}
-
-function createSchedule(building) {
-    var scheduleSet = document.createElement("div");
-        scheduleSet.className = "scheduleNOT";
-        for (var room in database[building]) {
-            scheduleSet.appendChild(createRoomBlock(building, room));
-        }
-    return scheduleSet;
-}
-
-function createRoomBlock(building, room) {
+function createTimerule(building, room) {
     var schedule = document.createElement("div");
-        schedule.className = "schedule";
-        schedule.dataset.room = room.toUpperCase();
+        schedule.className = "timeline";
+        schedule.dataset.label = room;
+        for (var i = 0; i < 24; i++) {
+            schedule.appendChild(createTimeBlock(i));
+        }
         for (var hours of database[building][room].schedule[day]) {
             schedule.appendChild(createTimeBubble(hours[0], hours[1]));
         }
     return schedule;
+}
+
+function createTimeBlock(i) {
+    var timeblock = document.createElement("div");
+        timeblock.className = "timeblock";
+    return timeblock;
 }
 
 function createTimeBubble(a, b) {
@@ -99,8 +83,8 @@ function updateTime() {
     var date = new Date();
     var now = date.getHours() + date.getMinutes() / 60;
     var percent = 100 * now / 24;
-    dynamicStyle.innerHTML = `.scrollbox {
-        background: linear-gradient(to right, #58b ${percent}%, #7ad ${percent}%);
+    dynamicStyle.innerHTML = `.timeline {
+        background: linear-gradient(to right, #024 ${percent}%, transparent ${percent}%);
     }`;
     setTimeout(updateTime, 60000);
 }

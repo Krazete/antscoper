@@ -3,18 +3,8 @@ body {
     width: 100%;
     height: 100%;
     background: palegoldenrod; /* TEMP */
-    font-family: "Avenir", sans-serif;
+    font-family: "Trebuchet MS", "Avenir", sans-serif;
     margin: 0;
-}
-
-/* MAIN MENU STUFF */
-
-#legend {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    background: #024; /* TEMP */
-    color: #eee; /* TEMP */
 }
 
 #days {
@@ -24,11 +14,9 @@ body {
 
 .day {
     width: 36px;
-    height: 24px;
     background: #147;
     color: #7ad;
     font-size: 12px;
-    line-height: 24px;
     border-radius: 6px;
     margin: 2px;
     opacity: 0.75;
@@ -41,21 +29,25 @@ body {
     opacity: 1;
 }
 
+#legend {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    background: #58b; /* TEMP */
+    color: #eee; /* TEMP */
+}
+
 @media all and (orientation: landscape) {
-    #legend {
-        left: 50%;
-        top: 0;
-    }
     #days {
         right: 50%;
         top: 0;
     }
+    #legend {
+        left: 50%;
+        top: 0;
+    }
 }
 @media all and (orientation: portrait) {
-    #legend {
-        left: 0;
-        top: 50%;
-    }
     #days {
         right: 0;
         bottom: 50%;
@@ -63,76 +55,87 @@ body {
     .day {
         float: left;
     }
+    #legend {
+        left: 0;
+        top: 50%;
+    }
 }
-
-/* SCROLLER */
 
 #scroller {
     width: 100%;
     height: 100%;
     overflow: scroll;
-    -webkit-overflow-scrolling: touch; /*s ios */
-}
-
-.building {
-    position: -webkit-sticky; /* safari */
-    position: sticky;
-    left: 0;
-    background: #147;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 1px;
+    -webkit-overflow-scrolling: touch; /* ios */
 }
 
 .timetable {
     min-width: 1500px;
 }
 
-.timeline {
-    height: 12px;
-    background: #147;
-    font-size: 12px;
-    line-height: 12px;
+.schedule, .timeline {
+    position: relative; /* .timebubble position */
+    font-variant: small-caps;
+    box-sizing: border-box;
+    margin: 0 0 1px 55px; /* dynamic timeline background offset */
     display: flex;
 }
 .timeline:before {
-    content: ""; /* OR attr(data-building) */
+    content: attr(data-label);
+    font-size: 14px;
+    z-index: 1;
+
+    background: #147;
     position: -webkit-sticky; /* safari */
     position: sticky;
-    background: linear-gradient(to right, #147, transparent); /* safari */
-    background: linear-gradient(to right, #147, #1470);
     left: 0;
     width: 55px;
-    height: 12px;
+    text-transform: uppercase;
+    text-align: center;
+    margin-left: -55px;
+    padding: 2px 0;
+}
+.timeline:first-child:before {
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .timeblock {
+    font-size: 12px;
+    vertical-align: bottom;
     overflow: hidden;
     flex: 1;
 }
-
-.schedule {
-    position: relative; /* .timebubble position */
-    height: 18px;
-    border-top: 1px solid #147;
-    box-sizing: border-box;
-    margin: 1px 0 0 55px; /* TODO: find proper room width */
-}
-.schedule:after {
-    content: attr(data-room);
-    position: -webkit-sticky; /* safari */
-    position: sticky;
-    left: 0;
-    width: 55px;
-    height: 14px;
+.timeline:first-child .timeblock:nth-child(1):after {content: "12am";}
+.timeline:first-child .timeblock:nth-child(2):after {content: "1am";}
+.timeline:first-child .timeblock:nth-child(3):after {content: "2am";}
+.timeline:first-child .timeblock:nth-child(4):after {content: "3am";}
+.timeline:first-child .timeblock:nth-child(5):after {content: "4am";}
+.timeline:first-child .timeblock:nth-child(6):after {content: "5am";}
+.timeline:first-child .timeblock:nth-child(7):after {content: "6am";}
+.timeline:first-child .timeblock:nth-child(8):after {content: "7am";}
+.timeline:first-child .timeblock:nth-child(9):after {content: "8am";}
+.timeline:first-child .timeblock:nth-child(10):after {content: "9am";}
+.timeline:first-child .timeblock:nth-child(11):after {content: "10am";}
+.timeline:first-child .timeblock:nth-child(12):after {content: "11am";}
+.timeline:first-child .timeblock:nth-child(13):after {content: "12pm";}
+.timeline:first-child .timeblock:nth-child(14):after {content: "1pm";}
+.timeline:first-child .timeblock:nth-child(15):after {content: "2pm";}
+.timeline:first-child .timeblock:nth-child(16):after {content: "3pm";}
+.timeline:first-child .timeblock:nth-child(17):after {content: "4pm";}
+.timeline:first-child .timeblock:nth-child(18):after {content: "5pm";}
+.timeline:first-child .timeblock:nth-child(19):after {content: "6pm";}
+.timeline:first-child .timeblock:nth-child(20):after {content: "7pm";}
+.timeline:first-child .timeblock:nth-child(21):after {content: "8pm";}
+.timeline:first-child .timeblock:nth-child(22):after {content: "9pm";}
+.timeline:first-child .timeblock:nth-child(23):after {content: "10pm";}
+.timeline:first-child .timeblock:nth-child(24):after {content: "11pm";}
+.timeline:first-child .timeblock {
     background: #147;
-    font-size: 14px;
-    line-height: 14px;
-    text-align: center;
-    padding: 2px 0 2px 0;
-    border-bottom-right-radius: 3px;
-    margin: -1px 0 0 -55px;
-    display: block;
+}
+.timeline:nth-child(n+2) .timeblock {
+    border: solid #147;
+    border-width: 2px 1px 0 1px;
+    height: 4px;
 }
 
 .timebubble {
