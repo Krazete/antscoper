@@ -3,7 +3,7 @@ body {
     width: 100%;
     height: 100%;
     background: palegoldenrod; /* TEMP */
-    font-family: "Trebuchet MS", "Avenir", sans-serif;
+    font-family: "Avenir", sans-serif;
     margin: 0;
 }
 
@@ -33,7 +33,7 @@ body {
     position: absolute;
     right: 0;
     bottom: 0;
-    background: #58b; /* TEMP */
+    background: #024; /* TEMP */
     color: #eee; /* TEMP */
 }
 
@@ -72,27 +72,38 @@ body {
     min-width: 1500px;
 }
 
+.topper {
+    position: -webkit-sticky; /* safari */
+    position: sticky;
+    left: 0;
+    width: 100%;
+    background: linear-gradient(to right, transparent 40%, #147 50%, transparent 60%);
+    text-align: center;
+    margin-bottom: -22px;
+    z-index: 1;
+}
+.topper::after {
+    content: attr(data-label);
+}
+
 .schedule, .timeline {
     position: relative; /* .timebubble position */
     font-variant: small-caps;
-    box-sizing: border-box;
     margin: 0 0 1px 55px; /* dynamic timeline background offset */
     display: flex;
 }
 .timeline:before {
     content: attr(data-label);
-    font-size: 14px;
-    z-index: 1;
-
-    background: #147;
     position: -webkit-sticky; /* safari */
     position: sticky;
     left: 0;
     width: 55px;
-    text-transform: uppercase;
+    background: #147;
+    font-size: 14px;
     text-align: center;
+    text-transform: uppercase;
     margin-left: -55px;
-    padding: 2px 0;
+    z-index: 1;
 }
 .timeline:first-child:before {
     font-size: 18px;
@@ -100,10 +111,10 @@ body {
 }
 
 .timeblock {
+    flex: 1;
     font-size: 12px;
     vertical-align: bottom;
     overflow: hidden;
-    flex: 1;
 }
 .timeline:first-child .timeblock:nth-child(1):after {content: "12am";}
 .timeline:first-child .timeblock:nth-child(2):after {content: "1am";}
@@ -133,9 +144,9 @@ body {
     background: #147;
 }
 .timeline:nth-child(n+2) .timeblock {
+    height: 4px;
     border: solid #147;
     border-width: 2px 1px 0 1px;
-    height: 4px;
 }
 
 .timebubble {

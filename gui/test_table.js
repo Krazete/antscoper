@@ -28,6 +28,7 @@ function toggleDay() { // TODO: delete this crap and put in an actual day switch
 
 function initTimeline() {
     for (var building in database) {
+        scroller.appendChild(createTitle(building));
         scroller.appendChild(createBuildingBlock(building));
     }
 }
@@ -40,6 +41,13 @@ function createBuildingBlock(building) {
             buildingTable.appendChild(createTimerule(building, room));
         }
     return buildingTable;
+}
+
+function createTitle(building) {
+    var bb = document.createElement("div");
+        bb.className = "topper";
+        bb.dataset.label = building;
+    return bb;
 }
 
 function createTimeline(building) {
@@ -84,7 +92,7 @@ function updateTime() {
     var now = date.getHours() + date.getMinutes() / 60;
     var percent = 100 * now / 24;
     dynamicStyle.innerHTML = `.timeline {
-        background: linear-gradient(to right, #024 ${percent}%, transparent ${percent}%);
+        background: linear-gradient(to right, #024 ${percent}%, #024 ${percent}%);
     }`;
     setTimeout(updateTime, 60000);
 }
