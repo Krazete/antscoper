@@ -28,16 +28,16 @@ function toggleDay() { // TODO: delete this crap and put in an actual day switch
 
 function initTimeline() {
     for (var building in database) {
-        scroller.appendChild(newTitle(building));
+        scroller.appendChild(newTimeheader(building));
         scroller.appendChild(newTimetable(building));
     }
 }
 
-function newTitle(building) {
-    var title = document.createElement("div");
-        title.className = "building-name";
-        title.dataset.label = building;
-    return title;
+function newTimeheader(building) {
+    var timeheader = document.createElement("div");
+        timeheader.className = "timeheader";
+        timeheader.dataset.building = building;
+    return timeheader;
 }
 
 function newTimetable(building) {
@@ -57,7 +57,7 @@ function newTimeline(building, room) {
             timeline.appendChild(newTimeunit(i));
         }
         if (typeof room != "undefined") {
-            timeline.dataset.label = room;
+            timeline.dataset.room = room;
             for (var hours of database[building][room].schedule[day]) {
                 timeline.appendChild(newTimespan(hours[0], hours[1]));
             }
@@ -84,7 +84,7 @@ function updateTime() {
     var now = date.getHours() + date.getMinutes() / 60;
     var percent = 100 * now / 24;
     dynamicStyle.innerHTML = `.timeline {
-        background: linear-gradient(to right, #024 ${percent}%, #024 ${percent}%);
+        background: linear-gradient(to right, #012 ${percent}%, transparent ${percent}%);
     }`;
     setTimeout(updateTime, 60000);
 }

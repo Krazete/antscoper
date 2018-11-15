@@ -1,32 +1,29 @@
 body {
-    position: absolute;
-    width: 100%;
-    height: 100%;
     background: palegoldenrod; /* TEMP */
-    font-family: "Avenir", sans-serif;
-    margin: 0;
 }
 
 #days {
     position: absolute;
-    text-align: center;
 }
 
 .day {
-    width: 36px;
+    width: 24px;
     background: #147;
     color: #7ad;
+    font-family: "Avenir", sans-serif;
     font-size: 12px;
+    text-align: center;
+    padding: 6px;
     border-radius: 6px;
     margin: 2px;
     opacity: 0.75;
     cursor: pointer;
 }
-.day:after {
-    content: attr(data-day);
-}
 .day:hover, .day.selected {
     opacity: 1;
+}
+.day:after {
+    content: attr(data-day);
 }
 
 #legend {
@@ -35,6 +32,7 @@ body {
     bottom: 0;
     background: #024; /* TEMP */
     color: #eee; /* TEMP */
+    font-family: "Avenir", sans-serif;
 }
 
 @media all and (orientation: landscape) {
@@ -68,32 +66,47 @@ body {
     -webkit-overflow-scrolling: touch; /* ios */
 }
 
+.timeheader {
+    position: -webkit-sticky; /* safari */
+    position: sticky;
+    left: 0;
+    height: 24px;
+    width: 100%;
+    background: linear-gradient(to right,
+        #147 0%,
+        #1470 10%,
+        #1470 40%,
+        #147 50%,
+        #1470 60%,
+        #1470 90%,
+        #147 100%
+    );
+    font-size: 18px;
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: -24px;
+    z-index: 1;
+}
+.timeheader:after {
+    content: attr(data-building);
+}
+
 .timetable {
     min-width: 1500px;
 }
 
-.topper {
-    position: -webkit-sticky; /* safari */
-    position: sticky;
-    left: 0;
-    width: 100%;
-    background: linear-gradient(to right, transparent 40%, #147 50%, transparent 60%);
-    text-align: center;
-    margin-bottom: -22px;
-    z-index: 1;
-}
-.topper::after {
-    content: attr(data-label);
-}
-
-.schedule, .timeline {
-    position: relative; /* .timebubble position */
+.timeline {
+    position: relative; /* .timespan position */
     font-variant: small-caps;
     margin: 0 0 1px 55px; /* dynamic timeline background offset */
     display: flex;
 }
+.timeline:first-child {
+    height: 24px;
+    background: #147;
+}
 .timeline:before {
-    content: attr(data-label);
+    content: attr(data-room);
     position: -webkit-sticky; /* safari */
     position: sticky;
     left: 0;
@@ -106,50 +119,52 @@ body {
     z-index: 1;
 }
 .timeline:first-child:before {
-    font-size: 18px;
-    font-weight: bold;
+    content: "";
+    position: relative;
 }
 
-.timeblock {
+.timeunit {
     flex: 1;
-    font-size: 12px;
-    vertical-align: bottom;
-    overflow: hidden;
-}
-.timeline:first-child .timeblock:nth-child(1):after {content: "12am";}
-.timeline:first-child .timeblock:nth-child(2):after {content: "1am";}
-.timeline:first-child .timeblock:nth-child(3):after {content: "2am";}
-.timeline:first-child .timeblock:nth-child(4):after {content: "3am";}
-.timeline:first-child .timeblock:nth-child(5):after {content: "4am";}
-.timeline:first-child .timeblock:nth-child(6):after {content: "5am";}
-.timeline:first-child .timeblock:nth-child(7):after {content: "6am";}
-.timeline:first-child .timeblock:nth-child(8):after {content: "7am";}
-.timeline:first-child .timeblock:nth-child(9):after {content: "8am";}
-.timeline:first-child .timeblock:nth-child(10):after {content: "9am";}
-.timeline:first-child .timeblock:nth-child(11):after {content: "10am";}
-.timeline:first-child .timeblock:nth-child(12):after {content: "11am";}
-.timeline:first-child .timeblock:nth-child(13):after {content: "12pm";}
-.timeline:first-child .timeblock:nth-child(14):after {content: "1pm";}
-.timeline:first-child .timeblock:nth-child(15):after {content: "2pm";}
-.timeline:first-child .timeblock:nth-child(16):after {content: "3pm";}
-.timeline:first-child .timeblock:nth-child(17):after {content: "4pm";}
-.timeline:first-child .timeblock:nth-child(18):after {content: "5pm";}
-.timeline:first-child .timeblock:nth-child(19):after {content: "6pm";}
-.timeline:first-child .timeblock:nth-child(20):after {content: "7pm";}
-.timeline:first-child .timeblock:nth-child(21):after {content: "8pm";}
-.timeline:first-child .timeblock:nth-child(22):after {content: "9pm";}
-.timeline:first-child .timeblock:nth-child(23):after {content: "10pm";}
-.timeline:first-child .timeblock:nth-child(24):after {content: "11pm";}
-.timeline:first-child .timeblock {
-    background: #147;
-}
-.timeline:nth-child(n+2) .timeblock {
     height: 4px;
     border: solid #147;
     border-width: 2px 1px 0 1px;
 }
+.timeline:first-child .timeunit {
+    height: auto;
+    color: #28d;
+    font-size: 12px;
+    border: none;
+    line-height: 24px;
+}
+.timeline:first-child .timeunit:after {
+    vertical-align: text-top;
+}
+.timeline:first-child .timeunit:nth-child(1):after {content: "12am";}
+.timeline:first-child .timeunit:nth-child(2):after {content: "1am";}
+.timeline:first-child .timeunit:nth-child(3):after {content: "2am";}
+.timeline:first-child .timeunit:nth-child(4):after {content: "3am";}
+.timeline:first-child .timeunit:nth-child(5):after {content: "4am";}
+.timeline:first-child .timeunit:nth-child(6):after {content: "5am";}
+.timeline:first-child .timeunit:nth-child(7):after {content: "6am";}
+.timeline:first-child .timeunit:nth-child(8):after {content: "7am";}
+.timeline:first-child .timeunit:nth-child(9):after {content: "8am";}
+.timeline:first-child .timeunit:nth-child(10):after {content: "9am";}
+.timeline:first-child .timeunit:nth-child(11):after {content: "10am";}
+.timeline:first-child .timeunit:nth-child(12):after {content: "11am";}
+.timeline:first-child .timeunit:nth-child(13):after {content: "12pm";}
+.timeline:first-child .timeunit:nth-child(14):after {content: "1pm";}
+.timeline:first-child .timeunit:nth-child(15):after {content: "2pm";}
+.timeline:first-child .timeunit:nth-child(16):after {content: "3pm";}
+.timeline:first-child .timeunit:nth-child(17):after {content: "4pm";}
+.timeline:first-child .timeunit:nth-child(18):after {content: "5pm";}
+.timeline:first-child .timeunit:nth-child(19):after {content: "6pm";}
+.timeline:first-child .timeunit:nth-child(20):after {content: "7pm";}
+.timeline:first-child .timeunit:nth-child(21):after {content: "8pm";}
+.timeline:first-child .timeunit:nth-child(22):after {content: "9pm";}
+.timeline:first-child .timeunit:nth-child(23):after {content: "10pm";}
+.timeline:first-child .timeunit:nth-child(24):after {content: "11pm";}
 
-.timebubble {
+.timespan {
     position: absolute;
     top: 0;
     height: 90%;
