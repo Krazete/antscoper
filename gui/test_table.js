@@ -28,63 +28,55 @@ function toggleDay() { // TODO: delete this crap and put in an actual day switch
 
 function initTimeline() {
     for (var building in database) {
-        scroller.appendChild(createTitle(building));
-        scroller.appendChild(createBuildingBlock(building));
+        scroller.appendChild(newTitle(building));
+        scroller.appendChild(newTimetable(building));
     }
 }
 
-function createBuildingBlock(building) {
-    var buildingTable = document.createElement("div");
-        buildingTable.className = "timetable";
-        buildingTable.appendChild(createTimeline(building));
+function newTitle(building) {
+    var title = document.createElement("div");
+        title.className = "building-name";
+        title.dataset.label = building;
+    return title;
+}
+
+function newTimetable(building) {
+    var timetable = document.createElement("div");
+        timetable.className = "timetable";
+        timetable.appendChild(newTimeline(building));
         for (var room in database[building]) {
-            buildingTable.appendChild(createTimerule(building, room));
+            timetable.appendChild(newTimeline(building, room));
         }
-    return buildingTable;
+    return timetable;
 }
 
-function createTitle(building) {
-    var bb = document.createElement("div");
-        bb.className = "topper";
-        bb.dataset.label = building;
-    return bb;
-}
-
-function createTimeline(building) {
+function newTimeline(building, room) {
     var timeline = document.createElement("div");
         timeline.className = "timeline";
-        timeline.dataset.label = building;
         for (var i = 0; i < 24; i++) {
-            timeline.appendChild(createTimeBlock(i));
+            timeline.appendChild(newTimeunit(i));
+        }
+        if (typeof room != "undefined") {
+            timeline.dataset.label = room;
+            for (var hours of database[building][room].schedule[day]) {
+                timeline.appendChild(newTimespan(hours[0], hours[1]));
+            }
         }
     return timeline;
 }
 
-function createTimerule(building, room) {
-    var schedule = document.createElement("div");
-        schedule.className = "timeline";
-        schedule.dataset.label = room;
-        for (var i = 0; i < 24; i++) {
-            schedule.appendChild(createTimeBlock(i));
-        }
-        for (var hours of database[building][room].schedule[day]) {
-            schedule.appendChild(createTimeBubble(hours[0], hours[1]));
-        }
-    return schedule;
+function newTimeunit(i) {
+    var timeunit = document.createElement("div");
+        timeunit.className = "timeunit";
+    return timeunit;
 }
 
-function createTimeBlock(i) {
-    var timeblock = document.createElement("div");
-        timeblock.className = "timeblock";
-    return timeblock;
-}
-
-function createTimeBubble(a, b) {
-    var timebubble = document.createElement("div");
-        timebubble.className = "timebubble";
-        timebubble.style.left = (100 * a / 24) + "%";
-        timebubble.style.width = (100 * (b - a) / 24) + "%";
-    return timebubble;
+function newTimespan(a, b) {
+    var timespan = document.createElement("div");
+        timespan.className = "timespan";
+        timespan.style.left = (100 * a / 24) + "%";
+        timespan.style.width = (100 * (b - a) / 24) + "%";
+    return timespan;
 }
 
 function updateTime() {
