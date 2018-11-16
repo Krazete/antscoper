@@ -1,35 +1,42 @@
-var day = 1; // 0 = sunday
-
+var days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
 var scroller, dynamicStyle;
 
 function init() {
+    var today = new Date().getDay();
     scroller = document.getElementById("scroller");
     dynamicStyle = document.getElementById("dynamic-style");
     initDays();
-    initTimeline();
+    selectDay(today);
     updateTime();
 }
 
 function initDays() { // TODO: fix days
     var days = document.getElementsByClassName("day");
     for (var day of days) {
-        day.addEventListener("click", toggleDay);
+        day.addEventListener("click", clickDay);
     }
 }
 
-function toggleDay() { // TODO: delete this crap and put in an actual day switcher
-    if (this.classList.contains("selected")) {
-        this.classList.remove("selected");
-    }
-    else {
-        this.classList.add("selected");
-    }
+function clickDay() {
+    var today = days.indexOf(this.id);
+    selectDay(today);
 }
 
-function initTimeline() {
+function selectDay(day) {
+    var todayButton = document.getElementById(days[day]);
+    for (var id of days) {
+        var dayButton = document.getElementById(id);
+        dayButton.classList.remove("selected");
+    }
+    todayButton.classList.add("selected");
+    scroller.innerHTML = "";
+    initTimeline(day);
+}
+
+function initTimeline(day) {
     for (var building in database) {
         scroller.appendChild(newTimeheader(building));
-        scroller.appendChild(newTimetable(building));
+        scroller.appendChild(newTimetable(building, day));
     }
 }
 
@@ -40,17 +47,17 @@ function newTimeheader(building) {
     return timeheader;
 }
 
-function newTimetable(building) {
+function newTimetable(building, day) {
     var timetable = document.createElement("div");
         timetable.className = "timetable";
         timetable.appendChild(newTimeline(building));
         for (var room in database[building]) {
-            timetable.appendChild(newTimeline(building, room));
+            timetable.appendChild(newTimeline(building, room, day));
         }
     return timetable;
 }
 
-function newTimeline(building, room) {
+function newTimeline(building, room, day) {
     var timeline = document.createElement("div");
         timeline.className = "timeline";
         for (var i = 0; i < 24; i++) {
@@ -81,8 +88,8 @@ function newTimespan(a, b) {
 
 function updateTime() {
     var date = new Date();
-    var now = date.getHours() + date.getMinutes() / 60;
-    var percent = 100 * now / 24;
+    var time = date.getHours() + date.getMinutes() / 60;
+    var percent = 100 * time / 24;
     dynamicStyle.innerHTML = `.timeline {
         background: linear-gradient(to right, #012 ${percent}%, transparent ${percent}%);
     }`;

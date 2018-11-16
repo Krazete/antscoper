@@ -22,8 +22,12 @@ body {
 .day:hover, .day.selected {
     opacity: 1;
 }
+.day.selected {
+    color: #eee;
+}
 .day:after {
-    content: attr(data-day);
+    content: attr(id);
+    text-transform: capitalize;
 }
 
 #legend {
@@ -83,12 +87,12 @@ body {
     );
     font-size: 18px;
     text-align: center;
-    text-transform: uppercase;
     margin-bottom: -24px;
     z-index: 1;
 }
 .timeheader:after {
     content: attr(data-building);
+    text-transform: uppercase;
 }
 
 .timetable {
