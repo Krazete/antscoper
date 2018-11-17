@@ -1,21 +1,29 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
-	<meta name="google" content="notranslate">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>AntScoper</title>
-	<link rel="stylesheet" type="text/css" href="index.css">
 	<link rel="stylesheet" type="text/css" href="leaflet/leaflet.css">
-	<script src="leaflet/leaflet.js"></script>
-	<script src="timetable.js"></script>
+	<script type="application/javascript" src="leaflet/leaflet.js"></script>
+	<link rel="stylesheet" type="text/css" href="index.css">
+	<script type="application/javascript" src="map.js"></script>
+    <script type="application/javascript" src="legend.js"></script>
+	<script type="application/javascript" src="index.js"></script>
 </head>
 <body>
 	<div id="map"></div>
-	<div id="list"></div>
-	<script>
-		var database = {WEBSOC_DATA};
-		var geo = {MAP_DATA};
-	</script>
-	<script src="index.js"></script>
+    <div id="days">
+        <div class="day" id="sun"></div>
+        <div class="day" id="mon"></div>
+        <div class="day" id="tue"></div>
+        <div class="day" id="wed"></div>
+        <div class="day" id="thu"></div>
+        <div class="day" id="fri"></div>
+        <div class="day" id="sat"></div>
+    </div>
+    <div id="legend">
+        <div id="scroller"></div>
+    </div>
+    <style id="dynamic-style"></style>
 </body>
 </html>

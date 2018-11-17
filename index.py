@@ -14,6 +14,18 @@ MAPURL = 'https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=371529
 class Index(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
+        content = open('index.html').read()
+        self.response.write(content)
+
+class Map(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
+        mapjson = urllib.urlopen(MAPURL).read()
+        self.response.write(mapjson)
+
+class Data(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
         database = {}
         for schedule in antndb.Schedule.query().fetch():
             building = schedule.building
@@ -23,11 +35,8 @@ class Index(webapp2.RequestHandler):
                 'schedule': schedule.schedule,
                 'datestamp': schedule.datestamp.isoformat()
             })
-        template = open('index.html').read()
         datajson = json.dumps(database)
-        mapjson = urllib.urlopen(MAPURL).read()
-        content = template.replace('{WEBSOC_DATA}', datajson).replace('{MAP_DATA}', mapjson)
-        self.response.write(content)
+        self.response.write(datajson)
 
 class Scrape_YearTerm(webapp2.RequestHandler):
     def get(self):
@@ -54,6 +63,8 @@ class Scrape_YearTerm(webapp2.RequestHandler):
 
 sitemap = [
     ('/', Index),
+    ('/map.json', Map),
+    ('/data.json', Data),
     ('/scrape_yearterm', Scrape_YearTerm)
 ]
 
