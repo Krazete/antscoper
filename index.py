@@ -5,12 +5,6 @@ import traceback
 import antndb
 from scrape import scrape
 
-MAPURL = 'https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5'
-# https://map.uci.edu/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
-# https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
-# http://map.concept3d.com/?id=463
-# https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990-03&CourseCodes=0-99999&Submit=Text
-
 class Index(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'text/html'
@@ -20,7 +14,17 @@ class Index(webapp2.RequestHandler):
 class Map(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
-        mapjson = urllib.urlopen(MAPURL).read()
+        mapurl = 'https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5'
+        # https://map.uci.edu/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
+        # https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
+        # http://map.concept3d.com/?id=463
+        # https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990-03&CourseCodes=0-99999&Submit=Text
+        try:
+            mapjson = urllib.urlopen(mapurl).read()
+            if len(mapjson) <= 0:
+                raise
+        except:
+            mapjson = '[]'
         self.response.write(mapjson)
 
 class Data(webapp2.RequestHandler):

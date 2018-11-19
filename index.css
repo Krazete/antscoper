@@ -74,6 +74,15 @@
     }
 }
 
+#scanline {
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    background: #147;
+    pointer-events: none;
+    z-index: 1;
+}
+
 #scroller {
     width: 100%;
     height: 100%;
@@ -99,7 +108,7 @@
     font-size: 18px;
     text-align: center;
     margin-bottom: -24px;
-    z-index: 1;
+    z-index: 3;
 }
 .timeheader:after {
     content: attr(data-building);
@@ -119,6 +128,7 @@
 .timeline:first-child {
     height: 24px;
     background: #147;
+    z-index: 2;
 }
 .timeline:before {
     content: attr(data-room);
@@ -131,7 +141,7 @@
     text-align: center;
     text-transform: uppercase;
     margin-left: -55px;
-    z-index: 1;
+    z-index: 2;
 }
 .timeline:first-child:before {
     content: "";
