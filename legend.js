@@ -48,12 +48,15 @@ function initTime() {
         var date = new Date();
         var time = date.getHours() + date.getMinutes() / 60;
         var percent = 100 * time / 24;
-        dynamicStyle.innerHTML = `.timeline {
-            background: linear-gradient(to right, #012 ${percent}%, transparent ${percent}%);
+        dynamicStyle.innerHTML = `.timetable {
+            background: linear-gradient(to right, gray ${percent}%, white ${percent}%);
+            background: linear-gradient(to right, var(--color-2) ${percent}%, var(--color-3) ${percent}%);
         }`;
         setTimeout(updateTime, 60000);
+        return time;
     }
-    updateTime();
+    var time = updateTime();
+    scroller.scrollTo(time * 1500/24, 0);
 }
 
 function initTimeline(day) {

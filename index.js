@@ -1,17 +1,14 @@
 var data, geo;
 
 function init() {
-    function callback(responses) {
-        geo = responses[0];
-        database = responses[1];
+    load("./map.json").then(function (response) {
+        geo = response;
         initMap();
+    });
+    load("./data.json").then(function (response) {
+        database = response;
         initLegend();
-    }
-
-    Promise.all([
-        load("./map.json"),
-        load("./data.json")
-    ]).then(callback);
+    });
 }
 
 function load(path) {

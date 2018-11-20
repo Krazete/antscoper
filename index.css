@@ -1,12 +1,20 @@
+html {
+  --color-1: #16b;
+  --color-2: #024;
+  --color-3: #9cf;
+}
+
 #days {
     position: absolute;
 }
 
 .day {
     width: 24px;
-    background: #147;
-    color: #7ad;
-    font-family: "Avenir", sans-serif;
+    background: black;
+    background: var(--color-1);
+    color: gray;
+    color: var(--color-2);
+    font-family: 'Avenir', sans-serif;
     font-size: 12px;
     text-align: center;
     padding: 6px;
@@ -19,7 +27,8 @@
     opacity: 1;
 }
 .day.selected {
-    color: #eee;
+    color: white;
+    color: var(--color-3);
 }
 .day:after {
     content: attr(id);
@@ -37,9 +46,14 @@
     position: absolute;
     right: 0;
     bottom: 0;
-    background: #024;
-    color: #eee;
-    font-family: "Avenir", sans-serif;
+    background: gray;
+    background: var(--color-2);
+    color: white;
+    color: var(--color-3);
+    font-family: 'Avenir', sans-serif;
+}
+#legend:before {
+    content: ''
 }
 
 @media all and (orientation: landscape) {
@@ -78,7 +92,8 @@
     position: absolute;
     width: 1px;
     height: 100%;
-    background: #147;
+    background: gray;
+    background: var(--color-2);
     pointer-events: none;
     z-index: 1;
 }
@@ -97,13 +112,18 @@
     height: 24px;
     width: 100%;
     background: linear-gradient(to right,
-        #147 0%,
-        #1470 10%,
-        #1470 40%,
-        #147 50%,
-        #1470 60%,
-        #1470 90%,
-        #147 100%
+        black 0%,
+        transparent 10%, transparent 40%,
+        black 50%,
+        transparent 60%, transparent 90%,
+        black 100%
+    );
+    background: linear-gradient(to right,
+        var(--color-1) 0%,
+        transparent 10%, transparent 40%,
+        var(--color-1) 50%,
+        transparent 60%, transparent 90%,
+        var(--color-1) 100%
     );
     font-size: 18px;
     text-align: center;
@@ -117,17 +137,19 @@
 
 .timetable {
     min-width: 1500px;
+    margin-left: 55px;
 }
 
 .timeline {
     position: relative; /* .timespan position */
     font-variant: small-caps;
-    margin: 0 0 1px 55px; /* dynamic timeline background offset */
+    margin-bottom: 1px;
     display: flex;
 }
 .timeline:first-child {
     height: 24px;
-    background: #147;
+    background: black;
+    background: var(--color-1);
     z-index: 2;
 }
 .timeline:before {
@@ -136,7 +158,8 @@
     position: sticky;
     left: 0;
     width: 55px;
-    background: #147;
+    background: black;
+    background: var(--color-1);
     font-size: 14px;
     text-align: center;
     text-transform: uppercase;
@@ -144,19 +167,22 @@
     z-index: 2;
 }
 .timeline:first-child:before {
-    content: "";
+    content: '';
     position: relative;
 }
 
 .timeunit {
     flex: 1;
     height: 4px;
-    border: solid #147;
+    border: solid black;
+    border: solid var(--color-1);
     border-width: 2px 1px 0 1px;
+    z-index: 2;
 }
 .timeline:first-child .timeunit {
     height: auto;
-    color: #28d;
+    color: gray;
+    color: var(--color-2);
     font-size: 12px;
     border: none;
     line-height: 24px;
@@ -164,35 +190,36 @@
 .timeline:first-child .timeunit:after {
     vertical-align: text-top;
 }
-.timeline:first-child .timeunit:nth-child(1):after {content: "12am";}
-.timeline:first-child .timeunit:nth-child(2):after {content: "1am";}
-.timeline:first-child .timeunit:nth-child(3):after {content: "2am";}
-.timeline:first-child .timeunit:nth-child(4):after {content: "3am";}
-.timeline:first-child .timeunit:nth-child(5):after {content: "4am";}
-.timeline:first-child .timeunit:nth-child(6):after {content: "5am";}
-.timeline:first-child .timeunit:nth-child(7):after {content: "6am";}
-.timeline:first-child .timeunit:nth-child(8):after {content: "7am";}
-.timeline:first-child .timeunit:nth-child(9):after {content: "8am";}
-.timeline:first-child .timeunit:nth-child(10):after {content: "9am";}
-.timeline:first-child .timeunit:nth-child(11):after {content: "10am";}
-.timeline:first-child .timeunit:nth-child(12):after {content: "11am";}
-.timeline:first-child .timeunit:nth-child(13):after {content: "12pm";}
-.timeline:first-child .timeunit:nth-child(14):after {content: "1pm";}
-.timeline:first-child .timeunit:nth-child(15):after {content: "2pm";}
-.timeline:first-child .timeunit:nth-child(16):after {content: "3pm";}
-.timeline:first-child .timeunit:nth-child(17):after {content: "4pm";}
-.timeline:first-child .timeunit:nth-child(18):after {content: "5pm";}
-.timeline:first-child .timeunit:nth-child(19):after {content: "6pm";}
-.timeline:first-child .timeunit:nth-child(20):after {content: "7pm";}
-.timeline:first-child .timeunit:nth-child(21):after {content: "8pm";}
-.timeline:first-child .timeunit:nth-child(22):after {content: "9pm";}
-.timeline:first-child .timeunit:nth-child(23):after {content: "10pm";}
-.timeline:first-child .timeunit:nth-child(24):after {content: "11pm";}
+.timeline:first-child .timeunit:nth-child(1):after {content: '12am';}
+.timeline:first-child .timeunit:nth-child(2):after {content: '1am';}
+.timeline:first-child .timeunit:nth-child(3):after {content: '2am';}
+.timeline:first-child .timeunit:nth-child(4):after {content: '3am';}
+.timeline:first-child .timeunit:nth-child(5):after {content: '4am';}
+.timeline:first-child .timeunit:nth-child(6):after {content: '5am';}
+.timeline:first-child .timeunit:nth-child(7):after {content: '6am';}
+.timeline:first-child .timeunit:nth-child(8):after {content: '7am';}
+.timeline:first-child .timeunit:nth-child(9):after {content: '8am';}
+.timeline:first-child .timeunit:nth-child(10):after {content: '9am';}
+.timeline:first-child .timeunit:nth-child(11):after {content: '10am';}
+.timeline:first-child .timeunit:nth-child(12):after {content: '11am';}
+.timeline:first-child .timeunit:nth-child(13):after {content: '12pm';}
+.timeline:first-child .timeunit:nth-child(14):after {content: '1pm';}
+.timeline:first-child .timeunit:nth-child(15):after {content: '2pm';}
+.timeline:first-child .timeunit:nth-child(16):after {content: '3pm';}
+.timeline:first-child .timeunit:nth-child(17):after {content: '4pm';}
+.timeline:first-child .timeunit:nth-child(18):after {content: '5pm';}
+.timeline:first-child .timeunit:nth-child(19):after {content: '6pm';}
+.timeline:first-child .timeunit:nth-child(20):after {content: '7pm';}
+.timeline:first-child .timeunit:nth-child(21):after {content: '8pm';}
+.timeline:first-child .timeunit:nth-child(22):after {content: '9pm';}
+.timeline:first-child .timeunit:nth-child(23):after {content: '10pm';}
+.timeline:first-child .timeunit:nth-child(24):after {content: '11pm';}
 
 .timespan {
     position: absolute;
     top: 0;
     height: 90%;
-    background: #147;
+    background: black;
+    background: var(--color-1);
     border-radius: 0 0 6px 6px;
 }
