@@ -1,11 +1,13 @@
 html {
-  --color-1: #16b;
-  --color-2: #024;
-  --color-3: #9cf;
+    --color-1: #16b;
+    --color-1a: #16b0;
+    --color-2: #024;
+    --color-3: #9cf;
 }
 
 #days {
     position: absolute;
+    z-index: 1;
 }
 
 .day {
@@ -39,7 +41,7 @@ html {
 	position: absolute;
 	top: 0;
 	left: 0;
-	z-index: -1;
+	z-index: 0;
 }
 
 #legend {
@@ -120,9 +122,9 @@ html {
     );
     background: linear-gradient(to right,
         var(--color-1) 0%,
-        transparent 10%, transparent 40%,
+        var(--color-1a) 10%, var(--color-1a) 40%,
         var(--color-1) 50%,
-        transparent 60%, transparent 90%,
+        var(--color-1a) 60%, var(--color-1a) 90%,
         var(--color-1) 100%
     );
     font-size: 18px;
@@ -164,7 +166,7 @@ html {
     text-align: center;
     text-transform: uppercase;
     margin-left: -55px;
-    z-index: 2;
+    z-index: 3;
 }
 .timeline:first-child:before {
     content: '';
