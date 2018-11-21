@@ -2,6 +2,20 @@ body {
     background: palegoldenrod; /* TEMP */
 }
 
+#search {
+    width: 72px;
+    background: white;
+    color: black;
+    font-size: 18px;
+    border: none;
+    border-radius: 6px;
+    text-align: center;
+    padding: 6px;
+    margin: 2px;
+    text-transform: uppercase;
+    display: block;
+}
+
 #days {
     position: absolute;
 }
@@ -16,6 +30,7 @@ body {
     padding: 6px;
     border-radius: 6px;
     margin: 2px;
+    margin-left: auto;
     opacity: 0.75;
     cursor: pointer;
 }
