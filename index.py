@@ -3,7 +3,7 @@ import json
 import urllib
 import traceback
 import antndb
-from scrape import scrape
+from scrape import scrape, websoc
 
 class Index(webapp2.RequestHandler):
     def get(self):
@@ -32,13 +32,15 @@ class Data(webapp2.RequestHandler):
         self.response.headers['Content-Type'] = 'application/json'
         database = {}
         for schedule in antndb.Schedule.query().fetch():
-            building = schedule.building
-            room = schedule.room
-            database.setdefault(building, {})
-            database[building].setdefault(room, {
-                'schedule': schedule.schedule,
-                'yearterm': schedule.yearterm
-            })
+            year = int(schedule.yearterm.split('-')[0])
+            if year >= websoc.YEAR_NOW - 1: # show this year and last year only
+                building = schedule.building
+                room = schedule.room
+                database.setdefault(building, {})
+                database[building].setdefault(room, {
+                    'schedule': schedule.schedule,
+                    'yearterm': schedule.yearterm
+                })
         datajson = json.dumps(database)
         self.response.write(datajson)
 
