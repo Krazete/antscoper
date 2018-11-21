@@ -5,17 +5,17 @@ def scrape(years=[], terms=[]):
     'Add schedules of specified or current yearterms to the database.'
     if len(years) > 0:
         if len(terms) > 0:
-            documents = websoc.iter_websoc(years, terms, only_now=False)
+            yeartermdocs = websoc.iter_websoc(years, terms, only_now=False)
         else:
-            documents = websoc.iter_websoc(years, only_now=False)
+            yeartermdocs = websoc.iter_websoc(years, only_now=False)
         keys = antndb.get()
     else:
-        documents = websoc.iter_websoc()
+        yeartermdocs = websoc.iter_websoc()
         keys = []
 
     database = {}
-    for document in documents:
-        websoc.parse_document(database, document)
+    for yearterm, document in yeartermdocs:
+        websoc.parse_document(database, document, yearterm)
 
     for building in database:
         for room in database[building]:
@@ -29,8 +29,8 @@ def scrape(years=[], terms=[]):
                 list(database[building][room]['f']),
                 list(database[building][room]['sa'])
             ]
-            datestamp = database[building][room]['datestamp']
-            key = antndb.set(id, building, room, schedule, datestamp)
+            yearterm = database[building][room]['yearterm']
+            key = antndb.set(id, building, room, schedule, yearterm)
             if key in keys:
                 keys.remove(key)
 

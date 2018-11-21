@@ -13,7 +13,7 @@ def iter_websoc(years=[YEAR_NOW], terms=TERMS, only_now=True):
     for yearterm in iter_yearterm(years, terms):
         for document in iter_valid_documents(yearterm):
             if not only_now or 'Currently in week' in document: # TODO: check if last few weeks have a different string
-                yield document
+                yield yearterm, document
 
 def iter_yearterm(years, terms):
     'Generate specified yearterms.'

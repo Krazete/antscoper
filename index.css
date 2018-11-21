@@ -181,6 +181,7 @@ html {
     border: solid var(--color-1);
     border-width: 2px 1px 0 1px;
     z-index: 2;
+    pointer-events: none;
 }
 .timeline:first-child .timeunit {
     height: auto;
@@ -225,4 +226,9 @@ html {
     background: black;
     background: var(--color-1);
     border-radius: 0 0 6px 6px;
+}
+.timespan a {
+    width: 100%;
+    height: 100%;
+    display: block;
 }

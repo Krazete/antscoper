@@ -1,41 +1,7 @@
 import re
 from datetime import datetime
 
-class Chronos:
-    def __init__(self, timespans=[]):
-        self.times = []
-        for timespan in timespans:
-            self.insert_timespan(timespan)
-
-    def insert_timespan(self, timespan):
-        time_a, time_b = timespan
-        a = self.insert_time(time_a)
-        b = self.insert_time(time_b)
-        self.times = self.times[:a + 1] + self.times[b:]
-
-    def insert_time(self, time):
-        i = self.get_index(time)
-        self.times = self.times[:i] + [time] + self.times[i:]
-        return i
-
-    def get_index(self, new_time):
-        for i, time in enumerate(self.times):
-            if new_time <= time:
-                return i
-        return len(self.times)
-
-    def get_timespans(self):
-        evens = self.times[0::2]
-        odds = self.times[1::2]
-        return zip(evens, odds)
-
-    def __iter__(self):
-        return iter(self.get_timespans())
-
-    def __repr__(self):
-        return str(self.get_timespans())
-
-def parse_document(database, document):
+def parse_document(database, document, yearterm):
     'Extract room data from a websoc document.'
     t, p, m = get_timeplace_indices(document)
     for block in iter_block(document):
@@ -50,31 +16,18 @@ def parse_document(database, document):
             building, room = parse_place(place)
             database.setdefault(building, {})
             database[building].setdefault(room, {
-                'su': Chronos(),
-                'm': Chronos(),
-                'tu': Chronos(),
-                'w': Chronos(),
-                'th': Chronos(),
-                'f': Chronos(),
-                'sa': Chronos(),
-                'datestamp': get_datestamp(document)
+                'su': set(),
+                'm': set(),
+                'tu': set(),
+                'w': set(),
+                'th': set(),
+                'f': set(),
+                'sa': set(),
+                'yearterm': yearterm
             })
             for day in days:
-                database[building][room][day].insert_timespan(hours)
+                database[building][room][day].add(hours)
     return database
-
-def get_datestamp(document):
-    'Find the date of the document.'
-    lines = document.split('\n')
-    for line in lines:
-        if 'Currently in week' in line:
-            break
-        datestrings = re.findall('Term ended on (\w+day, \w+ \d+, \d+)', line)
-        if datestrings:
-            datestring = datestrings[0]
-            timestamp = datetime.strptime(datestring, "%A, %B %d, %Y")
-            return timestamp.date()
-    return datetime.now().date()
 
 def get_timeplace_indices(document):
     'Find the indices of Time, Place, and Max on a line.'
@@ -116,7 +69,7 @@ def parse_time(time):
             if hours[0] < hours[1]:
                 hours[0] += 12
             hours[1] += 12
-    return days, hours
+    return days, tuple(hours)
 
 def parse_place(place):
     'Extract building and room from a websoc place string.'

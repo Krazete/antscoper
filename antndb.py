@@ -4,7 +4,7 @@ class Schedule(ndb.Model):
     building = ndb.StringProperty()
     room = ndb.StringProperty()
     schedule = ndb.JsonProperty()
-    datestamp = ndb.DateProperty()
+    yearterm = ndb.StringProperty()
 
 def get(filter=None, keys_only=True):
     'Get a list of specific entities or their keys.'
@@ -13,11 +13,11 @@ def get(filter=None, keys_only=True):
         query = query.filter(ndb.query.FilterNode(filter.split(' ')))
     return query.fetch(keys_only=keys_only)
 
-def set(id, building, room, schedule, datestamp):
+def set(id, building, room, schedule, yearterm):
     'Add or change an entity in the Schedule model.'
     entity = Schedule(
         id=id, building=building, room=room,
-        schedule=schedule, datestamp=datestamp
+        schedule=schedule, yearterm=yearterm
     )
     key = entity.put()
     return key

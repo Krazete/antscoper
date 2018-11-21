@@ -37,7 +37,7 @@ class Data(webapp2.RequestHandler):
             database.setdefault(building, {})
             database[building].setdefault(room, {
                 'schedule': schedule.schedule,
-                'datestamp': schedule.datestamp.isoformat()
+                'yearterm': schedule.yearterm
             })
         datajson = json.dumps(database)
         self.response.write(datajson)
