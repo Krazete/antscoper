@@ -6,6 +6,7 @@ function initLegend() {
     scroller = document.getElementById("scroller");
     dynamicStyle = document.getElementById("dynamic-style");
     initScanline();
+    initSearch();
     initDays();
     initTime();
 }
@@ -18,6 +19,21 @@ function initScanline() {
         scanline.style.left = (e.x - legendBox.x) + "px";
     }
     legend.addEventListener("mousemove", followMouse);
+}
+
+function initSearch() {
+    var search = document.getElementById("search");
+    function filter() {
+        var lower = this.value.toLowerCase();
+        for (var building in database) {
+            var block = document.getElementById(building);
+            block.classList.add("hidden");
+            if (building.includes(lower)) {
+                block.classList.remove("hidden");
+            }
+        }
+    }
+    search.addEventListener("input", filter);
 }
 
 function initDays() {
