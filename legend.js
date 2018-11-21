@@ -4,10 +4,19 @@ var scroller, dynamicStyle;
 function initLegend() {
     scroller = document.getElementById("scroller");
     dynamicStyle = document.getElementById("dynamic-style");
-    initDays();
     initScanline();
+    initDays();
     initTime();
-    initTimeline();
+}
+
+function initScanline() {
+    var legend = document.getElementById("legend");
+    var scanline = document.getElementById("scanline");
+    function followMouse(e) {
+        var legendBox = legend.getBoundingClientRect();
+        scanline.style.left = (e.x - legendBox.x) + "px";
+    }
+    legend.addEventListener("mousemove", followMouse);
 }
 
 function initDays() {
@@ -33,16 +42,6 @@ function initDays() {
     selectDay(today);
 }
 
-function initScanline() {
-    var legend = document.getElementById("legend");
-    var scanline = document.getElementById("scanline");
-    function followMouse(e) {
-        var legendBox = legend.getBoundingClientRect();
-        scanline.style.left = (e.x - legendBox.x) + "px";
-    }
-    legend.addEventListener("mousemove", followMouse);
-}
-
 function initTime() {
     function updateTime() {
         var date = new Date();
@@ -63,7 +62,7 @@ function initTimeline(day) {
     function newTimeheader(building) {
         var timeheader = document.createElement("div");
             timeheader.className = "timeheader";
-            timeheader.dataset.building = building;
+            timeheader.id = building;
         return timeheader;
     }
     function newTimetable(building, day) {
