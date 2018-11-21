@@ -3,7 +3,8 @@ import json
 import urllib
 import traceback
 import antndb
-from scrape import scrape, websoc
+from scrape import scrape
+from websoc import YEAR_NOW
 
 class Index(webapp2.RequestHandler):
     def get(self):
@@ -33,7 +34,7 @@ class Data(webapp2.RequestHandler):
         database = {}
         for schedule in antndb.Schedule.query().fetch():
             year = int(schedule.yearterm.split('-')[0])
-            if year >= websoc.YEAR_NOW - 1: # show this year and last year only
+            if year >= YEAR_NOW - 1: # show this year and last year only
                 building = schedule.building
                 room = schedule.room
                 database.setdefault(building, {})
