@@ -50,22 +50,6 @@ function initMap() {
     	watcherBubble.redraw();
 
     	watcherMarker.setLatLng(location.latlng);
-
-        for (var bldg of geo) {
-            if (bldg.name.includes("(")) {
-        		bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
-        		bldg.watcherBubble.setStyle({
-        			"fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
-        		});
-
-                for (var e of database) {
-                    if (bldg.name.includes(e.id.split(" ")[0])) {
-                        e.distance = bldg.distance;
-                    }
-                }
-            }
-        }
-        //timetable.sortByProperty("distance");
     }
 
     function onLeafletLocateError(e) {
