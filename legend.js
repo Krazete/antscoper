@@ -69,7 +69,7 @@ function initTimeline(day) {
         var timetable = document.createElement("div");
             timetable.className = "timetable";
             timetable.appendChild(newTimeline(building));
-            for (var room in database[building]) {
+            for (var room of sortedKeys(database[building])) {
                 timetable.appendChild(newTimeline(building, room, day));
             }
         return timetable;
@@ -128,7 +128,15 @@ function initTimeline(day) {
         }
         return hour + ":" + (minute < 10 ? "0" : "") + minute + meridiem;
     }
-    for (var building in database) {
+    function sortedKeys(dict) {
+        var keys = Object.keys(dict);
+        keys.sort(byAlpha);
+        return keys;
+    }
+    function byAlpha(a, b) {
+        return a < b ? -1 : a > b ? 1 : 0;
+    }
+    for (var building of sortedKeys(database)) {
         scroller.appendChild(newTimeheader(building));
         scroller.appendChild(newTimetable(building, day));
     }
