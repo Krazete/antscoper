@@ -24,17 +24,20 @@ function initMap() {
     });
     watcherMarker.addTo(leafletmap);
 
-    geo.filter(e => e.name.includes("(")).forEach(function(bldg) {
-    	bldg.latlng = L.latLng(bldg.lat, bldg.lng);
-    	bldg.watcherBubble = L.circle(bldg.latlng, 15, {
-    		"weight": 1,
-    		"color": "#0064a4",
-    		"fillOpacity": 0,
-    		"renderer": myRenderer
-    	});
-    	bldg.watcherBubble.bindPopup(bldg.name);
-    	bldg.watcherBubble.addTo(leafletmap);
-    });
+    for (var bldg of geo) {
+        if (bldg.name.includes("(")) {
+            bldg.latlng = L.latLng(bldg.lat, bldg.lng);
+        	bldg.watcherBubble = L.circle(bldg.latlng, 15, {
+        		"weight": 1,
+        		"color": "#0064a4",
+        		"fillOpacity": 0,
+        		"renderer": myRenderer
+        	});
+            var inParen = bldg.name.match(/\((.+?)\)/);
+        	bldg.watcherBubble.bindPopup("<a href=\"#" + (inParen ? inParen[1].toLowerCase() : "") + "\">" + bldg.name + "</a>");
+        	bldg.watcherBubble.addTo(leafletmap);
+        }
+    }
 
     function onLeafletLocate(location) {
     	watcherBubble.setLatLng(location.latlng);
@@ -48,15 +51,20 @@ function initMap() {
 
     	watcherMarker.setLatLng(location.latlng);
 
-    	geo.filter(e => e.name.includes("(")).forEach(function(bldg) {
-    		bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
-    		bldg.watcherBubble.setStyle({
-    			"fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
-    		});
+        for (var bldg of geo) {
+            if (bldg.name.includes("(")) {
+        		bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
+        		bldg.watcherBubble.setStyle({
+        			"fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
+        		});
 
-            database.filter(e => bldg.name.includes(e.id.split(" ")[0]))
-            .forEach(e => e.distance = bldg.distance);
-    	});
+                for (var e of database) {
+                    if (bldg.name.includes(e.id.split(" ")[0])) {
+                        e.distance = bldg.distance;
+                    }
+                }
+            }
+        }
         //timetable.sortByProperty("distance");
     }
 
