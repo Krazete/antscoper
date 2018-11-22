@@ -37,4 +37,11 @@ TODO:
         add some search feature
         allow building to be clicked
         etc
+        
+// optimize database requests (for quota limit)
+// change last_active to active_quarters
+// only request last four quarters from database
+// keep copy of mapbox data
+// only request rooms database with building abbreviations found in mapbox data
+
 '''

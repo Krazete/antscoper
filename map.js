@@ -50,6 +50,15 @@ function initMap() {
     	watcherBubble.redraw();
 
     	watcherMarker.setLatLng(location.latlng);
+
+        for (var bldg of geo) {
+            if (bldg.name.includes("(")) {
+                bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
+        		bldg.watcherBubble.setStyle({
+        			"fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
+        		});
+            }
+        }
     }
 
     function onLeafletLocateError(e) {
@@ -60,15 +69,3 @@ function initMap() {
     watcher.on("locationfound", onLeafletLocate);
     watcher.on("locationerror", onLeafletLocateError);
 }
-
-// Major
-// optimize database requests (for quota limit)
-// change last_active to active_quarters
-// only request last four quarters from database
-// keep copy of mapbox data
-// only request rooms database with building abbreviations found in mapbox data
-// verify that Array.prototype.filter causes a problem in mobile Safari
-//
-// Minor
-// change data retrieval methods (use codes directly instead of checking websoc form)
-// stop retrieval methods from requesting COM quarter data
