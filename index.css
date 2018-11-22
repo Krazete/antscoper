@@ -1,4 +1,5 @@
 html {
+    font-family: 'Avenir', sans-serif;
     --color-1: #137;
     --color-1a: rgba(17, 51, 119, 0);
     --color-1a: #1370;
@@ -22,6 +23,21 @@ html {
     display: block;
 }
 
+#about {
+    position: absolute;
+    background: black;
+    background: var(--color-1);
+    color: white;
+    color: var(--color-3);
+    font-size: 12px;
+    padding: 6px;
+    border-radius: 6px;
+    margin: 2px;
+}
+#about:after {
+    content: "About";
+}
+
 #days {
     position: absolute;
     z-index: 1;
@@ -33,7 +49,6 @@ html {
     background: var(--color-1);
     color: gray;
     color: var(--color-2);
-    font-family: 'Avenir', sans-serif;
     font-size: 12px;
     text-align: center;
     padding: 6px;
@@ -70,13 +85,16 @@ html {
     background: var(--color-2);
     color: white;
     color: var(--color-3);
-    font-family: 'Avenir', sans-serif;
 }
 #legend:before {
     content: ''
 }
 
 @media all and (orientation: landscape) {
+    #about {
+        left: 0;
+        bottom: 0;
+    }
     #days {
         right: 50%;
         top: 0;
@@ -91,6 +109,10 @@ html {
     }
 }
 @media all and (orientation: portrait) {
+    #about {
+        right: 0;
+        top: 0;
+    }
     #days {
         right: 0;
         bottom: 50%;
