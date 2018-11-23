@@ -9,7 +9,7 @@ On days when rooms are open, they are usually open from 7am to 10pm.
 Map data is taken from the same source that [UCI's official Interactive Map](https://map.uci.edu) uses.
 I probably should keep a copy for backup, but Antscoper currently calls the CDN for data on every visit.
 #### Display
-Antscoper displays the map via Leaflet, which the official UCI map also relies on.
+Antscoper displays the map via [Leaflet](https://leafletjs.com/), which the official UCI map also relies on.
 To run a local copy of Antscoper, you must also download Leaflet and include in the root directory.
 ### Schedules
 #### Daily Updates
