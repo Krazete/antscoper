@@ -25,24 +25,27 @@ class Map(webapp2.RequestHandler):
             if len(mapjson) <= 0:
                 raise
         except:
-            mapjson = '[]'
+            mapjson = open('geo_backup.json').read()
         self.response.write(mapjson)
 
 class Data(webapp2.RequestHandler):
     def get(self):
         self.response.headers['Content-Type'] = 'application/json'
-        database = {}
-        for schedule in antndb.Schedule.query().fetch():
-            year = int(schedule.yearterm.split('-')[0])
-            if year >= YEAR_NOW - 1: # show this year and last year only
-                building = schedule.building
-                room = schedule.room
-                database.setdefault(building, {})
-                database[building].setdefault(room, {
-                    'schedule': schedule.schedule,
-                    'yearterm': schedule.yearterm
-                })
-        datajson = json.dumps(database)
+        try:
+            database = {}
+            for schedule in antndb.Schedule.query().fetch():
+                year = int(schedule.yearterm.split('-')[0])
+                if year >= YEAR_NOW - 1: # show this year and last year only
+                    building = schedule.building
+                    room = schedule.room
+                    database.setdefault(building, {})
+                    database[building].setdefault(room, {
+                        'schedule': schedule.schedule,
+                        'yearterm': schedule.yearterm
+                    })
+            datajson = json.dumps(database)
+        except:
+            datajson = open('database_backup.json').read()
         self.response.write(datajson)
 
 class Scrape_YearTerm(webapp2.RequestHandler):
