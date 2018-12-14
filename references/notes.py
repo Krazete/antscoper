@@ -24,7 +24,6 @@ janitors come invariably between 8:00 and 11:00
 doors lock at 9:20?
 some systems shut down at 11:50???
 some systems restart at 1:00
-painter/maintenance at 2:45?
 doors unlock at 7
 
 TODO:
@@ -32,16 +31,7 @@ TODO:
         request by building?
         request by proximity?
         request by day?
-    fix gui
-        stop going by 30-minute blocks
-        add some search feature
-        allow building to be clicked
-        etc
-        
-// optimize database requests (for quota limit)
-// change last_active to active_quarters
-// only request last four quarters from database
-// keep copy of mapbox data
-// only request rooms database with building abbreviations found in mapbox data
+    optimize database requests (for quota limit)
+    keep copy of mapbox data
 
 '''
