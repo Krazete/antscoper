@@ -1,18 +1,34 @@
 var days = ["sun", "mon", "tue", "wed", "thu", "fri", "sat"];
-var today, scroller, dynamicStyle;
+var today, legend, scroller, dynamicStyle;
 
 function initLegend() {
     today = new Date().getDay();
+    legend = document.getElementById("legend");
     scroller = document.getElementById("scroller");
     dynamicStyle = document.getElementById("dynamic-style");
+    if (databaseIsEmpty()) {
+        legend.classList.add("noclass");
+    }
     initScanline();
     initSearch();
     initDays();
     initTime();
 }
 
+function databaseIsEmpty() {
+    for (building in database) {
+        for (room in database[building]) {
+            for (sch of database[building][room].schedule) {
+                if (sch.length > 0) {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
 function initScanline() {
-    var legend = document.getElementById("legend");
     var scanline = document.getElementById("scanline");
     function followMouse(e) {
         var legendBox = legend.getBoundingClientRect();

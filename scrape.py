@@ -8,10 +8,9 @@ def scrape(years=[], terms=[]):
             yeartermdocs = websoc.iter_websoc(years, terms, only_now=False)
         else:
             yeartermdocs = websoc.iter_websoc(years, only_now=False)
-        keys = antndb.get()
     else:
         yeartermdocs = websoc.iter_websoc()
-        keys = []
+    keys = antndb.get()
 
     database = {}
     for yearterm, document in yeartermdocs:
