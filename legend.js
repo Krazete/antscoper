@@ -49,7 +49,13 @@ function initSearch() {
             }
         }
     }
+    function exitSearch(e) {
+        if (e.keyCode == 13) {
+            this.blur();
+        }
+    }
     search.addEventListener("input", filter);
+    search.addEventListener("keydown", exitSearch);
 }
 
 function initDays() {
