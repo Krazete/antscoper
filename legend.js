@@ -38,9 +38,9 @@ function initScanline() {
 }
 
 function initSearch() {
-    var search = document.getElementById("search");
-    function filter() {
-        var lower = search.value.toLowerCase();
+    var query = document.getElementById("query");
+    function search() {
+        var lower = query.value.toLowerCase();
         for (var building in database) {
             var block = document.getElementById(building);
             block.classList.add("hidden");
@@ -54,13 +54,13 @@ function initSearch() {
             this.blur();
         }
     }
-    function searchHash() {
-        search.value = location.hash.slice(1);
-        filter();
+    function hashSearch() {
+        query.value = decodeURIComponent(location.hash.slice(1));
+        search();
     }
-    search.addEventListener("input", filter);
-    search.addEventListener("keydown", exitSearch);
-    window.addEventListener("hashchange", searchHash);
+    query.addEventListener("input", search);
+    query.addEventListener("keydown", exitSearch);
+    window.addEventListener("hashchange", hashSearch);
 }
 
 function initDays() {
