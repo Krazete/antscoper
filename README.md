@@ -12,7 +12,8 @@ Rooms are sometimes reserved (especially before exams), so be prepared to leave 
 ### Map
 #### Data
 Map data is taken from the same source that [UCI's official Interactive Map](https://map.uci.edu) uses.
-I probably should keep a copy for backup, but Antscoper currently calls the CDN for data on every visit.
+Antscoper calls the CDN for data on every visit.
+If it fails to load, Antscoper uses `geo_backup.json` instead.
 #### Display
 Antscoper displays the map via [Leaflet](https://leafletjs.com/), which the official UCI map also relies on.
 To run a local copy of Antscoper, you must also download Leaflet and include in the root directory.
@@ -20,7 +21,9 @@ To run a local copy of Antscoper, you must also download Leaflet and include in 
 #### Daily Updates
 Room schedules are scraped daily from [WebSOC](https://www.reg.uci.edu/perl/WebSoc) every day at 6am.
 Every scraping of WebSOC deletes all previously recorded schedules.
-Every time the website is opened, Antscoper queries the entire database. It probably shouldn't do this.
+Every time the website is opened, Antscoper queries the entire database.
+It probably shouldn't do this.
+If the database fails to load, Antscoper uses `database_backup.json` instead.
 #### Database
 Antscoper was initialized with all of WebSOC's data, meaning its database includes rooms from 1990 to now.
 The website only shows rooms which have had some schedule this year or the past year.
