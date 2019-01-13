@@ -1,8 +1,13 @@
 # Antscoper
 Antscoper is a tool for viewing the class schedule of every single classroom and lecture hall at UCI.
-It was made to easily find vacancies between classes (I personally used vacant classes as an alternative to reserving a study room).
 
-Please note that rooms are typically closed on weekends and holidays. On days when rooms are open, they are usually open from 7am to 10pm.  
+It can be used to easily find vacant classrooms to use as study rooms or theater rooms.
+
+Please note that rooms are typically closed on weekends and holidays.
+On days when rooms are open, they are usually open from 7am to 10pm.
+Rooms are sometimes reserved (especially before exams), so be prepared to leave a vacant classroom if asked.
+
+<img src="sample.png">
 
 ## Inner Workings
 ### Map
