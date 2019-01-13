@@ -1,6 +1,5 @@
 # Antscoper
 Antscoper is a tool for viewing the class schedule of every single classroom and lecture hall at UCI.
-
 It can be used to easily find vacant classrooms to use as study rooms or theater rooms.
 
 Please note that rooms are typically closed on weekends and holidays.
@@ -26,3 +25,8 @@ Every time the website is opened, Antscoper queries the entire database. It prob
 Antscoper was initialized with all of WebSOC's data, meaning its database includes rooms from 1990 to now.
 The website only shows rooms which have had some schedule this year or the past year.
 Rooms whose latest activity was two years ago or more are assumed to be presently nonexistent.
+
+## Issues
+### Quota
+The website can only handle approximately twenty requests per day.
+This is because I don't know how to efficiently fetch data from Google Cloud Datastore and the website does not dynamically load content.
