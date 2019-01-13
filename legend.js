@@ -98,7 +98,7 @@ function initTime() {
         return time;
     }
     var time = updateTime();
-    scroller.scrollTo(time * 1500/24, 0);
+    scroller.scrollTo((time - 1) * 1500/24, 0);
 }
 
 function initTimeline(day) {
