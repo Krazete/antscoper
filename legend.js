@@ -40,7 +40,7 @@ function initScanline() {
 function initSearch() {
     var search = document.getElementById("search");
     function filter() {
-        var lower = this.value.toLowerCase();
+        var lower = search.value.toLowerCase();
         for (var building in database) {
             var block = document.getElementById(building);
             block.classList.add("hidden");
@@ -54,8 +54,13 @@ function initSearch() {
             this.blur();
         }
     }
+    function searchHash() {
+        search.value = location.hash.slice(1);
+        filter();
+    }
     search.addEventListener("input", filter);
     search.addEventListener("keydown", exitSearch);
+    window.addEventListener("hashchange", searchHash);
 }
 
 function initDays() {
