@@ -17,7 +17,7 @@ function init() {
 function search() {
     var lower = query.value.toLowerCase();
     function updateResults() {
-        if (noResults()) {
+        if (lower in database) {
             legend.classList.add("noclass");
         }
         else {
@@ -30,21 +30,6 @@ function search() {
                 block.classList.remove("hidden");
             }
         }
-    }
-    function noResults() {
-        for (building in database) {
-            var lower = query.value.toLowerCase();
-            if (!lower || lower == building) {
-                for (room in database[building]) {
-                    for (sch of database[building][room].schedule) {
-                        if (sch.length > 0) {
-                            return false;
-                        }
-                    }
-                }
-            }
-        }
-        return true;
     }
     if (lower in database) {
         initTimeline(today);
