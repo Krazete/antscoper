@@ -53,13 +53,15 @@ class Data(webapp2.RequestHandler):
         try:
             query = antndb.Schedule.query().filter(antndb.ndb.StringProperty('building') == building)
             for schedule in query.fetch():
-                building = schedule.building
-                room = schedule.room
-                database.setdefault(building, {})
-                database[building].setdefault(room, {
-                    'schedule': schedule.schedule,
-                    'yearterm': schedule.yearterm
-                })
+                year = int(schedule.yearterm.split('-')[0])
+                if year >= YEAR_NOW - 1: # show this year and last year only
+                    building = schedule.building
+                    room = schedule.room
+                    database.setdefault(building, {})
+                    database[building].setdefault(room, {
+                        'schedule': schedule.schedule,
+                        'yearterm': schedule.yearterm
+                    })
         except:
             database.setdefault('error', {
                 'over': {
