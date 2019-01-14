@@ -61,7 +61,16 @@ class Data(webapp2.RequestHandler):
                     'yearterm': schedule.yearterm
                 })
         except:
-            self.response.write('ERROR')
+            database.setdefault('error', {
+                'over': {
+                    'schedule': [[],[],[],[],[],[],[]],
+                    'yearterm': '0000-00'
+                },
+                'quota': {
+                    'schedule': [[],[],[],[],[],[],[]],
+                    'yearterm': '0000-00'
+                }
+            })
         datajson = json.dumps(database)
         self.response.write(datajson)
 
