@@ -17,11 +17,11 @@ function init() {
 function search() {
     var lower = query.value.toLowerCase();
     function updateResults() {
-        if (lower in database) {
-            legend.classList.add("noclass");
+        if (!lower || lower in database) {
+            legend.classList.remove("noclass");
         }
         else {
-            legend.classList.remove("noclass");
+            legend.classList.add("noclass");
         }
         for (var building in database) {
             var block = document.getElementById(building);
