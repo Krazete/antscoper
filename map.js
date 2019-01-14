@@ -25,18 +25,25 @@ function initMap() {
     watcherMarker.addTo(leafletmap);
 
     for (var bldg of geo) {
-        if (bldg.name.includes("(")) {
-            bldg.latlng = L.latLng(bldg.lat, bldg.lng);
-        	bldg.watcherBubble = L.circle(bldg.latlng, 15, {
-        		"weight": 1,
-        		"color": "#0064a4",
-        		"fillOpacity": 0,
-        		"renderer": myRenderer
-        	});
-            var inParen = bldg.name.match(/\((.+?)\)/);
-        	bldg.watcherBubble.bindPopup("<a href=\"#" + (inParen ? inParen[1].toLowerCase() : "") + "\">" + bldg.name + "</a>");
-        	bldg.watcherBubble.addTo(leafletmap);
-        }
+        (function (bldg) {
+            if (bldg.name.includes("(")) {
+                bldg.latlng = L.latLng(bldg.lat, bldg.lng);
+            	bldg.watcherBubble = L.circle(bldg.latlng, 15, {
+            		"weight": 1,
+            		"color": "#0064a4",
+            		"fillOpacity": 0,
+            		"renderer": myRenderer
+            	});
+                var inParen = bldg.name.match(/\((.+?)\)/);
+            	bldg.watcherBubble.bindPopup(function () {
+                    var anchor = document.createElement("a");
+                    anchor.href = "#" + (inParen ? inParen[1].toLowerCase() : "");
+                    anchor.innerHTML = bldg.name;
+                    return anchor;
+                });
+            	bldg.watcherBubble.addTo(leafletmap);
+            }
+        })(bldg);
     }
 
     function onLeafletLocate(location) {

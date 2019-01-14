@@ -47,6 +47,23 @@ class Data(webapp2.RequestHandler):
         except:
             datajson = open('database_backup.json').read()
         self.response.write(datajson)
+    def post(self):
+        building = self.request.get('building', 'alh')
+        database = {}
+        try:
+            query = antndb.Schedule.query().filter(antndb.ndb.StringProperty('building') == building)
+            for schedule in query.fetch():
+                building = schedule.building
+                room = schedule.room
+                database.setdefault(building, {})
+                database[building].setdefault(room, {
+                    'schedule': schedule.schedule,
+                    'yearterm': schedule.yearterm
+                })
+        except:
+            self.response.write('ERROR')
+        datajson = json.dumps(database)
+        self.response.write(datajson)
 
 class Scrape_YearTerm(webapp2.RequestHandler):
     def get(self):

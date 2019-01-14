@@ -6,26 +6,9 @@ function initLegend() {
     legend = document.getElementById("legend");
     scroller = document.getElementById("scroller");
     dynamicStyle = document.getElementById("dynamic-style");
-    if (databaseIsEmpty()) {
-        legend.classList.add("noclass");
-    }
     initScanline();
-    initSearch();
     initDays();
     initTime();
-}
-
-function databaseIsEmpty() {
-    for (building in database) {
-        for (room in database[building]) {
-            for (sch of database[building][room].schedule) {
-                if (sch.length > 0) {
-                    return false;
-                }
-            }
-        }
-    }
-    return true;
 }
 
 function initScanline() {
@@ -35,32 +18,6 @@ function initScanline() {
         scanline.style.left = (e.x - legendBox.x) + "px";
     }
     legend.addEventListener("mousemove", followMouse);
-}
-
-function initSearch() {
-    var query = document.getElementById("query");
-    function search() {
-        var lower = query.value.toLowerCase();
-        for (var building in database) {
-            var block = document.getElementById(building);
-            block.classList.add("hidden");
-            if (building.includes(lower)) {
-                block.classList.remove("hidden");
-            }
-        }
-    }
-    function exitSearch(e) {
-        if (e.keyCode == 13) {
-            this.blur();
-        }
-    }
-    function hashSearch() {
-        query.value = decodeURIComponent(location.hash.slice(1));
-        search();
-    }
-    query.addEventListener("input", search);
-    query.addEventListener("keydown", exitSearch);
-    window.addEventListener("hashchange", hashSearch);
 }
 
 function initDays() {
@@ -75,8 +32,7 @@ function initDays() {
             dayButton.classList.remove("selected");
         }
         todayButton.classList.add("selected");
-        scroller.innerHTML = "";
-        initTimeline(day);
+        search();
     }
     for (var id of days) {
         var dayButton = document.getElementById(id);
@@ -85,23 +41,23 @@ function initDays() {
     selectDay(today);
 }
 
-function initTime() {
-    function updateTime() {
-        var date = new Date();
-        var time = date.getHours() + date.getMinutes() / 60;
-        var percent = 100 * time / 24;
-        dynamicStyle.innerHTML = `.timetable {
-            background: linear-gradient(to right, gray ${percent}%, white ${percent}%);
-            background: linear-gradient(to right, var(--color-2) ${percent}%, var(--color-3) ${percent}%);
-        }`;
-        setTimeout(updateTime, 60000);
-        return time;
-    }
-    var time = updateTime();
-    scroller.scrollTo((time - 1) * 1500/24, 0);
+function getTime() {
+    var date = new Date();
+    var time = date.getHours() + date.getMinutes() / 60;
+    return time;
 }
 
-function initTimeline(day) {
+function initTime() {
+    var time = getTime();
+    var percent = 100 * time / 24;
+    dynamicStyle.innerHTML = `.timetable {
+        background: linear-gradient(to right, gray ${percent}%, white ${percent}%);
+        background: linear-gradient(to right, var(--color-2) ${percent}%, var(--color-3) ${percent}%);
+    }`;
+    setTimeout(initTime, 60000);
+}
+
+function initTimeline() {
     function newTimeheader(building) {
         var timeheader = document.createElement("div");
             timeheader.className = "timeheader";
@@ -126,7 +82,7 @@ function initTimeline(day) {
             if (typeof room != "undefined") {
                 timeline.dataset.room = room;
                 for (var hours of database[building][room].schedule[day]) {
-                    timeline.appendChild(newTimespan(building, room, hours[0], hours[1]));
+                    timeline.appendChild(newTimespan(building, room, hours[0], hours[1], day));
                 }
             }
         return timeline;
@@ -136,7 +92,7 @@ function initTimeline(day) {
             timeunit.className = "timeunit";
         return timeunit;
     }
-    function newTimespan(building, room, a, b) {
+    function newTimespan(building, room, a, b, day) {
         var timespan = document.createElement("div");
             timespan.className = "timespan";
             timespan.style.left = (100 * a / 24) + "%";
@@ -179,8 +135,11 @@ function initTimeline(day) {
     function byAlpha(a, b) {
         return a < b ? -1 : a > b ? 1 : 0;
     }
+    scroller.innerHTML = "";
     for (var building of sortedKeys(database)) {
         scroller.appendChild(newTimeheader(building));
-        scroller.appendChild(newTimetable(building, day));
+        scroller.appendChild(newTimetable(building, today));
     }
+    var time = getTime();
+    scroller.scrollTo((time - 1) * 1500/24, 0);
 }

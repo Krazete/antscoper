@@ -40,7 +40,12 @@ html {
 
 #days {
     position: absolute;
+    width: 0;
+    margin-right: 2px;
     z-index: 1;
+}
+#days > * {
+    transform: translate(-100%, 0);
 }
 
 .day {
@@ -87,7 +92,7 @@ html {
     color: var(--color-3);
 }
 #legend.noclass:before {
-    content: 'There are no classes in session today.';
+    content: 'No results.';
     position: absolute;
     width: 100%;
     height: 100%;

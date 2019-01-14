@@ -21,15 +21,18 @@ To run a local copy of Antscoper, you must also download Leaflet and include in 
 #### Daily Updates
 Room schedules are scraped daily from [WebSOC](https://www.reg.uci.edu/perl/WebSoc) every day at 6am.
 Every scraping of WebSOC deletes all previously recorded schedules.
-Every time the website is opened, Antscoper queries the entire database.
-It probably shouldn't do this.
-If the database fails to load, Antscoper uses `database_backup.json` instead.
+#### Legend
+The legend displays schedules from the database.
+Due to quota limits, the legend will not activate until a query is entered in the search box.
+Clicking a map popup also automatically enters a query and thus activates the legend.
+An active legend will show the schedule information for the relevant building on the selected day.
+
+A query must consist of a building's abbreviated name.
+The full building name will likely not bring up any results.
+All results are stored until the page is closed.
 #### Database
 Antscoper was initialized with all of WebSOC's data, meaning its database includes rooms from 1990 to now.
 The website only shows rooms which have had some schedule this year or the past year.
 Rooms whose latest activity was two years ago or more are assumed to be presently nonexistent.
-
-## Issues
-### Quota
-The website can only handle approximately twenty requests per day.
-This is because I don't know how to efficiently fetch data from Google Cloud Datastore and the website does not dynamically load content.
+The entire database can be accessed from `data.json`, though this is avoided due to quota limits.
+If the database ever fails to load, Antscoper uses `database_backup.json` instead.

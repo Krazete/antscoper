@@ -1,20 +1,85 @@
-var data, geo;
+var query;
+var database = {};
+var geo = [];
 
 function init() {
-    load("./map.json").then(function (response) {
-        geo = response;
+    query = document.getElementById("query");
+    load("GET", "./map.json").then(function (response) {
+        for (var item of response) {
+            geo.push(item);
+        }
         initMap();
     });
-    load("./data.json").then(function (response) {
-        database = response;
-        initLegend();
-    });
+    initLegend();
+    initSearch();
 }
 
-function load(path) {
+function search() {
+    var lower = query.value.toLowerCase();
+    function updateResults() {
+        if (noResults()) {
+            legend.classList.add("noclass");
+        }
+        else {
+            legend.classList.remove("noclass");
+        }
+        for (var building in database) {
+            var block = document.getElementById(building);
+            block.classList.add("hidden");
+            if (building.includes(lower)) {
+                block.classList.remove("hidden");
+            }
+        }
+    }
+    function noResults() {
+        for (building in database) {
+            var lower = query.value.toLowerCase();
+            if (!lower || lower == building) {
+                for (room in database[building]) {
+                    for (sch of database[building][room].schedule) {
+                        if (sch.length > 0) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+    if (lower in database) {
+        initTimeline(today);
+        updateResults();
+    }
+    else {
+        load("POST", "./data.json?building=" + lower).then(function (response) {
+            for (var key in response) {
+                database[key] = response[key];
+            }
+            initTimeline(today);
+            updateResults();
+        });
+    }
+}
+
+function initSearch() {
+    function exitSearch(e) {
+        if (e.keyCode == 13) {
+            this.blur();
+        }
+    }
+    function hashSearch() {
+        query.value = decodeURIComponent(location.hash.slice(1));
+        search();
+    }
+    query.addEventListener("change", search);
+    query.addEventListener("keydown", exitSearch);
+    window.addEventListener("hashchange", hashSearch);
+}
+
+function load(method, path) {
     function request(resolve, reject) {
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", path, true);
+        xhr.open(method, path, true);
         xhr.onload = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 resolve(JSON.parse(this.response));
