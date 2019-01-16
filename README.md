@@ -36,3 +36,9 @@ An active legend will show schedule information for the relevant building on the
 A query must consist of a building's abbreviated name.
 The full building name will likely not bring up any results.
 All results are stored until the page is closed.
+
+## Efficiency
+The day after announcing this project on [Reddit](https://www.reddit.com/r/UCI/comments/ag50qk/i_made_a_thing_with_websoc/), there were 178 users and 209 sessions with an average duration of 38 seconds (according to Google Analytics).
+The screenshot below displays daily quota usage which resulted from this day.
+
+<img src="quota.png">
