@@ -6,12 +6,12 @@ function initMap() {
         "worldCopyJump": true
     });
     var myRenderer = L.svg({
-    	"padding": 2
+        "padding": 2
     });
     var tiles = L.tileLayer("https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw", {
-    	"maxZoom": 18,
-    	"id": "mapbox.streets",
-    	"worldCopyJump": true
+        "maxZoom": 18,
+        "id": "mapbox.streets",
+        "worldCopyJump": true
     });
     tiles.addTo(leafletmap);
 
@@ -20,7 +20,7 @@ function initMap() {
 
     var watcherMarker = L.marker([90, 180]);
     watcherMarker.on("click", function() {
-    	leafletmap.setView(watcherMarker.getLatLng(), 16);
+        leafletmap.setView(watcherMarker.getLatLng(), 16);
     });
     watcherMarker.addTo(leafletmap);
 
@@ -28,48 +28,48 @@ function initMap() {
         (function (bldg) {
             if (bldg.name.includes("(")) {
                 bldg.latlng = L.latLng(bldg.lat, bldg.lng);
-            	bldg.watcherBubble = L.circle(bldg.latlng, 15, {
-            		"weight": 1,
-            		"color": "#0064a4",
-            		"fillOpacity": 0,
-            		"renderer": myRenderer
-            	});
+                bldg.watcherBubble = L.circle(bldg.latlng, 15, {
+                    "weight": 1,
+                    "color": "#0064a4",
+                    "fillOpacity": 0,
+                    "renderer": myRenderer
+                });
                 var inParen = bldg.name.match(/\((.+?)\)/);
-            	bldg.watcherBubble.bindPopup(function () {
+                bldg.watcherBubble.bindPopup(function () {
                     var anchor = document.createElement("a");
                     anchor.href = "#" + (inParen ? inParen[1].toLowerCase() : "");
                     anchor.innerHTML = bldg.name;
                     return anchor;
                 });
-            	bldg.watcherBubble.addTo(leafletmap);
+                bldg.watcherBubble.addTo(leafletmap);
             }
         })(bldg);
     }
 
     function onLeafletLocate(location) {
-    	watcherBubble.setLatLng(location.latlng);
-    	watcherBubble.setRadius(location.accuracy);
-    	watcherBubble.setStyle({
-    		"stroke": false,
-    		"color": "#6aa2b8",
-    		"opacity": 0.75
-    	});
-    	watcherBubble.redraw();
+        watcherBubble.setLatLng(location.latlng);
+        watcherBubble.setRadius(location.accuracy);
+        watcherBubble.setStyle({
+            "stroke": false,
+            "color": "#6aa2b8",
+            "opacity": 0.75
+        });
+        watcherBubble.redraw();
 
-    	watcherMarker.setLatLng(location.latlng);
+        watcherMarker.setLatLng(location.latlng);
 
         for (var bldg of geo) {
             if (bldg.name.includes("(")) {
                 bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
-        		bldg.watcherBubble.setStyle({
-        			"fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
-        		});
+                bldg.watcherBubble.setStyle({
+                    "fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
+                });
             }
         }
     }
 
     function onLeafletLocateError(e) {
-    	console.log(e.message);
+        console.log(e.message);
     }
 
     var watcher = leafletmap.locate({"watch": true});
