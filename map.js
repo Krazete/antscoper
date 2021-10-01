@@ -2,7 +2,7 @@ function initMap() {
     /* Leaflet */
     var leafletmap = L.map("map", {
         "center": [33.64625, -117.84215],
-        "zoom": 16,
+        "zoom": 17,
         "worldCopyJump": true
     });
     var myRenderer = L.svg({
@@ -10,8 +10,9 @@ function initMap() {
     });
     var tiles = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         "maxZoom": 18,
+        "tileSize": 512,
+        "zoomOffset": -1,
         "id": "mapbox/streets-v11",
-        "worldCopyJump": true,
         "accessToken": "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
     });
     tiles.addTo(leafletmap);
@@ -30,7 +31,7 @@ function initMap() {
             if (bldg.name.includes("(")) {
                 bldg.latlng = L.latLng(bldg.lat, bldg.lng);
                 bldg.watcherBubble = L.circle(bldg.latlng, 15, {
-                    "weight": 1,
+                    "weight": 2,
                     "color": "#0064a4",
                     "fillOpacity": 0,
                     "renderer": myRenderer
