@@ -28,7 +28,7 @@ function initMap() {
 
     for (var bldg of geo) {
         (function (bldg) {
-            if (bldg.name.includes("(")) {
+            if (bldg.name.includes("(") && !bldg.name.includes("Minutes)")) {
                 bldg.latlng = L.latLng(bldg.lat, bldg.lng);
                 bldg.watcherBubble = L.circle(bldg.latlng, 15, {
                     "weight": 2,
