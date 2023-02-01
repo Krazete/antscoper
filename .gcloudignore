@@ -1,0 +1,5 @@
+*.pyc
+*.pyo
+references
+README.md
+vacancy.js
