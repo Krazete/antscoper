@@ -84,4 +84,4 @@ if __name__ == '__main__':
     for d in test_websoc_parse.data:
         parse_document(database, d)
     for d in database:
-        print d, database[d]
+        print(d, database[d])
