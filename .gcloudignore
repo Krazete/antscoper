@@ -1,5 +1,6 @@
 *.pyc
 *.pyo
+.git
 references
 README.md
 vacancy.js
