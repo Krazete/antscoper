@@ -78,7 +78,7 @@ def data_post():
             }
         })
     datajson = json.dumps(database)
-    return Response(datajson, mimetype=contenttype)
+    return Response(datajson)
 
 @app.route('/scrape_yearterm')
 def scrape_yearterm_get():
@@ -103,4 +103,4 @@ def scrape_yearterm_post():
         year_value = str(year) # preserve year
         input_index = str([0, 03, 14, 25, 39, 76, 92].index(term)) # preserve term
     content += template.replace('{YEAR_VALUE}', year_value).replace('{INPUT_INDEX}', input_index)
-    return Response(content, mimetype=contenttype)
+    return Response(content)
