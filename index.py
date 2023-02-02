@@ -104,3 +104,6 @@ def scrape_yearterm_post():
         input_index = str([0, 03, 14, 25, 39, 76, 92].index(term)) # preserve term
     content += template.replace('{YEAR_VALUE}', year_value).replace('{INPUT_INDEX}', input_index)
     return Response(content)
+
+if __name__ == '__main__':
+    app.run(host='127.0.0.1', port=8080, debug=True)
