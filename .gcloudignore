@@ -1,4 +1,5 @@
+*.pyc
 .git
-references
+venv
+exclude
 README.md
-vacancy.js

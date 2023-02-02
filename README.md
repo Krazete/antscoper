@@ -6,7 +6,7 @@ Please note that rooms are typically closed on weekends and holidays.
 On days when rooms are open, they are usually open from 7am to 10pm.
 Rooms are sometimes reserved (especially before exams), so be prepared to leave a vacant classroom if asked.
 
-<img src="sample.png">
+<img src="exclude/sample.png">
 
 ## Inner Workings
 ### Map
@@ -38,7 +38,7 @@ The full building name will likely not bring up any results.
 All results are stored until the page is closed.
 
 ## Efficiency
-The day after announcing this project on [Reddit](https://www.reddit.com/r/UCI/comments/ag50qk/i_made_a_thing_with_websoc/), there were 178 users and 209 sessions with an average duration of 38 seconds (according to Google Analytics).
+The day after announcing this project on [Reddit](https://redd.it/ag50qk), there were 178 users and 209 sessions with an average duration of 38 seconds (according to Google Analytics).
 The screenshot below displays daily quota usage which resulted from this day.
 
-<img src="quota.png">
+<img src="exclude/quota.png">

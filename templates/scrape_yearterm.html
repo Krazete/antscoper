@@ -10,7 +10,7 @@
     <form action="scrape_yearterm" method="post">
         YEAR
         <br>
-        <input type="number" name="year" min="1990" max="9999" value="{YEAR_VALUE}">
+        <input type="number" name="year" min="1990" max="9999" value="{{ year_value }}">
         <br><br>
         TERM
         <br>
@@ -29,7 +29,7 @@
         <input type="submit" value="Submit">
     </form>
     <script>
-        document.forms[0][{INPUT_INDEX}].checked = true;
+        document.forms[0][{{ input_index }}].checked = true;
     </script>
 </body>
 </html>
