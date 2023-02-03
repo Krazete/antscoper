@@ -21,7 +21,7 @@ def map_get():
     # - http://map.concept3d.com/?id=463
     # - https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990-03&CourseCodes=0-99999&Submit=Text
     try:
-        mapjson = urllib.request.urlopen(mapurl).read()
+        mapjson = urllib.request.urlopen(mapurl).read().decode('utf-8')
         if len(mapjson) <= 0:
             raise
     except:
@@ -31,18 +31,19 @@ def map_get():
 @app.route('/data.json')
 def data_get():
     try:
-        database = {}
-        for schedule in antndb.Schedule.query().fetch():
-            year = int(schedule.yearterm.split('-')[0])
-            if year >= YEAR_NOW - 1: # show this year and last year only
-                building = schedule.building
-                room = schedule.room
-                database.setdefault(building, {})
-                database[building].setdefault(room, {
-                    'schedule': schedule.schedule,
-                    'yearterm': schedule.yearterm
-                })
-        datajson = json.dumps(database)
+        with antndb.client.context():
+            database = {}
+            for schedule in antndb.Schedule.query().fetch():
+                year = int(schedule.yearterm.split('-')[0])
+                if year >= YEAR_NOW - 1: # show this year and last year only
+                    building = schedule.building
+                    room = schedule.room
+                    database.setdefault(building, {})
+                    database[building].setdefault(room, {
+                        'schedule': schedule.schedule,
+                        'yearterm': schedule.yearterm
+                    })
+            datajson = json.dumps(database)
     except:
         datajson = open('static/database_backup.json').read()
     return Response(datajson, mimetype='application/json')
