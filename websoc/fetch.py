@@ -1,11 +1,9 @@
-from google.appengine.api import urlfetch
+import urllib
 from datetime import datetime, timedelta
-
-urlfetch.set_default_fetch_deadline(60)
 
 YEAR_NOW = (datetime.utcnow() + timedelta(hours=-8)).year
 YEARS = range(1990, YEAR_NOW + 1)
-TERMS = [03, 14, 25, 39, 76, 92]
+TERMS = [3, 14, 25, 39, 76, 92] # 3 should be 03
 # [Winter, Spring, Summer Session 1, 10-Wk Summer, Summer Session 2, Fall]
 
 def iter_websoc(years=[YEAR_NOW], terms=TERMS, only_now=True):
@@ -49,4 +47,4 @@ def post(yearterm, coursecodes):
     url = 'https://www.reg.uci.edu/perl/WebSoc'
     query_template = '?YearTerm={}&CourseCodes={}&Submit=Text'
     query = query_template.format(yearterm, coursecodes)
-    return urlfetch.fetch(url + query).content
+    return urllib.request.urlopen(url + query).read().decode('utf-8')
