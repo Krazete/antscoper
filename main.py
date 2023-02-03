@@ -1,5 +1,4 @@
 import json
-import urllib
 import traceback
 import antndb
 from flask import Flask, Response, request, render_template
@@ -11,22 +10,6 @@ app = Flask(__name__)
 @app.route('/')
 def index_get():
     return render_template('index.html')
-
-@app.route('/map.json')
-def map_get():
-    mapurl = 'https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5'
-    # Miscellaneous Relevant URLs:
-    # - https://map.uci.edu/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
-    # - https://www.myatlascms.com/map/api/v2/locations?map=463&api_key=3715298bef4e8732196adf0b95254dd5
-    # - http://map.concept3d.com/?id=463
-    # - https://www.reg.uci.edu/perl/WebSoc?YearTerm=1990-03&CourseCodes=0-99999&Submit=Text
-    try:
-        mapjson = urllib.request.urlopen(mapurl).read().decode('utf-8')
-        if len(mapjson) <= 0:
-            raise
-    except:
-        mapjson = open('static/geo_backup.json').read()
-    return Response(mapjson, mimetype='application/json')
 
 @app.route('/data.json')
 def data_get():
