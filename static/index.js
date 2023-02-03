@@ -4,7 +4,7 @@ var geo = [];
 
 function init() {
     query = document.getElementById("query");
-    load("GET", "./map.json").then(function (response) {
+    load("GET", "/map.json").then(function (response) {
         for (var item of response) {
             geo.push(item);
         }
@@ -36,7 +36,7 @@ function search() {
         updateResults();
     }
     else {
-        load("POST", "./data.json?building=" + lower).then(function (response) {
+        load("POST", "/data.json?building=" + lower).then(function (response) {
             for (var key in response) {
                 database[key] = response[key];
             }
