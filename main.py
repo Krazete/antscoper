@@ -3,8 +3,8 @@ import urllib
 import traceback
 # import antndb
 from flask import Flask, Response, request, render_template
-# from scrape import scrape
-# from websoc import YEAR_NOW
+from scrape import scrape
+from websoc.fetch import YEAR_NOW
 
 app = Flask(__name__)
 
@@ -49,7 +49,7 @@ def data_get():
 
 @app.post('/data.json')
 def data_post():
-    building = request.get('building', 'alh')
+    building = request.args.get('building', 'alh')
     database = {}
     try:
         query = antndb.Schedule.query().filter(antndb.ndb.StringProperty('building') == building)
@@ -83,26 +83,25 @@ def scrape_yearterm_get():
 
 @app.post('/scrape_yearterm')
 def scrape_yearterm_post():
-    year = int(request.get('year', 1990))
-    term = int(request.get('term', 92))
+    year = int(request.args.get('year', 1990))
+    term = int(request.args.get('term', 92))
     template = render_template('scrape_yearterm.html')
     try:
         scrape([year], [term])
         content = 'YearTerm {:04d}-{:02d} has successfully been added to the database.<br><br>'.format(year, term)
         year_value = str(year + 1 if term == 92 else year) # iterate year
-        input_index = str(['0', '92', '03', '14', '25', '39', '76'].index(term)) # iterate term
+        input_index = str(['0', '92', '03', '14', '25', '39', '76'].index(str(term))) # iterate term
     except Exception as e:
         traceback.print_exc() # only visible in terminal
         content = 'ERROR: {}<br><br>'.format(e)
         year_value = str(year) # preserve year
-        input_index = str(['0', '03', '14', '25', '39', '76', '92'].index(term)) # preserve term
+        input_index = str(['0', '03', '14', '25', '39', '76', '92'].index(str(term))) # preserve term
     content += template.replace('{YEAR_VALUE}', year_value).replace('{INPUT_INDEX}', input_index)
     return content
 
 @app.post('/scrape')
-def scrape():
+def scrape_post():
     try:
-        from scrape import scrape
         scrape()
         return 'Success'
     except Exception as e:

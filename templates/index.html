@@ -13,12 +13,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=0.75, maximum-scale=0.75, user-scalable=no">
 	<title>AntScoper</title>
 	<meta name="description" content="A tool for viewing the class schedules of every classroom and lecture hall of any particular building at UCI.">
-	<link rel="stylesheet" type="text/css" href="static/leaflet/leaflet.css">
-	<script type="application/javascript" src="static/leaflet/leaflet.js"></script>
-	<link rel="stylesheet" type="text/css" href="static/index.css">
-	<script type="application/javascript" src="static/map.js"></script>
-    <script type="application/javascript" src="static/legend.js"></script>
-	<script type="application/javascript" src="static/index.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='leaflet/leaflet.css') }}">
+	<script type="application/javascript" src="{{ url_for('static', filename='leaflet/leaflet.js') }}"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='index.css') }}">
+	<script type="application/javascript" src="{{ url_for('static', filename='map.js') }}"></script>
+    <script type="application/javascript" src="{{ url_for('static', filename='legend.js') }}"></script>
+	<script type="application/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
 </head>
 <body>
 	<div id="map"></div>

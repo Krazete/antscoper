@@ -1,20 +1,21 @@
-import websoc
+from websoc.fetch import iter_websoc
+from websoc.parse import parse_document
 import antndb
 
 def scrape(years=[], terms=[]):
     'Add schedules of specified or current yearterms to the database.'
     if len(years) > 0:
         if len(terms) > 0:
-            yeartermdocs = websoc.iter_websoc(years, terms, only_now=False)
+            yeartermdocs = iter_websoc(years, terms, only_now=False)
         else:
-            yeartermdocs = websoc.iter_websoc(years, only_now=False)
+            yeartermdocs = iter_websoc(years, only_now=False)
     else:
-        yeartermdocs = websoc.iter_websoc()
+        yeartermdocs = iter_websoc()
     keys = antndb.get()
 
     database = {}
     for yearterm, document in yeartermdocs:
-        websoc.parse_document(database, document, yearterm)
+        parse_document(database, document, yearterm)
 
     for building in database:
         for room in database[building]:
