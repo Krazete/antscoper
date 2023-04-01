@@ -8,12 +8,18 @@ function initMap() {
     var myRenderer = L.svg({
         "padding": 2
     });
+    /* This is the TileLayer used by map.uci.edu. They finally changed and privated their access_token, making this unusable as of 2023.
     var tiles = L.tileLayer("https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
         "maxZoom": 18,
         "tileSize": 512,
         "zoomOffset": -1,
         "id": "mapbox/streets-v11",
         "accessToken": "pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw"
+    });
+    */
+    var tiles = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        "maxZoom": 18,
+        "attribution": '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
     });
     tiles.addTo(leafletmap);
 
@@ -62,10 +68,15 @@ function initMap() {
 
         for (var bldg of geo) {
             if (bldg.name.includes("(")) {
-                bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
-                bldg.watcherBubble.setStyle({
-                    "fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
-                });
+                try {
+                    bldg.distance = leafletmap.distance(location.latlng, bldg.latlng);
+                    bldg.watcherBubble.setStyle({
+                        "fillOpacity": 1 / Math.pow(Math.E, bldg.distance / 272)
+                    });
+                }
+                catch (e) {
+                    console.log("Skipping \"" + bldg.name + "\" (malformed building data).", bldg);
+                }
             }
         }
     }
