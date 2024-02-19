@@ -1,16 +1,21 @@
 import re
 from datetime import datetime
 
+timeplacepattern = re.compile('((?:Su|M|Tu|W|Th|F|Sa)+\s*\d+:\d+-\s*\d+:\d+p?)\s+(\w+\s+\w+)')
+
 def parse_document(database, document, yearterm):
     'Extract room data from a websoc document.'
-    t, p, m = get_timeplace_indices(document)
+    t = get_timeplace_index(document)
     for block in iter_block(document):
         for line in iter_line(block):
-            time = line[t:p]
-            place = line[p:m]
-            if '*TBA*' in time or '*TBA*' in place:
+            timeplaces = re.findall(timeplacepattern, line[t:])
+            if len(timeplaces) < 1:
                 continue
-            if time.strip() == '' or place.strip() == '':
+            elif len(timeplaces) > 1:
+                print('Warning: Multiple timeplace strings encountered.', timeplace)
+            time = timeplaces[0][0]
+            place = timeplaces[0][1]
+            if '*TBA*' in time or '*TBA*' in place: # remnant of old get_timeplace_indices
                 continue
             days, hours = parse_time(time)
             building, room = parse_place(place)
@@ -29,16 +34,13 @@ def parse_document(database, document, yearterm):
                 database[building][room][day].add(hours)
     return database
 
-def get_timeplace_indices(document):
-    'Find the indices of Time, Place, and Max on a line.'
+def get_timeplace_index(document):
+    'Find the index of Time and Place on a line.'
     lines = document.split('\n')
     for line in lines:
         if 'Time' in line and 'Place' in line and 'Max' in line:
-            t = line.index('Time')
-            p = line.index('Place')
-            m = line.index('Max')
-            return t, p, m
-    return 0, 0, 0
+            return line.index('Time')
+    return -1
 
 def iter_block(document):
     'Generate each block of the document containing courses.'
