@@ -23,7 +23,7 @@ def iter_yearterm(years, terms):
 def iter_valid_documents(yearterm, a=0, b=99999):
     'Generate WebSoc documents with valid coursecode ranges.'
     document = get_valid_document(yearterm, a, b)
-    if document == None:
+    if document == None or 'refine your search' in document:
         m = (a + b) // 2
         if a < m < b:
             for document in iter_valid_documents(yearterm, a, m):
