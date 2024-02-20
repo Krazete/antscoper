@@ -13,6 +13,7 @@ function init() {
     });
     initLegend();
     initSearch();
+    history.replaceState("", document.title, window.location.pathname); /* remove hash */
 }
 
 function initMapData(response) {
