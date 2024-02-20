@@ -1,5 +1,6 @@
 import urllib
 from datetime import datetime, timedelta
+from time import sleep
 
 YEAR_NOW = (datetime.utcnow() + timedelta(hours=-8)).year
 YEARS = range(1990, YEAR_NOW + 1)
@@ -39,6 +40,7 @@ def get_valid_document(yearterm, a, b):
     'Get a WebSoc document given a valid coursecode range or return None.'
     coursecodes = '{}-{}'.format(a, b)
     document = post(yearterm, coursecodes)
+    sleep(0.5) # to prevent "Remote end closed connection without response"
     if 'please refine your search' not in document:
         return document
 
