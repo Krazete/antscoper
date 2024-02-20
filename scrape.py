@@ -13,9 +13,11 @@ def scrape(years=[], terms=[]):
         yeartermdocs = iter_websoc()
     keys = antndb.get()
 
+    yearterms = set()
     database = {}
     for yearterm, document in yeartermdocs:
         parse_document(database, document, yearterm)
+        yearterms.add(yearterm)
 
     for building in database:
         for room in database[building]:
@@ -35,7 +37,7 @@ def scrape(years=[], terms=[]):
                 keys.remove(key)
 
     antndb.reset_multi(keys)
-    return [yearterm for yearterm, document in yeartermdocs]
+    return yearterms
 
 if __name__ == '__main__':
     scrape()
