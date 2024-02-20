@@ -13,7 +13,6 @@ function init() {
     });
     initLegend();
     initSearch();
-    history.replaceState("", document.title, window.location.pathname); /* remove hash */
 }
 
 function initMapData(response) {
@@ -67,6 +66,8 @@ function initSearch() {
     }
     query.addEventListener("change", search);
     query.addEventListener("keydown", exitSearch);
+    
+    history.replaceState("", document.title, window.location.pathname); /* remove hash */
     window.addEventListener("hashchange", hashSearch);
 }
 

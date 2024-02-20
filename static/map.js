@@ -34,7 +34,8 @@ function initMap() {
 
     for (var bldg of geo) {
         (function (bldg) {
-            if (bldg.name.includes("(") && !bldg.name.includes("Minutes)")) {
+            var inParen = bldg.name.match(/\((\w+)\)/);
+            if (inParen) {
                 bldg.latlng = L.latLng(bldg.lat, bldg.lng);
                 bldg.watcherBubble = L.circle(bldg.latlng, 15, {
                     "weight": 2,
@@ -42,10 +43,9 @@ function initMap() {
                     "fillOpacity": 0,
                     "renderer": myRenderer
                 });
-                var inParen = bldg.name.match(/\((.+?)\)/);
                 bldg.watcherBubble.bindPopup(function () {
                     var anchor = document.createElement("a");
-                    anchor.href = "#" + (inParen ? inParen[1].toLowerCase() : "");
+                    anchor.href = "#" + inParen[1].toLowerCase();
                     anchor.innerHTML = bldg.name;
                     return anchor;
                 });
