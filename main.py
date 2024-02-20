@@ -87,8 +87,8 @@ def scrape_yearterm_post():
 @app.post('/scrape')
 def scrape_post():
     try:
-        scrape()
-        return 'Success'
+        content = scrape()
+        return 'SUCCESS: {}'.format(content)
     except Exception as e:
         return 'ERROR: {}'.format(e)
 

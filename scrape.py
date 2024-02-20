@@ -35,6 +35,7 @@ def scrape(years=[], terms=[]):
                 keys.remove(key)
 
     antndb.reset_multi(keys)
+    return [yearterm for yearterm, document in yeartermdocs]
 
 if __name__ == '__main__':
     scrape()
