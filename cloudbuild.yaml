@@ -2,3 +2,9 @@ steps:
 - name: 'gcr.io/cloud-builders/gcloud'
   args: ['app', 'deploy', '-v', 'github-v3', '--no-promote']
 timeout: '600s'
+
+# After building, go to
+#   Google Cloud Console > Cloud Storage > Buckets
+# and delete the bucket named
+#   us.artifacts.antscoper.appspot.com
+# to avoid charges.
